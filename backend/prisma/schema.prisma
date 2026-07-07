@@ -12,41 +12,124 @@ datasource db {
   provider = "postgresql"
 }
 
-model Uloga{
-  ulogaId Int @id @default(autoincrement()) @map("uloga_id")
-  naziv String @unique @db.VarChar(50)
-  opis String? @db.VarChar(1000)
+model Uloga {
+  ulogaId Int     @id @default(autoincrement()) @map("uloga_id")
+  naziv   String  @unique @db.VarChar(50)
+  opis    String? @db.VarChar(1000)
 
   korisnici Korisnik[]
 
   @@map("uloga")
 }
 
-model Korisnik{
-  korisnikId Int @id @default(autoincrement()) @map("korisnik_id")
-  ime String? @db.VarChar(50)
-  prezime String? @db.VarChar(50)
-  korisnickoIme String @unique @map("korisnicko_ime") @db.VarChar(50)
-  email String @unique @db.VarChar(100)
-  lozinkaHash String @map("lozinka_hash") @db.VarChar(255)
+model Korisnik {
+  korisnikId    Int     @id @default(autoincrement()) @map("korisnik_id")
+  ime           String? @db.VarChar(50)
+  prezime       String? @db.VarChar(50)
+  korisnickoIme String  @unique @map("korisnicko_ime") @db.VarChar(50)
+  email         String  @unique @db.VarChar(100)
+  lozinkaHash   String  @map("lozinka_hash") @db.VarChar(255)
 
-  ulogaId Int @map("uloga_id")
-  uloga Uloga @relation(fields: [ulogaId], references: [ulogaId])
+  ulogaId Int   @map("uloga_id")
+  uloga   Uloga @relation(fields: [ulogaId], references: [ulogaId])
 
-  profil Profil?
+  profil              Profil?
+  rijeseneLokacije    RijesenaLokacija[]
+  korisnikDekoracije  KorisnikDekoracija[]
+  korisnikPostignuca  KorisnikPostignuce[]
+  povratneInformacije PovratnaInformacija[]
+  dodaneLokacije      Lokacija[]
 
   @@map("korisnik")
 }
 
-model Profil{
-  profilId Int @id @default(autoincrement()) @map("profil_id")
-  opisProfila String? @map("opis_profila") @db.VarChar(1000)
-  razina Int @default(1)
-  xpBodovi Int @default(0) @map("xp_bodovi")
-  virtualniNovac Int @default(0) @map("virtualni_novac")
+model Profil {
+  profilId       Int     @id @default(autoincrement()) @map("profil_id")
+  opisProfila    String? @map("opis_profila") @db.VarChar(1000)
+  razina         Int     @default(1)
+  xpBodovi       Int     @default(0) @map("xp_bodovi")
+  virtualniNovac Int     @default(0) @map("virtualni_novac")
 
-  korisnikId Int @unique @map("korisnik_id")
-  korisnik Korisnik @relation(fields: [korisnikId], references: [korisnikId])
+  korisnikId Int      @unique @map("korisnik_id")
+  korisnik   Korisnik @relation(fields: [korisnikId], references: [korisnikId])
 
   @@map("profil")
+}
+
+model KategorijaLokacije {
+  kategorijaId Int     @id @default(autoincrement()) @map("kategorija_id")
+  naziv        String  @unique @db.VarChar(100)
+  opis         String? @db.VarChar(1000)
+
+  lokacije   Lokacija[]
+  postognuca Postignuce[]
+
+  @@map("kategorija_lokacije")
+}
+
+model Lokacija {
+  lokacijaId     Int      @id @default(autoincrement()) @map("lokacija_id")
+  naziv          String   @db.VarChar(200)
+  opis           String?  @db.VarChar(1000)
+  adresa         String   @db.VarChar(200)
+  grad           String   @db.VarChar(200)
+  zupanija       String   @db.VarChar(200)
+  ulaznicaCijena Decimal? @map("ulaznica_cijena") @db.Decimal(10, 2)
+  datumDodavanja DateTime @default(now()) @map("datum_dodavanja")
+  geoSirina      Decimal  @map("geo_sirina") @db.Decimal(9, 6)
+  geoDuzina      Decimal  @map("geo_duzina") @db.Decimal(9, 6)
+  nagradaXp      Int      @default(0) @map("nagrada_xp")
+  nagradaValuta  Int      @default(0) @map("nagrada_valuta")
+
+  dodaoKorisnikId Int      @map("dodao_korisnik_id")
+  dodaoKorisnik   Korisnik @relation(fields: [dodaoKorisnikId], references: [korisnikId])
+
+  kategorijaId Int                @map("kategorija_id")
+  kategorija   KategorijaLokacije @relation(fields: [kategorijaId], references: [kategorijaId])
+
+  slikeLokacije       SlikaLokacije[]
+  rijeseneLokacije    RijesenaLokacija[]
+  povratneInformacije PovratnaInformacija[]
+
+  @@map("lokacija")
+}
+
+model SlikaLokacije {
+  slikaId        Int      @id @default(autoincrement()) @map("slika_id")
+  putanjaSlike   String   @unique @map("putanja_slike") @db.VarChar(255)
+  opisSlike      String?  @map("opis_slike") @db.VarChar(255)
+  datumDodavanja DateTime @default(now()) @map("datum_dodavanja")
+  glavna         Boolean  @default(false)
+
+  lokacijaId Int      @map("lokacija_id")
+  lokacija   Lokacija @relation(fields: [lokacijaId], references: [lokacijaId])
+}
+
+model RijesenaLokacija {
+  rijesenaLokacijaId  Int      @id @default(autoincrement()) @map("rijesena_lokacija_id")
+  datumVrijemePosjeta DateTime @default(now()) @map("datum_vrijeme_posjeta")
+  biljeska            String?  @db.VarChar(1000)
+  brojOsvojenihXp     Int      @default(0) @map("broj_osvojenih_xp")
+  brojOsvojeneVaulte  Int      @default(0) @map("broj_osvojene_vaulte")
+
+  korisnikId Int      @map("korisnik_id")
+  korisnik   Korisnik @relation(fields: [korisnikId], references: [korisnikId])
+
+  lokacijaId Int      @map("lokacija_id")
+  lokacija   Lokacija @relation(fields: [lokacijaId], references: [lokacijaId])
+
+  slikePosjeta SlikaPosjeta[]
+
+  @@unique([korisnikId, lokacijaId])
+  @@map("rijesena_lokacija")
+}
+
+model SlikaPosjeta {
+  slikaId        Int      @id @default(autoincrement()) @map("slika_id")
+  putanjaSlike   String   @unique @map("putanja_slike") @db.VarChar(255)
+  opisSlike      String?  @map("opis_slike") @db.VarChar(255)
+  datumDodavanja DateTime @default(now()) @map("datum_dodavanja")
+
+  rijesenaLokacijaId Int              @map("rijesena_lokacija_id")
+  rijesenaLokacija   RijesenaLokacija @relation(fields: [rijesenaLokacijaId], references: [rijesenaLokacijaId])
 }
