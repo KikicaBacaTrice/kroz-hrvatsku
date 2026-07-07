@@ -11,3 +11,42 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model Uloga{
+  ulogaId Int @id @default(autoincrement()) @map("uloga_id")
+  naziv String @unique @db.VarChar(50)
+  opis String? @db.VarChar(1000)
+
+  korisnici Korisnik[]
+
+  @@map("uloga")
+}
+
+model Korisnik{
+  korisnikId Int @id @default(autoincrement()) @map("korisnik_id")
+  ime String? @db.VarChar(50)
+  prezime String? @db.VarChar(50)
+  korisnickoIme String @unique @map("korisnicko_ime") @db.VarChar(50)
+  email String @unique @db.VarChar(100)
+  lozinkaHash String @map("lozinka_hash") @db.VarChar(255)
+
+  ulogaId Int @map("uloga_id")
+  uloga Uloga @relation(fields: [ulogaId], references: [ulogaId])
+
+  profil Profil?
+
+  @@map("korisnik")
+}
+
+model Profil{
+  profilId Int @id @default(autoincrement()) @map("profil_id")
+  opisProfila String? @map("opis_profila") @db.VarChar(1000)
+  razina Int @default(1)
+  xpBodovi Int @default(0) @map("xp_bodovi")
+  virtualniNovac Int @default(0) @map("virtualni_novac")
+
+  korisnikId Int @unique @map("korisnik_id")
+  korisnik Korisnik @relation(fields: [korisnikId], references: [korisnikId])
+
+  @@map("profil")
+}

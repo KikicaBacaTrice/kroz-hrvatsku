@@ -16,6 +16,8 @@ backend/dist/
 .env.local
 .env.development
 .env.production
+backend/.env
+frontend/.env
 
 # Prisma
 backend/prisma/dev.db
