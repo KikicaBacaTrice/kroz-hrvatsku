@@ -166,7 +166,7 @@ model Dekoracija {
   nacinOtkljucavanja   NacinOtkljucavanja @relation(fields: [nacinOtkljucavanjaId], references: [nacinOtkljucavanjaId])
 
   korisnikDekoracije KorisnikDekoracija[]
-  postignuca         Postignuca[]
+  postignuca         Postignuce[]
 
   @@map("dekoracija")
 }
@@ -185,4 +185,37 @@ model KorisnikDekoracija {
 
   @@unique([korisnikId, dekoracijaId])
   @@map("korinsik_dekoracija")
+}
+
+model Postignuce {
+  postignuceId          Int     @id @default(autoincrement()) @map("postignuce_id")
+  naziv                 String  @unique @db.VarChar(100)
+  opis                  String? @db.VarChar(255)
+  brojPotrebnihLokacija Int     @map("broj_potrebnih_lokacija")
+  nagradaXp             Int     @default(0) @map("nagrada_xp")
+  nagradaValuta         Int     @default(0) @map("nagrada_valuta")
+
+  kategorijaId Int                @map("kategorija_id")
+  kategorija   KategorijaLokacije @relation(fields: [kategorijaId], references: [kategorijaId])
+
+  dekoracijaId Int?        @map("dekoracija_id")
+  dekoracija   Dekoracija? @relation(fields: [dekoracijaId], references: [dekoracijaId])
+
+  korisnikPostignuca KorisnikPostignuce[]
+
+  @@map("postignuce")
+}
+
+model KorisnikPostignuce {
+  korinsikPostignuceId Int      @id @default(autoincrement()) @map("korisnik_postignuce_id")
+  datumOtkljucavanja   DateTime @default(now()) @map("datum_otkljucavanja")
+
+  postignuceId Int        @map("postignuce_id")
+  postignuce   Postignuce @relation(fields: [postignuceId], references: [postignuceId])
+
+  korisnikId Int      @map("korisnik_id")
+  korisnik   Korisnik @relation(fields: [korisnikId], references: [korisnikId])
+
+  @@unique([korisnikId, postignuceId])
+  @@map("korisnik_postignuce")
 }
