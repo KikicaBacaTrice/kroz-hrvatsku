@@ -62,7 +62,7 @@ model KategorijaLokacije {
   opis         String? @db.VarChar(1000)
 
   lokacije   Lokacija[]
-  postognuca Postignuce[]
+  postignuca Postignuce[]
 
   @@map("kategorija_lokacije")
 }
@@ -110,7 +110,7 @@ model RijesenaLokacija {
   datumVrijemePosjeta DateTime @default(now()) @map("datum_vrijeme_posjeta")
   biljeska            String?  @db.VarChar(1000)
   brojOsvojenihXp     Int      @default(0) @map("broj_osvojenih_xp")
-  brojOsvojeneVaulte  Int      @default(0) @map("broj_osvojene_vaulte")
+  brojOsvojeneValute  Int      @default(0) @map("broj_osvojene_valute")
 
   korisnikId Int      @map("korisnik_id")
   korisnik   Korisnik @relation(fields: [korisnikId], references: [korisnikId])
@@ -155,7 +155,7 @@ model NacinOtkljucavanja {
 model Dekoracija {
   dekoracijaId    Int    @id @default(autoincrement()) @map("dekoracija_id")
   naziv           String @unique @db.VarChar(100)
-  opis            String @unique @db.VarChar(255)
+  opis            String @db.VarChar(255)
   cijenaValuta    Int?   @map("cijena_valuta")
   slikaDekoracija String @map("slika_dekoracija") @db.VarChar(255)
 
@@ -184,7 +184,7 @@ model KorisnikDekoracija {
   korisnik   Korisnik @relation(fields: [korisnikId], references: [korisnikId])
 
   @@unique([korisnikId, dekoracijaId])
-  @@map("korinsik_dekoracija")
+  @@map("korisnik_dekoracija")
 }
 
 model Postignuce {
@@ -207,7 +207,7 @@ model Postignuce {
 }
 
 model KorisnikPostignuce {
-  korinsikPostignuceId Int      @id @default(autoincrement()) @map("korisnik_postignuce_id")
+  korisnikPostignuceId Int      @id @default(autoincrement()) @map("korisnik_postignuce_id")
   datumOtkljucavanja   DateTime @default(now()) @map("datum_otkljucavanja")
 
   postignuceId Int        @map("postignuce_id")
@@ -222,14 +222,14 @@ model KorisnikPostignuce {
 
 model PovratnaInformacija {
   povratnaInformacijaId Int      @id @default(autoincrement()) @map("povratna_informacija_id")
-  teskt                 String   @db.VarChar(1000)
+  tekst                 String   @db.VarChar(1000)
   ocjena                Int
   datum                 DateTime @default(now())
 
   korisnikId Int      @map("korisnik_id")
   korisnik   Korisnik @relation(fields: [korisnikId], references: [korisnikId])
 
-  lokacijaId Int      @map("lokacijaId")
+  lokacijaId Int      @map("lokacija_id")
   lokacija   Lokacija @relation(fields: [lokacijaId], references: [lokacijaId])
 
   @@map("povratna_informacija")
