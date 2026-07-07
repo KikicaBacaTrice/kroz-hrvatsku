@@ -133,3 +133,56 @@ model SlikaPosjeta {
   rijesenaLokacijaId Int              @map("rijesena_lokacija_id")
   rijesenaLokacija   RijesenaLokacija @relation(fields: [rijesenaLokacijaId], references: [rijesenaLokacijaId])
 }
+
+model TipDekoracije {
+  tipDekoracijeId Int    @id @default(autoincrement()) @map("tip_dekoracije_id")
+  naziv           String @unique @db.VarChar(100)
+
+  dekoracije Dekoracija[]
+
+  @@map("tip_dekoracije")
+}
+
+model NacinOtkljucavanja {
+  nacinOtkljucavanjaId Int    @id @default(autoincrement()) @map("nacin_otkljucavanja_id")
+  naziv                String @unique @db.VarChar(100)
+
+  dekoracije Dekoracija[]
+
+  @@map("nacin_otkljucavanja")
+}
+
+model Dekoracija {
+  dekoracijaId    Int    @id @default(autoincrement()) @map("dekoracija_id")
+  naziv           String @unique @db.VarChar(100)
+  opis            String @unique @db.VarChar(255)
+  cijenaValuta    Int?   @map("cijena_valuta")
+  slikaDekoracija String @map("slika_dekoracija") @db.VarChar(255)
+
+  tipDekoracijeId Int           @map("tip_dekoracije_id")
+  tipDekoracije   TipDekoracije @relation(fields: [tipDekoracijeId], references: [tipDekoracijeId])
+
+  nacinOtkljucavanjaId Int                @map("nacin_otkljucavanja_id")
+  nacinOtkljucavanja   NacinOtkljucavanja @relation(fields: [nacinOtkljucavanjaId], references: [nacinOtkljucavanjaId])
+
+  korisnikDekoracije KorisnikDekoracija[]
+  postignuca         Postignuca[]
+
+  @@map("dekoracija")
+}
+
+model KorisnikDekoracija {
+  korisnikDekoracijaId Int      @id @default(autoincrement()) @map("korisnik_dekoracija_id")
+  datumDobivanja       DateTime @default(now()) @map("datum_dobivanja")
+  aktivna              Boolean  @default(false)
+  pozicijaPrikaza      Int?     @map("pozicija_prikaza")
+
+  dekoracijaId Int        @map("dekoracija_id")
+  dekoracija   Dekoracija @relation(fields: [dekoracijaId], references: [dekoracijaId])
+
+  korisnikId Int      @map("korisnik_id")
+  korisnik   Korisnik @relation(fields: [korisnikId], references: [korisnikId])
+
+  @@unique([korisnikId, dekoracijaId])
+  @@map("korinsik_dekoracija")
+}
