@@ -219,3 +219,18 @@ model KorisnikPostignuce {
   @@unique([korisnikId, postignuceId])
   @@map("korisnik_postignuce")
 }
+
+model PovratnaInformacija {
+  povratnaInformacijaId Int      @id @default(autoincrement()) @map("povratna_informacija_id")
+  teskt                 String   @db.VarChar(1000)
+  ocjena                Int
+  datum                 DateTime @default(now())
+
+  korisnikId Int      @map("korisnik_id")
+  korisnik   Korisnik @relation(fields: [korisnikId], references: [korisnikId])
+
+  lokacijaId Int      @map("lokacijaId")
+  lokacija   Lokacija @relation(fields: [lokacijaId], references: [lokacijaId])
+
+  @@map("povratna_informacija")
+}
