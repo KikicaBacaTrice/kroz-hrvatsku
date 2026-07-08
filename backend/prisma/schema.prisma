@@ -44,11 +44,12 @@ model Korisnik {
 }
 
 model Profil {
-  profilId       Int     @id @default(autoincrement()) @map("profil_id")
-  opisProfila    String? @map("opis_profila") @db.VarChar(1000)
-  razina         Int     @default(1)
-  xpBodovi       Int     @default(0) @map("xp_bodovi")
-  virtualniNovac Int     @default(0) @map("virtualni_novac")
+  profilId         Int     @id @default(autoincrement()) @map("profil_id")
+  opisProfila      String? @map("opis_profila") @db.VarChar(1000)
+  razina           Int     @default(1)
+  xpBodovi         Int     @default(0) @map("xp_bodovi")
+  virtualniNovac   Int     @default(0) @map("virtualni_novac")
+  profilnaSlikaUrl String? @map("profilna_slika_url") @db.VarChar(255)
 
   korisnikId Int      @unique @map("korisnik_id")
   korisnik   Korisnik @relation(fields: [korisnikId], references: [korisnikId])
