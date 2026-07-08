@@ -103,6 +103,8 @@ model SlikaLokacije {
 
   lokacijaId Int      @map("lokacija_id")
   lokacija   Lokacija @relation(fields: [lokacijaId], references: [lokacijaId])
+
+  @@map("slika_lokacije")
 }
 
 model RijesenaLokacija {
@@ -132,6 +134,8 @@ model SlikaPosjeta {
 
   rijesenaLokacijaId Int              @map("rijesena_lokacija_id")
   rijesenaLokacija   RijesenaLokacija @relation(fields: [rijesenaLokacijaId], references: [rijesenaLokacijaId])
+
+  @@map("slika_posjeta")
 }
 
 model TipDekoracije {
