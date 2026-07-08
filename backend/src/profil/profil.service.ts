@@ -5,7 +5,6 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { AzuriranjProfilDto } from './dto/azuriraj-profil.dto';
-import { Prisma } from 'generated/prisma/client';
 
 @Injectable()
 export class ProfilService {
@@ -59,33 +58,6 @@ export class ProfilService {
     }
 
     return profil;
-  }
-
-  async kreirajProfil(id: number) {
-    const korisnik = await this.prisma.korisnik.findUnique({
-      where: { korisnikId: id },
-    });
-
-    if (!korisnik) {
-      throw new NotFoundException('Korisnik nije pronađen');
-    }
-
-    try {
-      return this.prisma.profil.create({
-        data: {
-          korisnikId: id,
-        },
-      });
-    } catch (e) {
-      if (
-        e instanceof Prisma.PrismaClientKnownRequestError &&
-        e.code === 'P2002'
-      ) {
-        throw new ConflictException('Profil već postoji');
-      }
-
-      throw e;
-    }
   }
 
   async azurirajProfil(id: number, dto: AzuriranjProfilDto) {
