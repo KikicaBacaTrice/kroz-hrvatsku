@@ -12,7 +12,7 @@ export class KategorijeService {
   }
 
   async dohvatiJednu(id: number) {
-    const kategorija = this.prisma.kategorijaLokacije.findUnique({
+    const kategorija = await this.prisma.kategorijaLokacije.findUnique({
       where: { kategorijaId: id },
       include: {
         lokacije: true,
@@ -43,9 +43,7 @@ export class KategorijeService {
 
     return this.prisma.kategorijaLokacije.update({
       where: { kategorijaId: id },
-      data: {
-        dto,
-      },
+      data: dto,
     });
   }
 
