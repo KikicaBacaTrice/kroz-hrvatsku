@@ -40,6 +40,8 @@ export class KorisniciService {
   }
 
   async azuriraj(id: number, dto: AzurirajKorisnikaDto) {
+    await this.provjeriPostojiLiKorisnik(id);
+
     return this.prisma.korisnik.update({
       where: { korisnikId: id },
       data: dto,
@@ -47,8 +49,21 @@ export class KorisniciService {
   }
 
   async obrisi(id: number) {
+    await this.provjeriPostojiLiKorisnik(id);
+
     return this.prisma.korisnik.delete({
       where: { korisnikId: id },
     });
+  }
+
+  async provjeriPostojiLiKorisnik(id: number) {
+    const korisnik = await this.prisma.korisnik.findUnique({
+      where: { korisnikId: id },
+    });
+
+    if (!korisnik) {
+      throw new NotFoundException('Korisnik nije pronađena');
+    }
+    return korisnik;
   }
 }
