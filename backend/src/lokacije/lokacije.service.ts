@@ -3,6 +3,8 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { FiltrirajLokacijeDto } from './dto/filtriraj-lokacije.dto';
 import { DodajLokacijaDto } from './dto/dodaj-lokacije.dto';
 import { AzurirajLokacijuDto } from './dto/azuriraj-lokacije.dto';
+import { DodajSlikuDto } from './dto/dodaj-sliku.dto';
+import { AzurirajSlikuLokacijeDto } from './dto/azuriraj-sliku-lokacije.dto';
 
 @Injectable()
 export class LokacijeService {
@@ -74,6 +76,15 @@ export class LokacijeService {
     return lokacija;
   }
 
+  async dohvatiSlikeZaLokaciju(id: number) {
+    await this.provjeriPostojiLiLokacija(id);
+
+    return this.prisma.slikaLokacije.findMany({
+      where: { lokacijaId: id },
+      orderBy: [{ glavna: 'desc' }, { datumDodavanja: 'desc' }],
+    });
+  }
+
   async dodajLokaciju(dto: DodajLokacijaDto) {
     const novaLokacija = await this.prisma.lokacija.create({
       data: {
@@ -95,6 +106,26 @@ export class LokacijeService {
     return novaLokacija;
   }
 
+  async dodajSlikuZaLokaciju(id: number, dto: DodajSlikuDto) {
+    await this.provjeriPostojiLiLokacija(id);
+
+    if (dto.glavna) {
+      await this.prisma.slikaLokacije.updateMany({
+        where: { lokacijaId: id, glavna: true },
+        data: { glavna: false },
+      });
+    }
+
+    return this.prisma.slikaLokacije.create({
+      data: {
+        putanjaSlike: dto.putanjaSlike,
+        opisSlike: dto.opisSlike,
+        glavna: dto.glavna ?? false,
+        lokacijaId: id,
+      },
+    });
+  }
+
   async azurirajLokaciju(id: number, dto: AzurirajLokacijuDto) {
     await this.provjeriPostojiLiLokacija(id);
 
@@ -104,11 +135,67 @@ export class LokacijeService {
     });
   }
 
+  async azurirajSlikuZaLokaciju(
+    lokacijaId: number,
+    slikaId: number,
+    dto: AzurirajSlikuLokacijeDto,
+  ) {
+    await this.provjeriPostojiLiLokacija(lokacijaId);
+
+    const slika = await this.prisma.slikaLokacije.findFirst({
+      where: {
+        slikaId,
+        lokacijaId,
+      },
+    });
+    if (!slika) {
+      throw new NotFoundException('SLika za ovu lokaciju nije pronađena');
+    }
+
+    if (dto.glavna) {
+      await this.prisma.slikaLokacije.updateMany({
+        where: {
+          lokacijaId,
+          glavna: true,
+          slikaId: {
+            not: slikaId,
+          },
+        },
+        data: {
+          glavna: false,
+        },
+      });
+    }
+
+    return this.prisma.slikaLokacije.update({
+      where: { slikaId },
+      data: dto,
+    });
+  }
+
   async obrisi(id: number) {
     await this.provjeriPostojiLiLokacija(id);
 
     return this.prisma.lokacija.delete({
       where: { lokacijaId: id },
+    });
+  }
+
+  async obrisiSlikuZaLokaciju(lokacijaId: number, slikaId: number) {
+    await this.provjeriPostojiLiLokacija(lokacijaId);
+
+    const slika = await this.prisma.slikaLokacije.findFirst({
+      where: {
+        slikaId,
+        lokacijaId,
+      },
+    });
+    if (!slika) {
+      throw new NotFoundException('SLika za ovu lokaciju nije pronađena');
+    }
+
+    return this.prisma.slikaLokacije.delete({
+      where: { slikaId },
     });
   }
 
