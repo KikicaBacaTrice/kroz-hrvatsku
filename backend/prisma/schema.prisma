@@ -32,7 +32,7 @@ model Korisnik {
   lozinkaHash   String  @map("lozinka_hash") @db.VarChar(255)
 
   ulogaId Int   @map("uloga_id")
-  uloga   Uloga @relation(fields: [ulogaId], references: [ulogaId])
+  uloga   Uloga @relation(fields: [ulogaId], references: [ulogaId], onDelete: Restrict, onUpdate: Cascade)
 
   profil              Profil?
   rijeseneLokacije    RijesenaLokacija[]
@@ -53,7 +53,7 @@ model Profil {
   profilnaSlikaUrl String? @map("profilna_slika_url") @db.VarChar(255)
 
   korisnikId Int      @unique @map("korisnik_id")
-  korisnik   Korisnik @relation(fields: [korisnikId], references: [korisnikId])
+  korisnik   Korisnik @relation(fields: [korisnikId], references: [korisnikId], onDelete: Cascade, onUpdate: Cascade)
 
   @@map("profil")
 }
@@ -84,10 +84,10 @@ model Lokacija {
   nagradaValuta  Int      @default(0) @map("nagrada_valuta")
 
   dodaoKorisnikId Int      @map("dodao_korisnik_id")
-  dodaoKorisnik   Korisnik @relation(fields: [dodaoKorisnikId], references: [korisnikId])
+  dodaoKorisnik   Korisnik @relation(fields: [dodaoKorisnikId], references: [korisnikId], onDelete: Restrict, onUpdate: Cascade)
 
   kategorijaId Int                @map("kategorija_id")
-  kategorija   KategorijaLokacije @relation(fields: [kategorijaId], references: [kategorijaId])
+  kategorija   KategorijaLokacije @relation(fields: [kategorijaId], references: [kategorijaId], onDelete: Restrict, onUpdate: Cascade)
 
   slikeLokacije       SlikaLokacije[]
   rijeseneLokacije    RijesenaLokacija[]
@@ -104,7 +104,7 @@ model SlikaLokacije {
   glavna         Boolean  @default(false)
 
   lokacijaId Int      @map("lokacija_id")
-  lokacija   Lokacija @relation(fields: [lokacijaId], references: [lokacijaId])
+  lokacija   Lokacija @relation(fields: [lokacijaId], references: [lokacijaId], onDelete: Cascade, onUpdate: Cascade)
 
   @@map("slika_lokacije")
 }
@@ -117,10 +117,10 @@ model RijesenaLokacija {
   brojOsvojeneValute  Int      @default(0) @map("broj_osvojene_valute")
 
   korisnikId Int      @map("korisnik_id")
-  korisnik   Korisnik @relation(fields: [korisnikId], references: [korisnikId])
+  korisnik   Korisnik @relation(fields: [korisnikId], references: [korisnikId], onDelete: Cascade, onUpdate: Cascade)
 
   lokacijaId Int      @map("lokacija_id")
-  lokacija   Lokacija @relation(fields: [lokacijaId], references: [lokacijaId])
+  lokacija   Lokacija @relation(fields: [lokacijaId], references: [lokacijaId], onDelete: Cascade, onUpdate: Cascade)
 
   slikePosjeta SlikaPosjeta[]
 
@@ -135,7 +135,7 @@ model SlikaPosjeta {
   datumDodavanja DateTime @default(now()) @map("datum_dodavanja")
 
   rijesenaLokacijaId Int              @map("rijesena_lokacija_id")
-  rijesenaLokacija   RijesenaLokacija @relation(fields: [rijesenaLokacijaId], references: [rijesenaLokacijaId])
+  rijesenaLokacija   RijesenaLokacija @relation(fields: [rijesenaLokacijaId], references: [rijesenaLokacijaId], onDelete: Cascade, onUpdate: Cascade)
 
   @@map("slika_posjeta")
 }
@@ -166,10 +166,10 @@ model Dekoracija {
   slikaDekoracija String @map("slika_dekoracija") @db.VarChar(255)
 
   tipDekoracijeId Int           @map("tip_dekoracije_id")
-  tipDekoracije   TipDekoracije @relation(fields: [tipDekoracijeId], references: [tipDekoracijeId])
+  tipDekoracije   TipDekoracije @relation(fields: [tipDekoracijeId], references: [tipDekoracijeId], onDelete: Restrict, onUpdate: Cascade)
 
   nacinOtkljucavanjaId Int                @map("nacin_otkljucavanja_id")
-  nacinOtkljucavanja   NacinOtkljucavanja @relation(fields: [nacinOtkljucavanjaId], references: [nacinOtkljucavanjaId])
+  nacinOtkljucavanja   NacinOtkljucavanja @relation(fields: [nacinOtkljucavanjaId], references: [nacinOtkljucavanjaId], onDelete: Restrict, onUpdate: Cascade)
 
   korisnikDekoracije KorisnikDekoracija[]
   postignuca         Postignuce[]
@@ -184,10 +184,10 @@ model KorisnikDekoracija {
   pozicijaPrikaza      Int?     @map("pozicija_prikaza")
 
   dekoracijaId Int        @map("dekoracija_id")
-  dekoracija   Dekoracija @relation(fields: [dekoracijaId], references: [dekoracijaId])
+  dekoracija   Dekoracija @relation(fields: [dekoracijaId], references: [dekoracijaId], onDelete: Cascade, onUpdate: Cascade)
 
   korisnikId Int      @map("korisnik_id")
-  korisnik   Korisnik @relation(fields: [korisnikId], references: [korisnikId])
+  korisnik   Korisnik @relation(fields: [korisnikId], references: [korisnikId], onDelete: Cascade, onUpdate: Cascade)
 
   @@unique([korisnikId, dekoracijaId])
   @@map("korisnik_dekoracija")
@@ -202,10 +202,10 @@ model Postignuce {
   nagradaValuta         Int     @default(0) @map("nagrada_valuta")
 
   kategorijaId Int                @map("kategorija_id")
-  kategorija   KategorijaLokacije @relation(fields: [kategorijaId], references: [kategorijaId])
+  kategorija   KategorijaLokacije @relation(fields: [kategorijaId], references: [kategorijaId], onDelete: Restrict, onUpdate: Cascade)
 
   dekoracijaId Int?        @map("dekoracija_id")
-  dekoracija   Dekoracija? @relation(fields: [dekoracijaId], references: [dekoracijaId])
+  dekoracija   Dekoracija? @relation(fields: [dekoracijaId], references: [dekoracijaId], onDelete: SetNull, onUpdate: SetNull)
 
   korisnikPostignuca KorisnikPostignuce[]
 
@@ -217,10 +217,10 @@ model KorisnikPostignuce {
   datumOtkljucavanja   DateTime @default(now()) @map("datum_otkljucavanja")
 
   postignuceId Int        @map("postignuce_id")
-  postignuce   Postignuce @relation(fields: [postignuceId], references: [postignuceId])
+  postignuce   Postignuce @relation(fields: [postignuceId], references: [postignuceId], onDelete: Cascade, onUpdate: Cascade)
 
   korisnikId Int      @map("korisnik_id")
-  korisnik   Korisnik @relation(fields: [korisnikId], references: [korisnikId])
+  korisnik   Korisnik @relation(fields: [korisnikId], references: [korisnikId], onDelete: Cascade, onUpdate: Cascade)
 
   @@unique([korisnikId, postignuceId])
   @@map("korisnik_postignuce")
@@ -233,10 +233,10 @@ model PovratnaInformacija {
   datum                 DateTime @default(now())
 
   korisnikId Int      @map("korisnik_id")
-  korisnik   Korisnik @relation(fields: [korisnikId], references: [korisnikId])
+  korisnik   Korisnik @relation(fields: [korisnikId], references: [korisnikId], onDelete: Cascade, onUpdate: Cascade)
 
   lokacijaId Int      @map("lokacija_id")
-  lokacija   Lokacija @relation(fields: [lokacijaId], references: [lokacijaId])
+  lokacija   Lokacija @relation(fields: [lokacijaId], references: [lokacijaId], onDelete: Cascade, onUpdate: Cascade)
 
   @@map("povratna_informacija")
 }
