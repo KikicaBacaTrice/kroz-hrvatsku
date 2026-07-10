@@ -8,6 +8,8 @@ import {
   Patch,
   Post,
   Query,
+  Req,
+  UseGuards,
 } from '@nestjs/common';
 import { LokacijeService } from './lokacije.service';
 import { AzurirajLokacijuDto } from './dto/azuriraj-lokacije.dto';
@@ -15,6 +17,7 @@ import { DodajLokacijaDto } from './dto/dodaj-lokacije.dto';
 import { FiltrirajLokacijeDto } from './dto/filtriraj-lokacije.dto';
 import { DodajSlikuDto } from './dto/dodaj-sliku.dto';
 import { AzurirajSlikuLokacijeDto } from './dto/azuriraj-sliku-lokacije.dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('lokacije')
 export class LokacijeController {
@@ -35,6 +38,24 @@ export class LokacijeController {
     return this.lokacijeServis.dohvatiSlikeZaLokaciju(id);
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Get('ja/rijesene')
+  dohvatiRijeseneLokacija(@Req() req: any) {
+    return this.lokacijeServis.dohvatiRijeseneLokacije(req.user.userId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('ja/rijesene/:rijesenaLokacijaId')
+  dohvatiRijesenuLokaciju(
+    @Param('rijesenaLokacijaId', ParseIntPipe) rijesenaLokacijaId: number,
+    @Req() req: any,
+  ) {
+    return this.lokacijeServis.dohvatiRijesenuLokaciju(
+      rijesenaLokacijaId,
+      req.user.userId,
+    );
+  }
+
   @Post()
   dodajLokaciju(@Body() dto: DodajLokacijaDto) {
     return this.lokacijeServis.dodajLokaciju(dto);
@@ -48,12 +69,29 @@ export class LokacijeController {
     return this.lokacijeServis.dodajSlikuZaLokaciju(id, dto);
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Post(':lokacijaId/rijesi')
+  zabiljesiRijesenuLokaciju(
+    @Param('lokacijaId', ParseIntPipe) lokacijaId: number,
+    @Req() req: any,
+  ) {
+    return this.lokacijeServis.zabiljeziRijesenuLokaciju(
+      lokacijaId,
+      req.user.userId,
+    );
+  }
+
   @Patch(':id')
   azurirajLokaciju(
     @Param('id', ParseIntPipe) id: number,
     @Body() dto: AzurirajLokacijuDto,
   ) {
     return this.lokacijeServis.azurirajLokaciju(id, dto);
+  }
+
+  @Patch(':id/popularnost')
+  izmijeniPopularnostLokacija(@Param('id', ParseIntPipe) id: number) {
+    return this.lokacijeServis.izmijeniPopularnostLokacija(id);
   }
 
   @Patch(':id/slike/:slikaId')
