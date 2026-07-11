@@ -8,9 +8,10 @@ import { AuthModule } from './auth/auth.module';
 import { LokacijeModule } from './lokacije/lokacije.module';
 import { KategorijeModule } from './kategorije/kategorije.module';
 import { NagradeModule } from './nagrade/nagrade.module';
+import { PostignucaModule } from './postignuca/postignuca.module';
 
 @Module({
-  imports: [PrismaModule, KorisniciModule, ProfilModule, AuthModule, LokacijeModule, KategorijeModule, NagradeModule],
+  imports: [PrismaModule, KorisniciModule, ProfilModule, AuthModule, LokacijeModule, KategorijeModule, NagradeModule, PostignucaModule],
   controllers: [AppController],
   providers: [AppService],
 })
