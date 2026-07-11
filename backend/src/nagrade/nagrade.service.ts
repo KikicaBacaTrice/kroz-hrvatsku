@@ -1,9 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { DekoracijeService } from 'src/dekoracije/dekoracije.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class NagradeService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly dekoracijeServis: DekoracijeService,
+  ) {}
 
   async dohvatiMojeNagrade(korisnikId: number) {
     const profil = await this.prisma.profil.findUnique({
@@ -134,30 +138,19 @@ export class NagradeService {
         },
       });
 
-      if (postignuce.dekoracijaId) {
-        const vecImaDekoraciju =
-          await this.prisma.korisnikDekoracija.findUnique({
-            where: {
-              korisnikId_dekoracijaId: {
-                korisnikId,
-                dekoracijaId: postignuce.dekoracijaId,
-              },
-            },
-          });
-        if (!vecImaDekoraciju) {
-          await this.prisma.korisnikDekoracija.create({
-            data: {
-              korisnikId,
-              dekoracijaId: postignuce.dekoracijaId,
-            },
-          });
+      if (postignuce.nagradaXp > 0 || postignuce.nagradaValuta > 0) {
+        await this.dodijeliNagradu(
+          korisnikId,
+          postignuce.nagradaXp,
+          postignuce.nagradaValuta,
+        );
+      }
 
-          await this.dodijeliNagradu(
-            korisnikId,
-            postignuce.nagradaXp,
-            postignuce.nagradaValuta,
-          );
-        }
+      if (postignuce.dekoracijaId) {
+        await this.dekoracijeServis.dodijeliDekoracijuKorisniku(
+          korisnikId,
+          postignuce.dekoracijaId,
+        );
       }
     }
   }
