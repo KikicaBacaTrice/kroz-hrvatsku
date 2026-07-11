@@ -82,6 +82,7 @@ model Lokacija {
   geoDuzina      Decimal  @map("geo_duzina") @db.Decimal(9, 6)
   nagradaXp      Int      @default(0) @map("nagrada_xp")
   nagradaValuta  Int      @default(0) @map("nagrada_valuta")
+  jePopularna    Boolean  @default(false) @map("je_popularna")
 
   dodaoKorisnikId Int      @map("dodao_korisnik_id")
   dodaoKorisnik   Korisnik @relation(fields: [dodaoKorisnikId], references: [korisnikId], onDelete: Restrict, onUpdate: Cascade)

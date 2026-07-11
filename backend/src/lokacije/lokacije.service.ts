@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { FiltrirajLokacijeDto } from './dto/filtriraj-lokacije.dto';
 import { DodajLokacijaDto } from './dto/dodaj-lokacije.dto';
@@ -85,6 +89,58 @@ export class LokacijeService {
     });
   }
 
+  async dohvatiRijeseneLokacije(korisnikId: number) {
+    return this.prisma.rijesenaLokacija.findMany({
+      where: { korisnikId },
+      select: {
+        rijesenaLokacijaId: true,
+        datumVrijemePosjeta: true,
+        brojOsvojeneValute: true,
+        brojOsvojenihXp: true,
+        lokacija: {
+          select: {
+            naziv: true,
+            slikeLokacije: {
+              where: { glavna: true },
+              select: {
+                slikaId: true,
+                putanjaSlike: true,
+                opisSlike: true,
+              },
+              take: 1,
+            },
+          },
+        },
+      },
+      orderBy: {
+        datumVrijemePosjeta: 'desc',
+      },
+    });
+  }
+
+  async dohvatiRijesenuLokaciju(
+    rijesenaLokacijaId: number,
+    korisnikId: number,
+  ) {
+    const rijesenaLokacija = await this.prisma.rijesenaLokacija.findFirst({
+      where: { rijesenaLokacijaId, korisnikId },
+      include: {
+        lokacija: {
+          include: {
+            kategorija: true,
+            slikeLokacije: true,
+          },
+        },
+        slikePosjeta: true,
+      },
+    });
+    if (!rijesenaLokacija) {
+      throw new NotFoundException('Riješena lokacija nije pronađena');
+    }
+
+    return rijesenaLokacija;
+  }
+
   async dodajLokaciju(dto: DodajLokacijaDto) {
     const novaLokacija = await this.prisma.lokacija.create({
       data: {
@@ -122,6 +178,54 @@ export class LokacijeService {
         opisSlike: dto.opisSlike,
         glavna: dto.glavna ?? false,
         lokacijaId: id,
+      },
+    });
+  }
+
+  async zabiljeziRijesenuLokaciju(lokacijaId: number, korisnikId: number) {
+    const lokacija = await this.prisma.lokacija.findUnique({
+      where: { lokacijaId },
+      select: {
+        lokacijaId: true,
+        nagradaValuta: true,
+        nagradaXp: true,
+        jePopularna: true,
+      },
+    });
+    if (!lokacija) {
+      throw new NotFoundException('Lokacija nije pronađena');
+    }
+
+    const vecRijesena = await this.prisma.rijesenaLokacija.findUnique({
+      where: {
+        korisnikId_lokacijaId: {
+          korisnikId,
+          lokacijaId,
+        },
+      },
+    });
+    if (vecRijesena) {
+      throw new ConflictException('Lokacija je već riješena');
+    }
+
+    return this.prisma.rijesenaLokacija.create({
+      data: {
+        korisnikId,
+        lokacijaId,
+        brojOsvojenihXp: lokacija.jePopularna
+          ? lokacija.nagradaXp * 2
+          : lokacija.nagradaXp,
+        brojOsvojeneValute: lokacija.jePopularna
+          ? lokacija.nagradaValuta * 2
+          : lokacija.nagradaValuta,
+      },
+      include: {
+        lokacija: {
+          include: {
+            kategorija: true,
+            slikeLokacije: true,
+          },
+        },
       },
     });
   }
@@ -170,6 +274,19 @@ export class LokacijeService {
     return this.prisma.slikaLokacije.update({
       where: { slikaId },
       data: dto,
+    });
+  }
+
+  async izmijeniPopularnostLokacija(id: number) {
+    const lokacija = await this.provjeriPostojiLiLokacija(id);
+
+    return this.prisma.lokacija.update({
+      where: {
+        lokacijaId: id,
+      },
+      data: {
+        jePopularna: !lokacija.jePopularna,
+      },
     });
   }
 
