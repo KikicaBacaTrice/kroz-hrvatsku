@@ -9,10 +9,14 @@ import { DodajLokacijaDto } from './dto/dodaj-lokacije.dto';
 import { AzurirajLokacijuDto } from './dto/azuriraj-lokacije.dto';
 import { DodajSlikuDto } from './dto/dodaj-sliku.dto';
 import { AzurirajSlikuLokacijeDto } from './dto/azuriraj-sliku-lokacije.dto';
+import { NagradeService } from 'src/nagrade/nagrade.service';
 
 @Injectable()
 export class LokacijeService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly nagradeServis: NagradeService,
+  ) {}
 
   async dohvatiSve(filter?: FiltrirajLokacijeDto) {
     return this.prisma.lokacija.findMany({
@@ -187,6 +191,7 @@ export class LokacijeService {
       where: { lokacijaId },
       select: {
         lokacijaId: true,
+        kategorijaId: true,
         nagradaValuta: true,
         nagradaXp: true,
         jePopularna: true,
@@ -208,16 +213,19 @@ export class LokacijeService {
       throw new ConflictException('Lokacija je već riješena');
     }
 
-    return this.prisma.rijesenaLokacija.create({
+    const xpDodati = lokacija.jePopularna
+      ? lokacija.nagradaXp * 2
+      : lokacija.nagradaXp;
+    const valutaDodati = lokacija.jePopularna
+      ? lokacija.nagradaValuta * 2
+      : lokacija.nagradaValuta;
+
+    const rijesenaLokacija = await this.prisma.rijesenaLokacija.create({
       data: {
         korisnikId,
         lokacijaId,
-        brojOsvojenihXp: lokacija.jePopularna
-          ? lokacija.nagradaXp * 2
-          : lokacija.nagradaXp,
-        brojOsvojeneValute: lokacija.jePopularna
-          ? lokacija.nagradaValuta * 2
-          : lokacija.nagradaValuta,
+        brojOsvojenihXp: xpDodati,
+        brojOsvojeneValute: valutaDodati,
       },
       include: {
         lokacija: {
@@ -228,6 +236,18 @@ export class LokacijeService {
         },
       },
     });
+
+    await this.nagradeServis.dodijeliNagradu(
+      korisnikId,
+      xpDodati,
+      valutaDodati,
+    );
+    await this.nagradeServis.provjeriINapraviPostignuce(
+      korisnikId,
+      lokacija.kategorijaId,
+    );
+
+    return rijesenaLokacija;
   }
 
   async azurirajLokaciju(id: number, dto: AzurirajLokacijuDto) {
