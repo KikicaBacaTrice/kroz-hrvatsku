@@ -15,6 +15,8 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { DodajDekoracijuDto } from './dto/dodaj-dekoraciju.dto';
 import { AzurirajDekoracijuDto } from './dto/azuriraj-dekoraciju.dto';
 import { AktivirajDekoracijuDto } from './dto/aktiviraj-dekoraciju.dto';
+import { DodajTipDekoracijeDto } from './dto/dodaj-tip-dekoracije.dto';
+import { AzurirajTipDekoracijeDto } from './dto/azuriraj-tip-dekoracije.dto';
 
 @Controller('dekoracije')
 export class DekoracijeController {
@@ -74,5 +76,33 @@ export class DekoracijeController {
       req.user.userId,
       dekoracijaId,
     );
+  }
+
+  @Get('tipovi')
+  dohvatiTipoveDekoracije() {
+    return this.dekoracijeServis.dohvatiTipDekoracije();
+  }
+
+  @Get('tipovi/:id/dekoracije')
+  dohvatiDekoracijeZaTip(@Param('id', ParseIntPipe) id: number) {
+    return this.dekoracijeServis.dohvatiDekoracijeZaTip(id);
+  }
+
+  @Post('tipovi')
+  dodajTipDekoracije(@Body() dto: DodajTipDekoracijeDto) {
+    return this.dekoracijeServis.dodajTipDekoracije(dto);
+  }
+
+  @Patch('tipovi/:id')
+  azurirajTipDekoracije(
+    @Param('id', ParseIntPipe) tipId: number,
+    @Body() dto: AzurirajTipDekoracijeDto,
+  ) {
+    return this.dekoracijeServis.azurirajTipDekoracije(tipId, dto);
+  }
+
+  @Delete('tipovi/:id')
+  obrisiTipDekoracije(@Param('id', ParseIntPipe) id: number) {
+    return this.dekoracijeServis.obrisiTipDekoracije(id);
   }
 }
