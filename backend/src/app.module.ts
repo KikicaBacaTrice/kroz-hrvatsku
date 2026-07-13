@@ -7,9 +7,12 @@ import { ProfilModule } from './profil/profil.module';
 import { AuthModule } from './auth/auth.module';
 import { LokacijeModule } from './lokacije/lokacije.module';
 import { KategorijeModule } from './kategorije/kategorije.module';
+import { NagradeModule } from './nagrade/nagrade.module';
+import { PostignucaModule } from './postignuca/postignuca.module';
+import { DekoracijeModule } from './dekoracije/dekoracije.module';
 
 @Module({
-  imports: [PrismaModule, KorisniciModule, ProfilModule, AuthModule, LokacijeModule, KategorijeModule],
+  imports: [PrismaModule, KorisniciModule, ProfilModule, AuthModule, LokacijeModule, KategorijeModule, NagradeModule, PostignucaModule, DekoracijeModule],
   controllers: [AppController],
   providers: [AppService],
 })
