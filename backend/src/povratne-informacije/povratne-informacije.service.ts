@@ -33,7 +33,7 @@ export class PovratneInformacijeService {
   ) {
     await this.provjeriPostojiLiLokacija(lokacijaId);
 
-    const rijesenaLokacija = this.prisma.rijesenaLokacija.findUnique({
+    const rijesenaLokacija = await this.prisma.rijesenaLokacija.findUnique({
       where: {
         korisnikId_lokacijaId: {
           korisnikId,
@@ -47,6 +47,12 @@ export class PovratneInformacijeService {
       );
     }
 
+    const brojPostojecihKomentara = await this.prisma.povratnaInformacija.count(
+      {
+        where: { korisnikId, lokacijaId },
+      },
+    );
+
     const povratnaInformacija = await this.prisma.povratnaInformacija.create({
       data: {
         tekst: dto.tekst,
@@ -56,7 +62,11 @@ export class PovratneInformacijeService {
       },
     });
 
-    await this.nagradeServis.dodijeliNagradu(korisnikId, 10, 50);
+    if (brojPostojecihKomentara === 0) {
+      await this.nagradeServis.dodijeliNagradu(korisnikId, 10, 50);
+    }
+
+    await this.izracunajNovuProsjecnuOcjenuIBrojGlasova(lokacijaId);
 
     return povratnaInformacija;
   }
@@ -76,10 +86,14 @@ export class PovratneInformacijeService {
       throw new NotFoundException('Povratna informacije ne postoji');
     }
 
-    return await this.prisma.povratnaInformacija.update({
-      where: { povratnaInformacijaId, korisnikId },
+    const azurirana = await this.prisma.povratnaInformacija.update({
+      where: { povratnaInformacijaId },
       data: dto,
     });
+
+    await this.izracunajNovuProsjecnuOcjenuIBrojGlasova(lokacijaId);
+
+    return azurirana;
   }
 
   async obrisiPovratnuInformaciju(
@@ -96,9 +110,13 @@ export class PovratneInformacijeService {
       throw new NotFoundException('Povratna informacije ne postoji');
     }
 
-    return await this.prisma.povratnaInformacija.delete({
-      where: { povratnaInformacijaId, korisnikId },
+    const obrisna = await this.prisma.povratnaInformacija.delete({
+      where: { povratnaInformacijaId },
     });
+
+    await this.izracunajNovuProsjecnuOcjenuIBrojGlasova(lokacijaId);
+
+    return obrisna;
   }
 
   async provjeriPostojiLiLokacija(id: number) {
@@ -110,5 +128,25 @@ export class PovratneInformacijeService {
     }
 
     return lokacija;
+  }
+
+  async izracunajNovuProsjecnuOcjenuIBrojGlasova(lokacijaId: number) {
+    const zbroj = await this.prisma.povratnaInformacija.aggregate({
+      where: { lokacijaId },
+      _avg: {
+        ocjena: true,
+      },
+      _count: {
+        ocjena: true,
+      },
+    });
+
+    return this.prisma.lokacija.update({
+      where: { lokacijaId },
+      data: {
+        prosjecnaOcjena: zbroj._avg.ocjena ?? 0,
+        brojOcjena: zbroj._count.ocjena,
+      },
+    });
   }
 }
