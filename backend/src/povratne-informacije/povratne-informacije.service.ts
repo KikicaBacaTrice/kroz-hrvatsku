@@ -33,25 +33,7 @@ export class PovratneInformacijeService {
   ) {
     await this.provjeriPostojiLiLokacija(lokacijaId);
 
-    const rijesenaLokacija = await this.prisma.rijesenaLokacija.findUnique({
-      where: {
-        korisnikId_lokacijaId: {
-          korisnikId,
-          lokacijaId,
-        },
-      },
-    });
-    if (!rijesenaLokacija) {
-      throw new ForbiddenException(
-        'Povratnu informaciju može ostaviti samo korisnik koji je riješio/bio na lokaciji',
-      );
-    }
-
-    const brojPostojecihKomentara = await this.prisma.povratnaInformacija.count(
-      {
-        where: { korisnikId, lokacijaId },
-      },
-    );
+    await this.provjeriDaKorisnikMozeKomentirati(korisnikId, lokacijaId);
 
     const povratnaInformacija = await this.prisma.povratnaInformacija.create({
       data: {
@@ -62,9 +44,7 @@ export class PovratneInformacijeService {
       },
     });
 
-    if (brojPostojecihKomentara === 0) {
-      await this.nagradeServis.dodijeliNagradu(korisnikId, 10, 50);
-    }
+    await this.dajNagraduAkoJePrviKomentarZaLokaciju(korisnikId, lokacijaId);
 
     await this.izracunajNovuProsjecnuOcjenuIBrojGlasova(lokacijaId);
 
@@ -148,5 +128,40 @@ export class PovratneInformacijeService {
         brojOcjena: zbroj._count.ocjena,
       },
     });
+  }
+
+  async provjeriDaKorisnikMozeKomentirati(
+    korisnikId: number,
+    lokacijaId: number,
+  ) {
+    const jeLiRijesena = await this.prisma.rijesenaLokacija.findUnique({
+      where: {
+        korisnikId_lokacijaId: {
+          korisnikId,
+          lokacijaId,
+        },
+      },
+    });
+
+    if (!jeLiRijesena) {
+      throw new ForbiddenException(
+        'Povratnu informaciju može ostaviti samo korisnik koji je riješio/bio na lokaciji',
+      );
+    }
+  }
+
+  async dajNagraduAkoJePrviKomentarZaLokaciju(
+    korisnikId: number,
+    lokacijaId: number,
+  ) {
+    const brojPostojecihKomentara = await this.prisma.povratnaInformacija.count(
+      {
+        where: { korisnikId, lokacijaId },
+      },
+    );
+
+    if (brojPostojecihKomentara === 0) {
+      await this.nagradeServis.dodijeliNagradu(korisnikId, 10, 50);
+    }
   }
 }

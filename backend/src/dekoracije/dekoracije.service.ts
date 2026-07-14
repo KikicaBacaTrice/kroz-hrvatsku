@@ -84,57 +84,27 @@ export class DekoracijeService {
       orderBy: [{ aktivna: 'desc' }, { datumDobivanja: 'desc' }],
     });
   }
-
   async aktivirajDekoraciju(
     korisnikId: number,
     dekoracijaId: number,
     pozicijaPrikaza: number,
   ) {
-    const korisnikDekoracija = await this.prisma.korisnikDekoracija.findUnique({
-      where: {
-        korisnikId_dekoracijaId: {
-          korisnikId,
-          dekoracijaId,
-        },
-      },
-      include: {
-        dekoracija: {
-          include: {
-            tipDekoracije: {
-              select: {
-                tipDekoracijeId: true,
-                maxAktivnih: true,
-              },
-            },
-          },
-        },
-      },
-    });
-    if (!korisnikDekoracija) {
-      throw new NotFoundException('Korisnik nema ovu dekoraciju');
-    }
+    const korisnikDekoracija =
+      await this.dohvatiKorisnikovuDekoracijuZaAktivaciju(
+        korisnikId,
+        dekoracijaId,
+      );
 
     const tipDekoracijeId = korisnikDekoracija.dekoracija.tipDekoracijeId;
     const maxAktivnih = korisnikDekoracija.dekoracija.tipDekoracije.maxAktivnih;
 
-    if (pozicijaPrikaza > maxAktivnih) {
-      throw new ConflictException('Neispravna pozicija za ovaj tip dekoracije');
-    }
+    this.provjeriValjanostPozicijePrikaza(pozicijaPrikaza, maxAktivnih);
 
-    await this.prisma.korisnikDekoracija.updateMany({
-      where: {
-        korisnikId,
-        aktivna: true,
-        pozicijaPrikaza,
-        dekoracija: {
-          tipDekoracijeId,
-        },
-      },
-      data: {
-        aktivna: false,
-        pozicijaPrikaza: null,
-      },
-    });
+    await this.deaktivirajAktivnuDekoracijuNaPoziciji(
+      korisnikId,
+      pozicijaPrikaza,
+      tipDekoracijeId,
+    );
 
     return this.prisma.korisnikDekoracija.update({
       where: {
@@ -277,5 +247,67 @@ export class DekoracijeService {
     }
 
     return tipDekoracije;
+  }
+
+  async dohvatiKorisnikovuDekoracijuZaAktivaciju(
+    korisnikId: number,
+    dekoracijaId: number,
+  ) {
+    const imaLiKorisnikDekoraciju =
+      await this.prisma.korisnikDekoracija.findUnique({
+        where: {
+          korisnikId_dekoracijaId: {
+            korisnikId,
+            dekoracijaId,
+          },
+        },
+        include: {
+          dekoracija: {
+            include: {
+              tipDekoracije: {
+                select: {
+                  tipDekoracijeId: true,
+                  maxAktivnih: true,
+                },
+              },
+            },
+          },
+        },
+      });
+    if (!imaLiKorisnikDekoraciju) {
+      throw new NotFoundException('Korisnik nema ovu dekoraciju');
+    }
+
+    return imaLiKorisnikDekoraciju;
+  }
+
+  provjeriValjanostPozicijePrikaza(
+    pozicijaPrikaza: number,
+    maxAktivnih: number,
+  ) {
+    if (pozicijaPrikaza > maxAktivnih) {
+      throw new ConflictException('Neispravna pozicija za ovaj tip dekoracije');
+    }
+  }
+
+  async deaktivirajAktivnuDekoracijuNaPoziciji(
+    korisnikId: number,
+    pozicijaPrikaza: number,
+    tipDekoracijeId: number,
+  ) {
+    this.prisma.korisnikDekoracija.updateMany({
+      where: {
+        korisnikId,
+        aktivna: true,
+        pozicijaPrikaza,
+        dekoracija: {
+          tipDekoracijeId,
+        },
+      },
+      data: {
+        aktivna: false,
+        pozicijaPrikaza: null,
+      },
+    });
   }
 }
