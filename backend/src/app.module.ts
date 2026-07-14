@@ -10,9 +10,10 @@ import { KategorijeModule } from './kategorije/kategorije.module';
 import { NagradeModule } from './nagrade/nagrade.module';
 import { PostignucaModule } from './postignuca/postignuca.module';
 import { DekoracijeModule } from './dekoracije/dekoracije.module';
+import { PovratneInformacijeModule } from './povratne-informacije/povratne-informacije.module';
 
 @Module({
-  imports: [PrismaModule, KorisniciModule, ProfilModule, AuthModule, LokacijeModule, KategorijeModule, NagradeModule, PostignucaModule, DekoracijeModule],
+  imports: [PrismaModule, KorisniciModule, ProfilModule, AuthModule, LokacijeModule, KategorijeModule, NagradeModule, PostignucaModule, DekoracijeModule, PovratneInformacijeModule],
   controllers: [AppController],
   providers: [AppService],
 })

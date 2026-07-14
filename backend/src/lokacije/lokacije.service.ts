@@ -10,7 +10,15 @@ import { AzurirajLokacijuDto } from './dto/azuriraj-lokacije.dto';
 import { DodajSlikuDto } from './dto/dodaj-sliku.dto';
 import { AzurirajSlikuLokacijeDto } from './dto/azuriraj-sliku-lokacije.dto';
 import { NagradeService } from 'src/nagrade/nagrade.service';
+import { Prisma } from '@prisma/client';
 
+type LokacijaZaRjesavanje = {
+  lokacijaId: number;
+  kategorijaId: number;
+  nagradaXp: number;
+  nagradaValuta: number;
+  jePopularna: boolean;
+};
 @Injectable()
 export class LokacijeService {
   constructor(
@@ -18,46 +26,54 @@ export class LokacijeService {
     private readonly nagradeServis: NagradeService,
   ) {}
 
-  async dohvatiSve(filter?: FiltrirajLokacijeDto) {
-    return this.prisma.lokacija.findMany({
-      where: {
-        ...(filter?.grad && {
-          grad: {
-            contains: filter.grad,
+  kreirajFilterLokacija(
+    filter?: FiltrirajLokacijeDto,
+  ): Prisma.LokacijaWhereInput {
+    return {
+      ...(filter?.grad && {
+        grad: {
+          contains: filter.grad,
+          mode: 'insensitive',
+        },
+      }),
+      ...(filter?.zupanija && {
+        zupanija: {
+          contains: filter.zupanija,
+          mode: 'insensitive',
+        },
+      }),
+      ...(filter?.kategorija && {
+        kategorija: {
+          naziv: {
+            equals: filter.kategorija,
             mode: 'insensitive',
           },
-        }),
-        ...(filter?.zupanija && {
-          zupanija: {
-            contains: filter.zupanija,
-            mode: 'insensitive',
-          },
-        }),
-        ...(filter?.kategorija && {
-          kategorija: {
+        },
+      }),
+      ...(filter?.pretraziNaziv && {
+        OR: [
+          {
             naziv: {
-              equals: filter.kategorija,
+              contains: filter.pretraziNaziv,
               mode: 'insensitive',
             },
           },
-        }),
-        ...(filter?.pretraziNaziv && {
-          OR: [
-            {
-              naziv: {
-                contains: filter.pretraziNaziv,
-                mode: 'insensitive',
-              },
+          {
+            opis: {
+              contains: filter.pretraziNaziv,
+              mode: 'insensitive',
             },
-            {
-              opis: {
-                contains: filter.pretraziNaziv,
-                mode: 'insensitive',
-              },
-            },
-          ],
-        }),
-      },
+          },
+        ],
+      }),
+    };
+  }
+
+  async dohvatiSve(filter?: FiltrirajLokacijeDto) {
+    const prismaWhereFilter = this.kreirajFilterLokacija(filter);
+
+    return this.prisma.lokacija.findMany({
+      where: prismaWhereFilter,
       include: {
         kategorija: true,
         slikeLokacije: true,
@@ -170,10 +186,7 @@ export class LokacijeService {
     await this.provjeriPostojiLiLokacija(id);
 
     if (dto.glavna) {
-      await this.prisma.slikaLokacije.updateMany({
-        where: { lokacijaId: id, glavna: true },
-        data: { glavna: false },
-      });
+      await this.deaktivirajTrenutnuGlavnuSliku(id);
     }
 
     return this.prisma.slikaLokacije.create({
@@ -187,55 +200,19 @@ export class LokacijeService {
   }
 
   async zabiljeziRijesenuLokaciju(lokacijaId: number, korisnikId: number) {
-    const lokacija = await this.prisma.lokacija.findUnique({
-      where: { lokacijaId },
-      select: {
-        lokacijaId: true,
-        kategorijaId: true,
-        nagradaValuta: true,
-        nagradaXp: true,
-        jePopularna: true,
-      },
-    });
-    if (!lokacija) {
-      throw new NotFoundException('Lokacija nije pronađena');
-    }
+    const lokacija = await this.dohvatiLokacijuZaRjesavanje(lokacijaId);
 
-    const vecRijesena = await this.prisma.rijesenaLokacija.findUnique({
-      where: {
-        korisnikId_lokacijaId: {
-          korisnikId,
-          lokacijaId,
-        },
-      },
-    });
-    if (vecRijesena) {
-      throw new ConflictException('Lokacija je već riješena');
-    }
+    await this.provjeriDaNijeVecRijesena(lokacijaId, korisnikId);
 
-    const xpDodati = lokacija.jePopularna
-      ? lokacija.nagradaXp * 2
-      : lokacija.nagradaXp;
-    const valutaDodati = lokacija.jePopularna
-      ? lokacija.nagradaValuta * 2
-      : lokacija.nagradaValuta;
+    const { xpDodati, valutaDodati } =
+      this.izracunajNagraduZaLokaciju(lokacija);
 
-    const rijesenaLokacija = await this.prisma.rijesenaLokacija.create({
-      data: {
-        korisnikId,
-        lokacijaId,
-        brojOsvojenihXp: xpDodati,
-        brojOsvojeneValute: valutaDodati,
-      },
-      include: {
-        lokacija: {
-          include: {
-            kategorija: true,
-            slikeLokacije: true,
-          },
-        },
-      },
-    });
+    const rijesenaLokacija = await this.spremiRijesenuLokaciju(
+      lokacijaId,
+      korisnikId,
+      xpDodati,
+      valutaDodati,
+    );
 
     await this.nagradeServis.dodijeliNagradu(
       korisnikId,
@@ -345,5 +322,78 @@ export class LokacijeService {
       throw new NotFoundException('Lokacija nije pronađena');
     }
     return lokacija;
+  }
+
+  async dohvatiLokacijuZaRjesavanje(lokacijaId: number) {
+    const lokacija = await this.prisma.lokacija.findUnique({
+      where: { lokacijaId },
+      select: {
+        lokacijaId: true,
+        kategorijaId: true,
+        nagradaValuta: true,
+        nagradaXp: true,
+        jePopularna: true,
+      },
+    });
+    if (!lokacija) {
+      throw new NotFoundException('Lokacija nije pronađena');
+    }
+    return lokacija;
+  }
+
+  async provjeriDaNijeVecRijesena(lokacijaId: number, korisnikId: number) {
+    const vecRijesena = await this.prisma.rijesenaLokacija.findUnique({
+      where: {
+        korisnikId_lokacijaId: {
+          korisnikId,
+          lokacijaId,
+        },
+      },
+    });
+    if (vecRijesena) {
+      throw new ConflictException('Lokacija je već riješena');
+    }
+  }
+
+  async spremiRijesenuLokaciju(
+    lokacijaId: number,
+    korisnikId: number,
+    xpDodati: number,
+    valutaDodati: number,
+  ) {
+    return this.prisma.rijesenaLokacija.create({
+      data: {
+        korisnikId,
+        lokacijaId,
+        brojOsvojenihXp: xpDodati,
+        brojOsvojeneValute: valutaDodati,
+      },
+      include: {
+        lokacija: {
+          include: {
+            kategorija: true,
+            slikeLokacije: true,
+          },
+        },
+      },
+    });
+  }
+
+  izracunajNagraduZaLokaciju(lokacija: LokacijaZaRjesavanje) {
+    const xpDodati = lokacija.jePopularna
+      ? lokacija.nagradaXp * 2
+      : lokacija.nagradaXp;
+    const valutaDodati = lokacija.jePopularna
+      ? lokacija.nagradaValuta * 2
+      : lokacija.nagradaValuta;
+
+    return { xpDodati, valutaDodati };
+  }
+
+  async deaktivirajTrenutnuGlavnuSliku(lokacijaId: number) {
+    await this.prisma.slikaLokacije.updateMany({
+      where: { lokacijaId, glavna: true },
+      data: { glavna: false },
+    });
   }
 }

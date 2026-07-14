@@ -99,7 +99,50 @@ export class NagradeService {
   }
 
   async provjeriINapraviPostignuce(korisnikId: number, kategorijaId: number) {
-    const brojRijesenih = await this.prisma.rijesenaLokacija.count({
+    const brojRijesenih = await this.prebrojuRijeseneLokacijeZaKategoriju(
+      korisnikId,
+      kategorijaId,
+    );
+
+    const postignuca = await this.dohvatiPostignucaZaOtkljucati(
+      kategorijaId,
+      brojRijesenih,
+    );
+
+    for (const postignuce of postignuca) {
+      await this.obradiOtkljucavanjePostignuca(korisnikId, postignuce);
+    }
+  }
+
+  async obradiOtkljucavanjePostignuca(korisnikId: number, postignuce: any) {
+    const vecOtkljucano = await this.jeLiPostignuceVecOtkljucano(
+      korisnikId,
+      postignuce.postignuceId,
+    );
+
+    if (vecOtkljucano) {
+      return;
+    }
+
+    await this.otkljucajPostignuce(korisnikId, postignuce.postignuceId);
+
+    await this.dodijeliNagradeZaPostignuce(
+      korisnikId,
+      postignuce.nagradaXp,
+      postignuce.nagradaValuta,
+    );
+
+    await this.dodijeliDostignuceZaPostignuce(
+      korisnikId,
+      postignuce.dekoracijaId,
+    );
+  }
+
+  async prebrojuRijeseneLokacijeZaKategoriju(
+    korisnikId: number,
+    kategorijaId: number,
+  ) {
+    return this.prisma.rijesenaLokacija.count({
       where: {
         korisnikId,
         lokacija: {
@@ -107,51 +150,68 @@ export class NagradeService {
         },
       },
     });
+  }
 
-    const postignuca = await this.prisma.postignuce.findMany({
+  async dohvatiPostignucaZaOtkljucati(
+    kategorijaId: number,
+    brojRijesenih: number,
+  ) {
+    return this.prisma.postignuce.findMany({
       where: {
         kategorijaId,
         brojPotrebnihLokacija: {
           lte: brojRijesenih,
         },
       },
+      orderBy: {
+        brojPotrebnihLokacija: 'asc',
+      },
+    });
+  }
+
+  async jeLiPostignuceVecOtkljucano(korisnikId: number, postignuceId: number) {
+    const zapis = await this.prisma.korisnikPostignuce.findUnique({
+      where: {
+        korisnikId_postignuceId: {
+          korisnikId,
+          postignuceId: postignuceId,
+        },
+      },
     });
 
-    for (const postignuce of postignuca) {
-      const vecOtkljucano = await this.prisma.korisnikPostignuce.findUnique({
-        where: {
-          korisnikId_postignuceId: {
-            korisnikId,
-            postignuceId: postignuce.postignuceId,
-          },
-        },
-      });
+    return !!zapis;
+  }
 
-      if (vecOtkljucano) {
-        continue;
-      }
+  async otkljucajPostignuce(korisnikId: number, postignuceId: number) {
+    await this.prisma.korisnikPostignuce.create({
+      data: {
+        korisnikId,
+        postignuceId: postignuceId,
+      },
+    });
+  }
 
-      await this.prisma.korisnikPostignuce.create({
-        data: {
-          korisnikId,
-          postignuceId: postignuce.postignuceId,
-        },
-      });
-
-      if (postignuce.nagradaXp > 0 || postignuce.nagradaValuta > 0) {
-        await this.dodijeliNagradu(
-          korisnikId,
-          postignuce.nagradaXp,
-          postignuce.nagradaValuta,
-        );
-      }
-
-      if (postignuce.dekoracijaId) {
-        await this.dekoracijeServis.dodijeliDekoracijuKorisniku(
-          korisnikId,
-          postignuce.dekoracijaId,
-        );
-      }
+  async dodijeliNagradeZaPostignuce(
+    korisnikId: number,
+    nagradaXp: number,
+    nagradaValuta: number,
+  ) {
+    if (nagradaXp <= 0 && nagradaValuta <= 0) {
+      return;
     }
+    await this.dodijeliNagradu(korisnikId, nagradaXp, nagradaValuta);
+  }
+
+  async dodijeliDostignuceZaPostignuce(
+    korisnikId: number,
+    dekoracijaId: number | null,
+  ) {
+    if (!dekoracijaId) {
+      return;
+    }
+    await this.dekoracijeServis.dodijeliDekoracijuKorisniku(
+      korisnikId,
+      dekoracijaId,
+    );
   }
 }
