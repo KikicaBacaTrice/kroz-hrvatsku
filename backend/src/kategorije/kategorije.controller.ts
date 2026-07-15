@@ -7,10 +7,14 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { KategorijeService } from './kategorije.service';
 import { DodajKategorijuDto } from './dto/dodaj-kategoriju.dto';
 import { AzurirajKategorijuDto } from './dto/azuriraj-kategoriju.dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { UlogeGuard } from 'src/auth/uloge.guard';
+import { Uloge } from 'src/auth/uloge.decorator';
 
 @Controller('kategorije')
 export class KategorijeController {
@@ -26,11 +30,15 @@ export class KategorijeController {
     return this.kategorijeServis.dohvatiJednu(id);
   }
 
+  @UseGuards(JwtAuthGuard, UlogeGuard)
+  @Uloge(1)
   @Post()
   dodajKategoriju(@Body() dto: DodajKategorijuDto) {
     return this.kategorijeServis.dodajKategoriju(dto);
   }
 
+  @UseGuards(JwtAuthGuard, UlogeGuard)
+  @Uloge(1)
   @Patch(':id')
   azurirajKategoriju(
     @Param('id', ParseIntPipe) id: number,
@@ -39,6 +47,8 @@ export class KategorijeController {
     return this.kategorijeServis.azurirajKategoriju(id, dto);
   }
 
+  @UseGuards(JwtAuthGuard, UlogeGuard)
+  @Uloge(1)
   @Delete(':id')
   obrisiKategoriju(@Param('id', ParseIntPipe) id: number) {
     return this.kategorijeServis.obrisiKategoriju(id);

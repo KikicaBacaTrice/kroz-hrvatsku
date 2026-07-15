@@ -18,6 +18,8 @@ import { FiltrirajLokacijeDto } from './dto/filtriraj-lokacije.dto';
 import { DodajSlikuDto } from './dto/dodaj-sliku.dto';
 import { AzurirajSlikuLokacijeDto } from './dto/azuriraj-sliku-lokacije.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { UlogeGuard } from 'src/auth/uloge.guard';
+import { Uloge } from 'src/auth/uloge.decorator';
 
 @Controller('lokacije')
 export class LokacijeController {
@@ -56,11 +58,15 @@ export class LokacijeController {
     );
   }
 
+  @UseGuards(JwtAuthGuard, UlogeGuard)
+  @Uloge(1)
   @Post()
   dodajLokaciju(@Body() dto: DodajLokacijaDto) {
     return this.lokacijeServis.dodajLokaciju(dto);
   }
 
+  @UseGuards(JwtAuthGuard, UlogeGuard)
+  @Uloge(1)
   @Post(':id/slike')
   dodajSlikeZaLokaciju(
     @Param('id', ParseIntPipe) id: number,
@@ -81,6 +87,8 @@ export class LokacijeController {
     );
   }
 
+  @UseGuards(JwtAuthGuard, UlogeGuard)
+  @Uloge(1)
   @Patch(':id')
   azurirajLokaciju(
     @Param('id', ParseIntPipe) id: number,
@@ -89,11 +97,15 @@ export class LokacijeController {
     return this.lokacijeServis.azurirajLokaciju(id, dto);
   }
 
+  @UseGuards(JwtAuthGuard, UlogeGuard)
+  @Uloge(1)
   @Patch(':id/popularnost')
   izmijeniPopularnostLokacija(@Param('id', ParseIntPipe) id: number) {
     return this.lokacijeServis.izmijeniPopularnostLokacija(id);
   }
 
+  @UseGuards(JwtAuthGuard, UlogeGuard)
+  @Uloge(1)
   @Patch(':id/slike/:slikaId')
   azurirajPodatkeSlike(
     @Param('id', ParseIntPipe) lokacijaId: number,
@@ -107,11 +119,15 @@ export class LokacijeController {
     );
   }
 
+  @UseGuards(JwtAuthGuard, UlogeGuard)
+  @Uloge(1)
   @Delete(':id')
   obrisiLokaciju(@Param('id', ParseIntPipe) id: number) {
     return this.lokacijeServis.obrisi(id);
   }
 
+  @UseGuards(JwtAuthGuard, UlogeGuard)
+  @Uloge(1)
   @Delete(':id/slike/:slikaId')
   obrisiSlikuZaLokaciju(
     @Param('id', ParseIntPipe) lokacijaId: number,
