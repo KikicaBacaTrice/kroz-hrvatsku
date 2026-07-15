@@ -45,8 +45,8 @@ export class DekoracijeService {
       data: {
         naziv: dto.naziv,
         opis: dto.opis,
-        cijenaValuta: dto.cijenaVaulta,
-        slikaDekoracija: dto.slikaDekoracije,
+        cijenaValuta: dto.cijenaValuta,
+        slikaDekoracija: dto.slikaDekoracija,
         tipDekoracijeId: dto.tipDekoracijeId,
         nacinOtkljucavanjaId: dto.nacinOtkljucavanjaId,
       },
@@ -295,7 +295,7 @@ export class DekoracijeService {
     pozicijaPrikaza: number,
     tipDekoracijeId: number,
   ) {
-    this.prisma.korisnikDekoracija.updateMany({
+    await this.prisma.korisnikDekoracija.updateMany({
       where: {
         korisnikId,
         aktivna: true,

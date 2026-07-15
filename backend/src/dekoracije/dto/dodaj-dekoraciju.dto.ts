@@ -14,11 +14,11 @@ export class DodajDekoracijuDto {
   @Type(() => Number)
   @IsInt()
   @Min(0)
-  cijenaVaulta?: number;
+  cijenaValuta?: number;
 
   @IsString()
   @MaxLength(255)
-  slikaDekoracije!: string;
+  slikaDekoracija!: string;
 
   @Type(() => Number)
   @IsInt()
