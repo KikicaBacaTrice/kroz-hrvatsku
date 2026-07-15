@@ -10,6 +10,8 @@ import { RegistracijaDto } from './dto/registracija.dto';
 import bcrypt from 'bcryptjs';
 import { PrijavaDto } from './dto/prijava.dto';
 
+const KORISNIK_ULOGA_ID = 1;
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -37,7 +39,7 @@ export class AuthService {
         korisnickoIme: dto.korisnickoIme,
         email: dto.email,
         lozinkaHash,
-        ulogaId: dto.ulogaId,
+        ulogaId: KORISNIK_ULOGA_ID,
       },
       select: {
         korisnikId: true,

@@ -207,7 +207,7 @@ export class LokacijeService {
       },
     });
     if (!slika) {
-      throw new NotFoundException('SLika za ovu lokaciju nije pronađena');
+      throw new NotFoundException('Slika za ovu lokaciju nije pronađena');
     }
 
     if (dto.glavna) {

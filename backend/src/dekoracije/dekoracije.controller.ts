@@ -96,6 +96,15 @@ export class DekoracijeController {
     );
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Post('ja/kupi/:dekoracijaId')
+  kupiDekoraciju(
+    @Req() req: any,
+    @Param('dekoracijaId', ParseIntPipe) dekoracijaId: number,
+  ) {
+    return this.dekoracijeServis.kupiDekoraciju(req.user.userId, dekoracijaId);
+  }
+
   @UseGuards(JwtAuthGuard, UlogeGuard)
   @Uloge(1)
   @Post('tipovi')

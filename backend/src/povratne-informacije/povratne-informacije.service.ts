@@ -35,6 +35,9 @@ export class PovratneInformacijeService {
 
     await this.provjeriDaKorisnikMozeKomentirati(korisnikId, lokacijaId);
 
+    const jePrviKomentarZaLokaciju =
+      await this.jePrviKomentarKorisnikaZaLokaciju(korisnikId, lokacijaId);
+
     const povratnaInformacija = await this.prisma.povratnaInformacija.create({
       data: {
         tekst: dto.tekst,
@@ -44,7 +47,9 @@ export class PovratneInformacijeService {
       },
     });
 
-    await this.dajNagraduAkoJePrviKomentarZaLokaciju(korisnikId, lokacijaId);
+    if (jePrviKomentarZaLokaciju) {
+      await this.nagradeServis.dodijeliNagradu(korisnikId, 10, 50);
+    }
 
     await this.izracunajNovuProsjecnuOcjenuIBrojGlasova(lokacijaId);
 
@@ -150,7 +155,7 @@ export class PovratneInformacijeService {
     }
   }
 
-  async dajNagraduAkoJePrviKomentarZaLokaciju(
+  async jePrviKomentarKorisnikaZaLokaciju(
     korisnikId: number,
     lokacijaId: number,
   ) {
@@ -160,8 +165,6 @@ export class PovratneInformacijeService {
       },
     );
 
-    if (brojPostojecihKomentara === 0) {
-      await this.nagradeServis.dodijeliNagradu(korisnikId, 10, 50);
-    }
+    return brojPostojecihKomentara === 0;
   }
 }
