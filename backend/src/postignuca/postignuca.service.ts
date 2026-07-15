@@ -22,7 +22,7 @@ export class PostignucaService {
   }
 
   async dohvatiJedno(id: number) {
-    const postignuce = await this.prisma.postignuce.findMany({
+    const postignuce = await this.prisma.postignuce.findUnique({
       where: { postignuceId: id },
       include: {
         kategorija: true,

@@ -17,6 +17,8 @@ import { AzurirajDekoracijuDto } from './dto/azuriraj-dekoraciju.dto';
 import { AktivirajDekoracijuDto } from './dto/aktiviraj-dekoraciju.dto';
 import { DodajTipDekoracijeDto } from './dto/dodaj-tip-dekoracije.dto';
 import { AzurirajTipDekoracijeDto } from './dto/azuriraj-tip-dekoracije.dto';
+import { UlogeGuard } from 'src/auth/uloge.guard';
+import { Uloge } from 'src/auth/uloge.decorator';
 
 @Controller('dekoracije')
 export class DekoracijeController {
@@ -27,16 +29,36 @@ export class DekoracijeController {
     return this.dekoracijeServis.dohvatiSve();
   }
 
+  @Get('tipovi')
+  dohvatiTipoveDekoracije() {
+    return this.dekoracijeServis.dohvatiTipDekoracije();
+  }
+
+  @Get('tipovi/:id/dekoracije')
+  dohvatiDekoracijeZaTip(@Param('id', ParseIntPipe) id: number) {
+    return this.dekoracijeServis.dohvatiDekoracijeZaTip(id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('ja/moje')
+  dohvatiMojeDekoracije(@Req() req: any) {
+    return this.dekoracijeServis.dohvatiMojeDekoracije(req.user.userId);
+  }
+
   @Get(':id')
   dohvatiJednu(@Param('id', ParseIntPipe) id: number) {
     return this.dekoracijeServis.dohvatiJednu(id);
   }
 
+  @UseGuards(JwtAuthGuard, UlogeGuard)
+  @Uloge(1)
   @Post()
   dodajDekoraciju(@Body() dto: DodajDekoracijuDto) {
     return this.dekoracijeServis.dodajDekoraciju(dto);
   }
 
+  @UseGuards(JwtAuthGuard, UlogeGuard)
+  @Uloge(1)
   @Patch(':id')
   azurirajDekoraciju(
     @Param('id', ParseIntPipe) id: number,
@@ -45,15 +67,11 @@ export class DekoracijeController {
     return this.dekoracijeServis.azurirajDekoraciju(id, dto);
   }
 
+  @UseGuards(JwtAuthGuard, UlogeGuard)
+  @Uloge(1)
   @Delete(':id')
   obrisiDekoraciju(@Param('id', ParseIntPipe) id: number) {
     return this.dekoracijeServis.obrisiDekoraciju(id);
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Get('ja/moje')
-  dohvatiMojeDekoracije(@Req() req: any) {
-    return this.dekoracijeServis.dohvatiMojeDekoracije(req.user.userId);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -78,21 +96,24 @@ export class DekoracijeController {
     );
   }
 
-  @Get('tipovi')
-  dohvatiTipoveDekoracije() {
-    return this.dekoracijeServis.dohvatiTipDekoracije();
+  @UseGuards(JwtAuthGuard)
+  @Post('ja/kupi/:dekoracijaId')
+  kupiDekoraciju(
+    @Req() req: any,
+    @Param('dekoracijaId', ParseIntPipe) dekoracijaId: number,
+  ) {
+    return this.dekoracijeServis.kupiDekoraciju(req.user.userId, dekoracijaId);
   }
 
-  @Get('tipovi/:id/dekoracije')
-  dohvatiDekoracijeZaTip(@Param('id', ParseIntPipe) id: number) {
-    return this.dekoracijeServis.dohvatiDekoracijeZaTip(id);
-  }
-
+  @UseGuards(JwtAuthGuard, UlogeGuard)
+  @Uloge(1)
   @Post('tipovi')
   dodajTipDekoracije(@Body() dto: DodajTipDekoracijeDto) {
     return this.dekoracijeServis.dodajTipDekoracije(dto);
   }
 
+  @UseGuards(JwtAuthGuard, UlogeGuard)
+  @Uloge(1)
   @Patch('tipovi/:id')
   azurirajTipDekoracije(
     @Param('id', ParseIntPipe) tipId: number,
@@ -101,6 +122,8 @@ export class DekoracijeController {
     return this.dekoracijeServis.azurirajTipDekoracije(tipId, dto);
   }
 
+  @UseGuards(JwtAuthGuard, UlogeGuard)
+  @Uloge(1)
   @Delete('tipovi/:id')
   obrisiTipDekoracije(@Param('id', ParseIntPipe) id: number) {
     return this.dekoracijeServis.obrisiTipDekoracije(id);

@@ -27,7 +27,4 @@ export class RegistracijaDto {
   @MinLength(6)
   @MaxLength(100)
   lozinka!: string;
-
-  @IsInt()
-  ulogaId!: number;
 }

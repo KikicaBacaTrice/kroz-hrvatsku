@@ -26,49 +26,6 @@ export class LokacijeService {
     private readonly nagradeServis: NagradeService,
   ) {}
 
-  kreirajFilterLokacija(
-    filter?: FiltrirajLokacijeDto,
-  ): Prisma.LokacijaWhereInput {
-    return {
-      ...(filter?.grad && {
-        grad: {
-          contains: filter.grad,
-          mode: 'insensitive',
-        },
-      }),
-      ...(filter?.zupanija && {
-        zupanija: {
-          contains: filter.zupanija,
-          mode: 'insensitive',
-        },
-      }),
-      ...(filter?.kategorija && {
-        kategorija: {
-          naziv: {
-            equals: filter.kategorija,
-            mode: 'insensitive',
-          },
-        },
-      }),
-      ...(filter?.pretraziNaziv && {
-        OR: [
-          {
-            naziv: {
-              contains: filter.pretraziNaziv,
-              mode: 'insensitive',
-            },
-          },
-          {
-            opis: {
-              contains: filter.pretraziNaziv,
-              mode: 'insensitive',
-            },
-          },
-        ],
-      }),
-    };
-  }
-
   async dohvatiSve(filter?: FiltrirajLokacijeDto) {
     const prismaWhereFilter = this.kreirajFilterLokacija(filter);
 
@@ -250,7 +207,7 @@ export class LokacijeService {
       },
     });
     if (!slika) {
-      throw new NotFoundException('SLika za ovu lokaciju nije pronađena');
+      throw new NotFoundException('Slika za ovu lokaciju nije pronađena');
     }
 
     if (dto.glavna) {
@@ -395,5 +352,48 @@ export class LokacijeService {
       where: { lokacijaId, glavna: true },
       data: { glavna: false },
     });
+  }
+
+  kreirajFilterLokacija(
+    filter?: FiltrirajLokacijeDto,
+  ): Prisma.LokacijaWhereInput {
+    return {
+      ...(filter?.grad && {
+        grad: {
+          contains: filter.grad,
+          mode: 'insensitive',
+        },
+      }),
+      ...(filter?.zupanija && {
+        zupanija: {
+          contains: filter.zupanija,
+          mode: 'insensitive',
+        },
+      }),
+      ...(filter?.kategorija && {
+        kategorija: {
+          naziv: {
+            equals: filter.kategorija,
+            mode: 'insensitive',
+          },
+        },
+      }),
+      ...(filter?.pretraziNaziv && {
+        OR: [
+          {
+            naziv: {
+              contains: filter.pretraziNaziv,
+              mode: 'insensitive',
+            },
+          },
+          {
+            opis: {
+              contains: filter.pretraziNaziv,
+              mode: 'insensitive',
+            },
+          },
+        ],
+      }),
+    };
   }
 }

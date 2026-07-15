@@ -45,8 +45,8 @@ export class DekoracijeService {
       data: {
         naziv: dto.naziv,
         opis: dto.opis,
-        cijenaValuta: dto.cijenaVaulta,
-        slikaDekoracija: dto.slikaDekoracije,
+        cijenaValuta: dto.cijenaValuta,
+        slikaDekoracija: dto.slikaDekoracija,
         tipDekoracijeId: dto.tipDekoracijeId,
         nacinOtkljucavanjaId: dto.nacinOtkljucavanjaId,
       },
@@ -154,6 +154,68 @@ export class DekoracijeService {
     });
   }
 
+  async kupiDekoraciju(korisnikId: number, dekoracijaId: number) {
+    const dekoracija = await this.prisma.dekoracija.findUnique({
+      where: { dekoracijaId },
+    });
+    if (!dekoracija) {
+      throw new NotFoundException('Dekoracija nije pronađena');
+    }
+
+    if (dekoracija.cijenaValuta === null) {
+      throw new ConflictException('Ova dekoracija se ne može kupiti');
+    }
+
+    const postojecaDekoracija = await this.prisma.korisnikDekoracija.findUnique(
+      {
+        where: {
+          korisnikId_dekoracijaId: {
+            korisnikId,
+            dekoracijaId,
+          },
+        },
+      },
+    );
+    if (postojecaDekoracija) {
+      throw new ConflictException('Korisnik već ima ovu dekoraciju');
+    }
+
+    return this.prisma.$transaction(async (tx) => {
+      const azuriraniProfil = await tx.profil.updateMany({
+        where: {
+          korisnikId,
+          virtualniNovac: {
+            gte: dekoracija.cijenaValuta!,
+          },
+        },
+        data: {
+          virtualniNovac: {
+            decrement: dekoracija.cijenaValuta!,
+          },
+        },
+      });
+
+      if (azuriraniProfil.count === 0) {
+        throw new ConflictException('Korisnik nema dovoljno virtualnog novca');
+      }
+
+      return tx.korisnikDekoracija.create({
+        data: {
+          korisnikId,
+          dekoracijaId,
+        },
+        include: {
+          dekoracija: {
+            include: {
+              tipDekoracije: true,
+              nacinOtkljucavanja: true,
+            },
+          },
+        },
+      });
+    });
+  }
+
   async dodijeliDekoracijuKorisniku(korisnikId: number, dekoracijaId: number) {
     await this.provjeriPostojiLiDekoracija(dekoracijaId);
 
@@ -166,7 +228,7 @@ export class DekoracijeService {
       },
     });
     if (vecPostoji) {
-      throw new ConflictException('Korsnik već ima ovu dekoraciju');
+      return vecPostoji;
     }
 
     return this.prisma.korisnikDekoracija.create({
@@ -295,7 +357,7 @@ export class DekoracijeService {
     pozicijaPrikaza: number,
     tipDekoracijeId: number,
   ) {
-    this.prisma.korisnikDekoracija.updateMany({
+    await this.prisma.korisnikDekoracija.updateMany({
       where: {
         korisnikId,
         aktivna: true,
