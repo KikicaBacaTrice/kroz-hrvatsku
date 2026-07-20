@@ -1,6 +1,7 @@
 @use "../postavke" as postavke;
 
 a {
+  font-size: var(--fs-osnovni);
   color: var(--clr-primarna-400);
   text-decoration: none;
   transition: color postavke.$tranzicija-brzo ease;
