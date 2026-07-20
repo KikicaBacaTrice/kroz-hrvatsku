@@ -1,0 +1,24 @@
+@use "../postavke" as postavke;
+
+input,
+textarea,
+select {
+  width: 100%;
+  border: 1px solid var(--clr-obrub);
+  border-radius: var(--radius-md);
+  background: var(--clr-povrsina);
+  color: var(--clr-text);
+
+  &:focus {
+    border-color: var(--clr-primarna);
+  }
+}
+
+label {
+  color: var(--clr-text);
+  font-weight: postavke.$fw-semibold;
+}
+
+textarea {
+  resize: vertical;
+}

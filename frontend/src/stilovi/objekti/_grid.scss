@@ -1,0 +1,29 @@
+@use "../postavke" as postavke;
+@use "../alati" as alati;
+
+.o-grid {
+  display: grid;
+  gap: postavke.$space-md;
+
+  &--2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  &--3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  &--auto {
+    --max-sirina-stupca: 400px;
+    grid-template-columns: repeat(
+      autofit,
+      minmax(min(var(--max-sirina-stupca), 100%), 1fr)
+    );
+  }
+}
+
+@include alati.ekranManjiOd(postavke.$breakpoint-md) {
+  .o-grid--2,
+  .o-grid--3 {
+    grid-template-columns: 1fr;
+  }
+}

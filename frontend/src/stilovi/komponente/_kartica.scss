@@ -1,0 +1,17 @@
+.c-kartica {
+  border: 1px solid var(--clr-obrub);
+  border-radius: var(--radius-lg);
+  background: var(--clr-povrsina);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+
+  &__body {
+    padding: 1.25rem;
+  }
+  &__title {
+    color: var(--clr-text);
+  }
+  &__text {
+    color: var(--clr-text-prigusen);
+  }
+}

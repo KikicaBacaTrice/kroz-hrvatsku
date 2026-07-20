@@ -1,0 +1,16 @@
+@use "../postavke" as postavke;
+
+a {
+  color: var(--clr-primarna-400);
+  text-decoration: none;
+  transition: color postavke.$tranzicija-brzo ease;
+}
+
+a:hover {
+  color: var(--clr-primarna-600);
+}
+
+a:focus-visible {
+  outline: 2px solid var(--clr-primarna-600);
+  outline-offset: 3px;
+}

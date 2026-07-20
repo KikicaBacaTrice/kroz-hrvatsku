@@ -1,0 +1,30 @@
+@use "../postavke" as postavke;
+
+.o-flex {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: postavke.$space-md;
+
+  &--stupac {
+    flex-direction: column;
+  }
+
+  &--sm {
+    gap: postavke.$space-sm;
+  }
+  &--lg {
+    gap: postavke.$space-lg;
+  }
+  &--xl {
+    gap: postavke.$space-xl;
+  }
+
+  &--between {
+    justify-content: space-between;
+  }
+  &--end {
+    justify-content: flex-end;
+  }
+}
