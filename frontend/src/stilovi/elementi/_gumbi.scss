@@ -1,0 +1,16 @@
+button {
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: inherit;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--clr-primarna-600);
+    outline-offset: 3px;
+  }
+}

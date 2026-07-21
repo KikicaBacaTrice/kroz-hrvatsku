@@ -1,0 +1,32 @@
+.c-forma {
+  display: grid;
+  gap: 1rem;
+
+  &__group {
+    gap: 0.4;
+  }
+
+  &__label {
+    font-weight: 700;
+    color: var(--clr-text);
+  }
+
+  &__kontrola {
+    min-height: 2.75rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--clr-border);
+    border-radius: var(--radius-md);
+    background: var(--clr-povrsina);
+    color: var(--clr-text);
+
+    &:focus {
+      border-color: var(--color-primarna);
+      outline: none;
+    }
+  }
+
+  &__pogreska {
+    color: var(--clr-opasnot);
+    font-size: 0.875rem;
+  }
+}

@@ -1,0 +1,11 @@
+@mixin ekranVećiOd($breakpoint) {
+  @media (min-width: $breakpont) {
+    @content;
+  }
+}
+
+@mixin ekranManjiOd($breakpoint) {
+  @media (max-width: $breakpoint) {
+    @content;
+  }
+}

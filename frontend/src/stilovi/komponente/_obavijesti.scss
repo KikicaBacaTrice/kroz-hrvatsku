@@ -1,0 +1,16 @@
+.c-obavijest {
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-obrub);
+  background: var(--color-povrsina-prigusen);
+
+  &--uspjeh {
+    border-color: var(--clr-uspjeh);
+    color: var(--clr-uspjeh);
+  }
+
+  &--opasnost {
+    border-color: var(--clr-opasnost);
+    color: var(--clr-opasnost);
+  }
+}

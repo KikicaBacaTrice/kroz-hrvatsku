@@ -1,0 +1,16 @@
+@use "../postavke" as postavke;
+
+html {
+  min-height: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100%;
+  font-family: postavke.$ff-osnovni;
+  font-size: var(--fs-md);
+  line-height: postavke.$lh-osnovni;
+  background: var(--clr-pozadina);
+  color: var(--clr-text);
+  text-rendering: optimizeSpeed;
+}

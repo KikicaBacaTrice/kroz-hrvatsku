@@ -1,0 +1,45 @@
+@use "../postavke" as postavke;
+
+.c-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0.75rem 1.25rem;
+  border: 0;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  text-decoration: none;
+  transition: all postavke.$tranzicija-brzo ease;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--clr-primarna-600);
+    outline-offset: 3px;
+  }
+
+  &--primarna {
+    background: var(--clr-primarna-400);
+    color: var(--clr-povrsina);
+    border: 3px solid var(--clr-primarna-400);
+  }
+  &--primarna-inverz {
+    color: var(--clr-primarna-400);
+    background-color: var(--clr-povrsina);
+    border: 3px solid var(--clr-primarna-400);
+  }
+  &--sekundarna {
+    background: var(--clr-sekundarna-400);
+    color: var(--clr-povrsina);
+    border: 3px solid var(--clr-sekundarna-400);
+  }
+  &--sekundarna-inverz {
+    color: var(--clr-sekundarna-400);
+    background: var(--clr-povrsina);
+    border: 3px solid var(--clr-sekundarna-400);
+  }
+}

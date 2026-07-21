@@ -1,0 +1,62 @@
+:root {
+  --clr-primarna-200: #cffaeb;
+  --clr-primarna-300: #71998c;
+  --clr-primarna-400: #173f35;
+  --clr-primarna-600: #0d372d;
+  --clr-primarna-800: #002019;
+
+  --clr-sekundarna-200: #ffefd4;
+  --clr-sekundarna-300: #edc060;
+  --clr-sekundarna-400: #d2a84a;
+  --clr-sekundarna-600: #5b4300;
+  --clr-sekundarna-800: #261a00;
+
+  --clr-neutral-100: #fff;
+  --clr-neutral-300: #f4f0e7;
+  --clr-neutral-400: #f7f3ea;
+  --clr-neutral-600: #605e58;
+  --clr-neutral-800: #1c1c16;
+  --clr-neutral-900: #000000;
+
+  --clr-uspjeh: var(--clr-primarna-300);
+  --clr-upozorenje: #d88a2d;
+  --clr-opasnot: #b42318;
+  --clr-fokus: var(--clr-primarna-600);
+
+  --clr-pozadina: #fbf7ef;
+  --clr-povrsina: #ffffff;
+  --clr-povrsina-prigusen: #f2eadc;
+
+  --clr-text: #1f2a24;
+  --clr-text-prigusen: #6f7b72;
+  --clr-obrub: #ded6c8;
+
+  --radius-sm: 0.375rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-zaobljeno: 50vw;
+
+  --shadow-sm:
+    rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+    rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+  --shadow-md:
+    rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+    rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+  --shadow-lg:
+    rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+    rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
+    rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+  --shadow-inner:
+    3px 3px 6px 0px #ccdbe8 inset,
+    -3px -3px 6px 1px rgba(255, 255, 255, 0.5) inset;
+
+  --fs-xs: clamp(0.6944rem, 0.6859rem + 0.0379vw, 0.72rem);
+  --fs-sm: clamp(0.8333rem, 0.8111rem + 0.0988vw, 0.9rem);
+  --fs-osnovni: clamp(1rem, 0.9583rem + 0.1852vw, 1.125rem);
+  --fs-md: clamp(1.2rem, 1.1313rem + 0.3056vw, 1.4063rem);
+  --fs-lg: clamp(1.44rem, 1.3341rem + 0.4708vw, 1.7578rem);
+  --fs-xl: clamp(1.728rem, 1.5716rem + 0.6952vw, 2.1973rem);
+  --fs-2xl: clamp(2.0736rem, 1.8493rem + 0.997vw, 2.7466rem);
+  --fs-3xl: clamp(2.4883rem, 2.1734rem + 1.3999vw, 3.4332rem);
+}
