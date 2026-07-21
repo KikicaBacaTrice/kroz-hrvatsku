@@ -41,9 +41,9 @@ export const routes: Routes = [
   },
   {
     path: 'autentikacija',
-    loadComponent: () =>
-      import('./funkcionalnosti/autentikacija/stranice/autentikacija/autentikacija.component').then(
-        (m) => m.AutentikacijaComponent,
+    loadChildren: () =>
+      import('./funkcionalnosti/autentikacija/autentikacija.routes').then(
+        (m) => m.AUTENTIKACIJA_ROUTES,
       ),
   },
   {

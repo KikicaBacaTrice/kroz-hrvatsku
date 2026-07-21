@@ -1,0 +1,40 @@
+<form class="c-form" #forma="ngForm" (ngSubmit)="posalji(forma)">
+  <div class="c-form__group">
+    <label for="email" class="c-form__label">Email</label>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      class="c-form__control"
+      required
+      email
+      pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
+      [(ngModel)]="model.email"
+      #email="ngModel"
+    />
+
+    @if (email.invalid && email.touched) {
+      <p class="c-form__pogreska">Unesite ispravam format email-a</p>
+    }
+  </div>
+  <div class="c-form__group">
+    <label for="lozinka" class="c-form__label">Lozinka</label>
+    <input
+      type="password"
+      id="lozinka"
+      name="lozinka"
+      class="c-form__control"
+      required
+      minlength="6"
+      [(ngModel)]="model.lozinka"
+      #lozinka="ngModel"
+    />
+
+    @if (lozinka.invalid && lozinka.touched) {
+      <p class="c-form__pogreska">Lozinka mora imati barem 6 znakova</p>
+    }
+  </div>
+
+  <button class="c-button c-button--primarna" type="submit">Prijavi se</button>
+  <a routerLink="/autentikacija/registracija">Nemam račun</a>
+</form>
