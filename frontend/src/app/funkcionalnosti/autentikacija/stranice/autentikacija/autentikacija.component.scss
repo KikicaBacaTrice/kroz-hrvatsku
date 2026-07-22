@@ -1,0 +1,125 @@
+@use "../../../../../stilovi/postavke" as postavke;
+
+.autentikacija {
+  height: 100svh;
+  grid-template-columns: 60% 40%;
+}
+
+.autentikacija-carousel {
+  &__spremnik {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  &__slajd {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    transform: translateX(0);
+  }
+
+  &__slajd--aktivan {
+    z-index: 2;
+  }
+
+  &__slajd--prethodni {
+    z-index: 3;
+    animation: slajd-izlaz 500ms ease-out forwards;
+  }
+
+  &__slajd::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--clr-primarna-800) 60%, transparent) 60%,
+      color-mix(in srgb, var(--clr-primarna-800) 95%, transparent) 100%
+    );
+  }
+
+  &__slika {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  &__sadrzaj {
+    position: absolute;
+    bottom: 1.5rem;
+    z-index: 2;
+    display: grid;
+    justify-items: start;
+    align-content: end;
+    gap: 1.5rem;
+    min-height: inherit;
+    padding: 2rem;
+    color: var(--clr-primarna-200);
+
+    h3,
+    h4,
+    p {
+      color: inherit;
+    }
+
+    h3 {
+      font-size: var(--fs-xl);
+    }
+
+    &-opis-lokacija {
+      font-size: var(--fs-rg);
+    }
+  }
+
+  &__lokacija-sadrzaj-spremnik {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+
+    padding: 1rem;
+
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.39);
+
+    .odvojna-linija {
+      align-self: stretch;
+      width: 1px;
+      opacity: 0.5;
+      background: var(--clr-primarna-200);
+    }
+  }
+
+  &__gumb-sljedeci {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    color: var(--clr-primarna-200);
+    opacity: 0.4;
+    transition: opacity postavke.$tranzicija-brzo postavke.$bezier-ease-in-out;
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+@keyframes slajd-izlaz {
+  to {
+    transform: translateX(-100%);
+  }
+}

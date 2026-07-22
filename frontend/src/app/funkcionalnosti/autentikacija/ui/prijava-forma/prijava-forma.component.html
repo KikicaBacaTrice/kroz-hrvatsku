@@ -1,11 +1,11 @@
-<form class="c-form" #forma="ngForm" (ngSubmit)="posalji(forma)">
-  <div class="c-form__group">
-    <label for="email" class="c-form__label">Email</label>
+<form class="c-forma" #forma="ngForm" (ngSubmit)="posalji(forma)">
+  <div class="c-forma__group">
+    <label for="email" class="c-forma__label">Email</label>
     <input
       type="email"
       id="email"
       name="email"
-      class="c-form__control"
+      class="c-forma__control"
       required
       email
       pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
@@ -13,25 +13,25 @@
       #email="ngModel"
     />
 
-    @if (email.invalid && email.touched) {
-      <p class="c-form__pogreska">Unesite ispravam format email-a</p>
+    @if (email.invalid && forma.submitted) {
+      <p class="c-forma__pogreska">Unesite ispravam format email-a</p>
     }
   </div>
-  <div class="c-form__group">
-    <label for="lozinka" class="c-form__label">Lozinka</label>
+  <div class="c-forma__group">
+    <label for="lozinka" class="c-forma__label">Lozinka</label>
     <input
       type="password"
       id="lozinka"
       name="lozinka"
-      class="c-form__control"
+      class="c-forma__control"
       required
       minlength="6"
       [(ngModel)]="model.lozinka"
       #lozinka="ngModel"
     />
 
-    @if (lozinka.invalid && lozinka.touched) {
-      <p class="c-form__pogreska">Lozinka mora imati barem 6 znakova</p>
+    @if (lozinka.invalid && forma.submitted) {
+      <p class="c-forma__pogreska">Lozinka mora imati barem 6 znakova</p>
     }
   </div>
 
