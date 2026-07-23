@@ -48,6 +48,17 @@
           </div>
         </div>
       }
+      <div class="autentikacija-carousel__navigacija-spremnik">
+        @for (lokacija of lokacije; track lokacija.lokacijaId; let i = $index) {
+          <span
+            class="autentikacija-carousel__navigacija-tocka"
+            [class.autentikacija-carousel__navigacija-tocka--aktivna]="
+              i === aktivniIndex
+            "
+          ></span>
+        }
+      </div>
+
       <button
         type="button"
         class="autentikacija-carousel__gumb-sljedeci"

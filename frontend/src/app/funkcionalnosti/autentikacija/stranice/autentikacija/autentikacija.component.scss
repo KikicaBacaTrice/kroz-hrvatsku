@@ -1,9 +1,17 @@
 @use "../../../../../stilovi/postavke" as postavke;
+@use "../../../../../stilovi/alati" as alati;
 
 .autentikacija {
   height: 100svh;
   grid-template-columns: 60% 40%;
   gap: 0;
+
+  @include alati.ekranManjiOd(postavke.$breakpoint-lg) {
+    grid-template-columns: 50% 50%;
+  }
+  @include alati.ekranManjiOd(postavke.$breakpoint-md) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .autentikacija-carousel {
@@ -13,6 +21,10 @@
     height: 100%;
     overflow: hidden;
     isolation: isolate;
+
+    @include alati.ekranManjiOd(postavke.$breakpoint-md) {
+      display: none;
+    }
   }
 
   &__slajd {
@@ -104,6 +116,31 @@
     }
   }
 
+  &__navigacija-spremnik {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+  }
+
+  &__navigacija-tocka {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-zaobljeno);
+    background: var(--clr-primarna-200);
+    opacity: 0.2;
+    transition: opacity postavke.$tranzicija-brzo postavke.$bezier-ease-in-out;
+
+    &--aktivna {
+      opacity: 0.7;
+    }
+  }
+
   &__gumb-sljedeci {
     position: absolute;
     right: 1rem;
@@ -130,6 +167,9 @@
   padding-inline: 3rem;
   display: grid;
   align-items: center;
+  @include alati.ekranManjiOd(postavke.$breakpoint-md) {
+    grid-column: 1;
+  }
 }
 
 .autentikacija__panel {
