@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   PrijavaFormaComponent,
   PrijavaFormaVrijednost,
 } from '../../ui/prijava-forma/prijava-forma.component';
+import { AuthStanjeService } from '../../stanje/auth-stanje.service';
 
 @Component({
   selector: 'app-prijava',
@@ -11,7 +12,16 @@ import {
   styleUrl: './prijava.component.scss',
 })
 export class PrijavaComponent {
+  private readonly authSpremiste = inject(AuthStanjeService);
+
+  porukaPogreske = '';
+
   naPrijavu(vrijednost: PrijavaFormaVrijednost): void {
-    console.log(vrijednost);
+    this.porukaPogreske = '';
+    this.authSpremiste.prijava(vrijednost).subscribe({
+      error: (greska) => {
+        this.porukaPogreske = greska.message;
+      },
+    });
   }
 }

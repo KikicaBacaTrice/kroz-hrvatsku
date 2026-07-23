@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthStanjeService } from '../../../funkcionalnosti/autentikacija/stanje/auth-stanje.service';
+import { TokenSpremisteService } from '../../autentikacija/token-spremiste.service';
 
 @Component({
   selector: 'app-navigacija',
@@ -7,4 +9,11 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   templateUrl: './navigacija.component.html',
   styleUrl: './navigacija.component.scss',
 })
-export class NavigacijaComponent {}
+export class NavigacijaComponent {
+  readonly authStanje = inject(AuthStanjeService);
+  readonly tokenSpremiste = inject(TokenSpremisteService);
+
+  odjava(): void {
+    this.authStanje.odjava();
+  }
+}

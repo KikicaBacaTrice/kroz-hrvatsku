@@ -7,6 +7,7 @@ import { Component, input } from '@angular/core';
     <svg
       [attr.width]="velicina()"
       [attr.height]="velicina()"
+      [style.transform]="'rotate(' + rotacija() + 'deg'"
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -14,7 +15,7 @@ import { Component, input } from '@angular/core';
       <path
         d="M9 6L15 12L9 18"
         [attr.stroke]="boja()"
-        stroke-width="2"
+        [attr.stroke-width]="debljinaLinije()"
         stroke-linecap="round"
         stroke-linejoin="round"
       ></path>
@@ -25,4 +26,6 @@ import { Component, input } from '@angular/core';
 export class PrethodniSljedeciIkonaComponent {
   velicina = input(24);
   boja = input('currentColor');
+  rotacija = input(0);
+  debljinaLinije = input(2);
 }

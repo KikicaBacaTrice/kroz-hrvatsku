@@ -6,7 +6,11 @@ export const httpPogreskaInterceptor: HttpInterceptorFn = (req, next) => {
     catchError((error: HttpErrorResponse) => {
       let poruka = 'Dogodila se pogreška';
 
-      if (error.status === 0) {
+      if (error.error?.message) {
+        poruka = Array.isArray(error.error.message)
+          ? error.error.message.join(', ')
+          : error.error.message;
+      } else if (error.status === 0) {
         poruka = 'Pozadinski dio aplikacije nije dostupan';
       } else if (error.status === 401) {
         poruka = 'Niste prijavljeni';

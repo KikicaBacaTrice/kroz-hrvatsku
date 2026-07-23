@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { EmailIkonaComponent } from '../../../../dijeljeno/ui/ikone/email-ikona/email-ikona.component';
@@ -21,6 +21,7 @@ export type PrijavaFormaVrijednost = {
   styleUrl: './prijava-forma.component.scss',
 })
 export class PrijavaFormaComponent {
+  @Input() porukaPogreske = '';
   @Output() prijava = new EventEmitter<PrijavaFormaVrijednost>();
 
   model: PrijavaFormaVrijednost = {
@@ -35,5 +36,6 @@ export class PrijavaFormaComponent {
     }
 
     this.prijava.emit(this.model);
+    form.resetForm();
   }
 }

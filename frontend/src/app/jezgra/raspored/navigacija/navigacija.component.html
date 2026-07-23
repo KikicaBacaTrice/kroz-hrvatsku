@@ -2,9 +2,18 @@
   <a routerLink="/">KrozHrvatsku</a>
 
   <nav>
-    <a routerLink="/" routerLinkActive="">Počenta</a>
-    <a routerLink="/lokacije" routerLinkActive="">Lokacije</a>
-    <a routerLink="/profil" routerLinkActive="">Profil</a>
-    <a routerLink="/autentikacija" routerLinkActive="">Prijava</a>
+    <a
+      routerLink="/"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      >Počenta</a
+    >
+    <a routerLink="/lokacije" routerLinkActive="active">Lokacije</a>
+    <a routerLink="/profil" routerLinkActive="active">Profil</a>
+    @if (authStanje.prijavljen()) {
+      <button type="button" (click)="odjava()">Odjava</button>
+    } @else {
+      <a routerLink="/autentikacija" routerLinkActive="active">Prijava</a>
+    }
   </nav>
 </header>

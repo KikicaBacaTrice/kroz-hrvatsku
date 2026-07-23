@@ -40,6 +40,10 @@
     @if (lozinka.invalid && forma.submitted) {
       <p class="c-forma__pogreska">Lozinka mora imati barem 6 znakova</p>
     }
+
+    @if (porukaPogreske) {
+      <p class="c-forma__pogreska">{{ porukaPogreske }}</p>
+    }
   </div>
 
   <button class="c-button c-button--primarna" type="submit">Prijavi se</button>

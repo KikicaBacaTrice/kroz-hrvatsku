@@ -3,5 +3,8 @@
     <h4>Počni istraživati</h4>
     <p>Izradi račun i započni otkrivati lokacija diljem Hrvatske</p>
   </div>
-  <app-registracija-forma (registracija)="naRegistraciju($event)" />
+  <app-registracija-forma
+    (registracija)="naRegistraciju($event)"
+    [porukaPogreske]="porukaPogreske"
+  />
 </div>
