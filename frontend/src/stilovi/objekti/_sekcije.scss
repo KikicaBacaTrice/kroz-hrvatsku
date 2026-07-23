@@ -21,3 +21,11 @@
 .o-sekcija-inline--lg {
   padding-inline: 6rem;
 }
+
+.u-nowrap {
+  white-space: nowrap;
+
+  @media (min-width: 900px) {
+    white-space: wrap;
+  }
+}

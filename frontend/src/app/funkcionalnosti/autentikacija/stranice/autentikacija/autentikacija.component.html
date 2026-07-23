@@ -59,6 +59,11 @@
     }
   </div>
   <div class="autentikacija__spremnik">
-    <router-outlet />
+    <div class="autentikacija__panel">
+      <div class="autentikacija__logo-spremnik">
+        <app-kroz-hrvatsku-logo-ikona [sirinaLogo]="300" />
+      </div>
+      <router-outlet />
+    </div>
   </div>
 </section>

@@ -4,10 +4,16 @@ import { AsyncPipe } from '@angular/common';
 import { LokacijeHttpService } from '../../../lokacije/podaci/lokacije-http.service';
 import { API_URL } from '../../../../jezgra/konfiguracija/api.config';
 import { PrethodniSljedeciIkonaComponent } from '../../../../dijeljeno/ui/ikone/prethodni-sljedeci-ikona/prethodni-sljedeci-ikona.component';
+import { KrozHrvatskuLogoIkonaComponent } from '../../../../dijeljeno/ui/ikone/kroz-hrvatsku-logo-ikona/kroz-hrvatsku-logo-ikona.component';
 
 @Component({
   selector: 'app-autentikacija',
-  imports: [RouterOutlet, AsyncPipe, PrethodniSljedeciIkonaComponent],
+  imports: [
+    RouterOutlet,
+    AsyncPipe,
+    PrethodniSljedeciIkonaComponent,
+    KrozHrvatskuLogoIkonaComponent,
+  ],
   templateUrl: './autentikacija.component.html',
   styleUrl: './autentikacija.component.scss',
 })

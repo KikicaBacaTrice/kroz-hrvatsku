@@ -1,35 +1,62 @@
 <form class="c-forma" #forma="ngForm" (ngSubmit)="posalji(forma)">
   <div class="c-forma__group">
-    <label for="email" class="c-from__label">Email</label>
-    <input
-      type="email"
-      id="email"
-      name="email"
-      class="c-forma__control"
-      required
-      email
-      pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
-      [(ngModel)]="model.email"
-      #email="ngModel"
-    />
+    <label for="email" class="c-forma__label">Email</label>
+    <div class="c-forma__kontrola-spremnik">
+      <app-email-ikona class="c-forma__ikona" />
+      <input
+        type="email"
+        id="email"
+        name="email"
+        class="c-forma__kontrola c-forma__kontrola--s-ikonom"
+        required
+        email
+        pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
+        [(ngModel)]="model.email"
+        #email="ngModel"
+      />
+    </div>
 
     @if (email.invalid && forma.submitted) {
       <p class="c-forma__pogreska">Unesite ispravam format email-a</p>
     }
   </div>
-
   <div class="c-forma__group">
-    <label for="lozinka" class="c-from__label">Lozinka</label>
-    <input
-      type="password"
-      id="lozinka"
-      name="lozinka"
-      class="c-forma__control"
-      required
-      minlength="6"
-      [(ngModel)]="model.lozinka"
-      #lozinka="ngModel"
-    />
+    <label for="lozinka" class="c-forma__label">Lozinka</label>
+    <div class="c-forma__kontrola-spremnik">
+      <app-lozinka-ikona class="c-forma__ikona" />
+
+      <input
+        type="password"
+        id="lozinka"
+        name="lozinka"
+        class="c-forma__kontrola c-forma__kontrola--s-ikonom"
+        required
+        minlength="6"
+        [(ngModel)]="model.lozinka"
+        #lozinka="ngModel"
+      />
+    </div>
+
+    @if (lozinka.invalid && forma.submitted) {
+      <p class="c-forma__pogreska">Lozinka mora imati barem 6 znakova</p>
+    }
+  </div>
+  <div class="c-forma__group">
+    <label for="lozinka" class="c-forma__label">Ponovi lozinku</label>
+    <div class="c-forma__kontrola-spremnik">
+      <app-lozinka-ikona class="c-forma__ikona" />
+
+      <input
+        type="password"
+        id="lozinka2"
+        name="lozinka2"
+        class="c-forma__kontrola c-forma__kontrola--s-ikonom"
+        required
+        minlength="6"
+        [(ngModel)]="model.ponovljenaLozinka"
+        #ponovljenaLozinka="ngModel"
+      />
+    </div>
 
     @if (lozinka.invalid && forma.submitted) {
       <p class="c-forma__pogreska">Lozinka mora imati barem 6 znakova</p>
@@ -39,5 +66,8 @@
   <button class="c-button c-button--primarna" type="submit">
     Registriraj se
   </button>
-  <a routerLink="/autentikacija/prijava">Već imam račun</a>
+  <p class="autentikacija__poziv-na-suprotno">
+    Već imaš račun?
+    <a routerLink="/autentikacija/prijava">Prijavi se</a>
+  </p>
 </form>

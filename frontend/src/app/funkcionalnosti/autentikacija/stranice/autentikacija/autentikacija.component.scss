@@ -3,6 +3,7 @@
 .autentikacija {
   height: 100svh;
   grid-template-columns: 60% 40%;
+  gap: 0;
 }
 
 .autentikacija-carousel {
@@ -122,4 +123,22 @@
   to {
     transform: translateX(-100%);
   }
+}
+
+.autentikacija__spremnik {
+  width: 100%;
+  padding-inline: 3rem;
+  display: grid;
+  align-items: center;
+}
+
+.autentikacija__panel {
+  width: min(100%, 24rem);
+  justify-self: center;
+}
+
+.autentikacija__logo-spremnik {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
