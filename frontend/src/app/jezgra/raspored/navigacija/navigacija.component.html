@@ -1,19 +1,41 @@
-<header>
-  <a routerLink="/">KrozHrvatsku</a>
+<nav class="navigacija">
+  <div class="navigacija__logo-spremnik">
+    <a routerLink="/">
+      <app-kroz-hrvatsku-logo-ikona sirinaLogo="150" [jeInverz]="true" />
+    </a>
+  </div>
 
-  <nav>
-    <a
-      routerLink="/"
-      routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: true }"
-      >Počenta</a
-    >
-    <a routerLink="/lokacije" routerLinkActive="active">Lokacije</a>
-    <a routerLink="/profil" routerLinkActive="active">Profil</a>
+  <div class="navigacija__linkovi-spremnik">
+    <ul class="navigacija__linkovi-lista">
+      <li class="navigacija__stavka">
+        <a
+          routerLink="/lokacije"
+          routerLinkActive="active"
+          class="navigacija__link"
+          >Lokacije</a
+        >
+      </li>
+      <li class="navigacija__stavka">
+        <a
+          routerLink="/profil"
+          routerLinkActive="active"
+          class="navigacija__link"
+          >Profil</a
+        >
+      </li>
+      <li class="navigacija__stavka">
+        <a routerLink="/" routerLinkActive="active" class="navigacija__link"
+          >Dostignuća</a
+        >
+      </li>
+    </ul>
+  </div>
+
+  <div class="navigacija__autentikacija-spremnik">
     @if (authStanje.prijavljen()) {
       <button type="button" (click)="odjava()">Odjava</button>
     } @else {
       <a routerLink="/autentikacija" routerLinkActive="active">Prijava</a>
     }
-  </nav>
-</header>
+  </div>
+</nav>

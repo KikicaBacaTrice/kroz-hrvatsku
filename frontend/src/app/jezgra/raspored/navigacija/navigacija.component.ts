@@ -2,10 +2,11 @@ import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthStanjeService } from '../../../funkcionalnosti/autentikacija/stanje/auth-stanje.service';
 import { TokenSpremisteService } from '../../autentikacija/token-spremiste.service';
+import { KrozHrvatskuLogoIkonaComponent } from '../../../dijeljeno/ui/ikone/kroz-hrvatsku-logo-ikona/kroz-hrvatsku-logo-ikona.component';
 
 @Component({
   selector: 'app-navigacija',
-  imports: [RouterLink, RouterLinkActive],
+  imports: [RouterLink, RouterLinkActive, KrozHrvatskuLogoIkonaComponent],
   templateUrl: './navigacija.component.html',
   styleUrl: './navigacija.component.scss',
 })

@@ -1,0 +1,67 @@
+.navigacija {
+  background-color: var(--clr-primarna-600);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--clr-primarna-200);
+  animation: navigacija-udi both;
+  animation-timeline: scroll();
+  animation-range-start: 150px;
+  animation-range-end: 400px;
+}
+
+.navigacija__linkovi-lista {
+  list-style: none;
+  display: flex;
+  anchor-name: --lebdeci-link;
+}
+
+.navigacija__link {
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  color: inherit;
+
+  &:hover {
+    anchor-name: --lebdeci-link;
+  }
+}
+
+.navigacija__linkovi-spremnik {
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: anchor(left);
+    right: anchor(right);
+    bottom: calc(anchor(bottom) - 0.5rem);
+    position-anchor: --lebdeci-link;
+    height: 3px;
+    background: var(--clr-primarna-200);
+    border-radius: var(--radius-zaobljeno);
+    opacity: 0;
+    transition: all 250ms ease-out;
+  }
+
+  &:has(.navigacija__link:hover)::after {
+    bottom: anchor(bottom);
+    opacity: 0.75;
+  }
+}
+
+.navigacija__autentikacija-spremnik {
+  a {
+    color: inherit;
+  }
+}
+
+@keyframes navigacija-udi {
+  100% {
+    border-radius: var(--radius-zaobljeno);
+    translate: 0 175px; // preko sticky se zalijepi na -150px, a ovo ga spusti za 175px s 25px margine
+    position: relative;
+    margin: 0 5rem;
+  }
+}
