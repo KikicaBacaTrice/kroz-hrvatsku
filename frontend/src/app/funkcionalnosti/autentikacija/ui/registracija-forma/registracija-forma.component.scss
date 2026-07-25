@@ -1,0 +1,31 @@
+.c-forma {
+  &__kontrola-spremnik {
+    position: relative;
+  }
+
+  &__ikona {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    z-index: 2;
+    transform: translateY(-50%);
+    color: var(--clr-text-prigusen);
+    pointer-events: none;
+  }
+
+  &__kontrola--s-ikonom {
+    padding-left: 3rem;
+  }
+}
+
+.autentikacija__poziv-na-suprotno {
+  text-align: center;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+
+  a {
+    font-size: inherit;
+    font-weight: inherit;
+    color: var(--clr-primarna-800);
+  }
+}

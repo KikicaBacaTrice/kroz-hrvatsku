@@ -1,5 +1,5 @@
 :root {
-  --clr-primarna-200: #cffaeb;
+  --clr-primarna-200: #e7f9f3;
   --clr-primarna-300: #71998c;
   --clr-primarna-400: #173f35;
   --clr-primarna-600: #0d372d;
@@ -53,7 +53,7 @@
 
   --fs-xs: clamp(0.6944rem, 0.6859rem + 0.0379vw, 0.72rem);
   --fs-sm: clamp(0.8333rem, 0.8111rem + 0.0988vw, 0.9rem);
-  --fs-osnovni: clamp(1rem, 0.9583rem + 0.1852vw, 1.125rem);
+  --fs-rg: clamp(1rem, 0.9583rem + 0.1852vw, 1.125rem);
   --fs-md: clamp(1.2rem, 1.1313rem + 0.3056vw, 1.4063rem);
   --fs-lg: clamp(1.44rem, 1.3341rem + 0.4708vw, 1.7578rem);
   --fs-xl: clamp(1.728rem, 1.5716rem + 0.6952vw, 2.1973rem);

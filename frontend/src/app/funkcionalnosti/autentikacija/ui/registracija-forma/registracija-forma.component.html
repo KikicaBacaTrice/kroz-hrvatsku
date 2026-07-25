@@ -1,0 +1,152 @@
+<form class="c-forma" #forma="ngForm" (ngSubmit)="posalji(forma)">
+  @if (korak === 1) {
+    <div class="c-forma__group">
+      <label for="email" class="c-forma__label">Email</label>
+      <div class="c-forma__kontrola-spremnik">
+        <app-email-ikona class="c-forma__ikona" />
+        <input
+          type="email"
+          id="email"
+          name="email"
+          class="c-forma__kontrola c-forma__kontrola--s-ikonom"
+          required
+          email
+          pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
+          [(ngModel)]="model.email"
+          #email="ngModel"
+        />
+      </div>
+
+      @if (email.invalid && pokusaoPrviKorak) {
+        <p class="c-forma__pogreska">Unesite ispravam format email-a</p>
+      }
+    </div>
+    <div class="c-forma__group">
+      <label for="lozinka" class="c-forma__label">Lozinka</label>
+      <div class="c-forma__kontrola-spremnik">
+        <app-lozinka-ikona class="c-forma__ikona" />
+
+        <input
+          type="password"
+          id="lozinka"
+          name="lozinka"
+          class="c-forma__kontrola c-forma__kontrola--s-ikonom"
+          required
+          minlength="6"
+          [(ngModel)]="model.lozinka"
+          #lozinka="ngModel"
+        />
+      </div>
+
+      @if (lozinka.invalid && pokusaoPrviKorak) {
+        <p class="c-forma__pogreska">Lozinka mora imati barem 6 znakova</p>
+      }
+    </div>
+    <div class="c-forma__group">
+      <label for="lozinka" class="c-forma__label">Ponovi lozinku</label>
+      <div class="c-forma__kontrola-spremnik">
+        <app-lozinka-ikona class="c-forma__ikona" />
+
+        <input
+          type="password"
+          id="lozinka2"
+          name="lozinka2"
+          class="c-forma__kontrola c-forma__kontrola--s-ikonom"
+          required
+          minlength="6"
+          [(ngModel)]="model.ponovljenaLozinka"
+          #ponovljenaLozinka="ngModel"
+        />
+      </div>
+
+      @if (lozinka.invalid && pokusaoPrviKorak) {
+        <p class="c-forma__pogreska">Lozinka mora imati barem 6 znakova</p>
+      }
+    </div>
+    @if (porukaPogreske) {
+      <p class="c-forma__pogreska">{{ porukaPogreske }}</p>
+    }
+    <button
+      class="c-button c-button--primarna"
+      type="button"
+      (click)="idiNaProfil(forma)"
+    >
+      Dalje
+    </button>
+  }
+
+  @if (korak === 2) {
+    <div class="c-forma__group">
+      <label for="ime" class="c-forma__label">Ime</label>
+      <input
+        type="text"
+        id="ime"
+        name="ime"
+        class="c-forma__kontrola"
+        required
+        [(ngModel)]="model.ime"
+        #ime="ngModel"
+      />
+      @if (ime.invalid && pokusaoDrugiKorak) {
+        <p class="c-forma__pogreska">Ime je obavezno</p>
+      }
+    </div>
+    <div class="c-forma__group">
+      <label for="prezime" class="c-forma__label">Prezime</label>
+      <input
+        type="text"
+        id="prezime"
+        name="prezime"
+        class="c-forma__kontrola"
+        required
+        [(ngModel)]="model.prezime"
+        #prezime="ngModel"
+      />
+      @if (prezime.invalid && pokusaoDrugiKorak) {
+        <p class="c-forma__pogreska">Prezime je obavezno</p>
+      }
+    </div>
+
+    <div class="c-forma__group">
+      <label for="korisnickoIme" class="c-forma__label">Korisničko ime</label>
+      <input
+        type="text"
+        id="korisnickoIme"
+        name="korisnickoIme"
+        class="c-forma__kontrola"
+        required
+        [(ngModel)]="model.korisnickoIme"
+        #korisnickoIme="ngModel"
+      />
+      @if (korisnickoIme.invalid && pokusaoDrugiKorak) {
+        <p class="c-forma__pogreska">Korisničko ime je obavezno</p>
+      }
+    </div>
+
+    @if (porukaPogreske) {
+      <p class="c-forma__pogreska">{{ porukaPogreske }}</p>
+    }
+    <div class="o-grid o-grid--2">
+      <button
+        class="c-button c-button--primarna-inverz"
+        type="button"
+        (click)="idiNatrag()"
+      >
+        <app-prethodni-sljedeci-ikona
+          [velicina]="20"
+          [rotacija]="180"
+          [debljinaLinije]="3"
+        />
+        Natrag
+      </button>
+      <button class="c-button c-button--primarna" type="submit">
+        Registriraj se
+      </button>
+    </div>
+  }
+
+  <p class="autentikacija__poziv-na-suprotno">
+    Već imaš račun?
+    <a routerLink="/autentikacija/prijava">Prijavi se</a>
+  </p>
+</form>
