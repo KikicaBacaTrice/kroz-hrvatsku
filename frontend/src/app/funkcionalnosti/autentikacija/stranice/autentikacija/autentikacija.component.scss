@@ -164,12 +164,21 @@
 
 .autentikacija__spremnik {
   width: 100%;
+  height: 100%;
   padding-inline: 3rem;
   display: grid;
   align-items: center;
   @include alati.ekranManjiOd(postavke.$breakpoint-md) {
     grid-column: 1;
   }
+  position: relative;
+}
+
+.autentikacija__strelica-povratak {
+  position: absolute;
+  top: 2rem;
+  left: 1.5rem;
+  z-index: 10;
 }
 
 .autentikacija__panel {

@@ -1,11 +1,12 @@
 import { Component, DestroyRef, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { AsyncPipe } from '@angular/common';
+import { RouterOutlet, Router } from '@angular/router';
+import { AsyncPipe, Location } from '@angular/common';
 import { LokacijeHttpService } from '../../../lokacije/podaci/lokacije-http.service';
 import { API_URL } from '../../../../jezgra/konfiguracija/api.config';
 import { PrethodniSljedeciIkonaComponent } from '../../../../dijeljeno/ui/ikone/prethodni-sljedeci-ikona/prethodni-sljedeci-ikona.component';
 import { KrozHrvatskuLogoIkonaComponent } from '../../../../dijeljeno/ui/ikone/kroz-hrvatsku-logo-ikona/kroz-hrvatsku-logo-ikona.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { StrelicaIkonaComponent } from '../../../../dijeljeno/ui/ikone/strelica-ikona/strelica-ikona.component';
 
 @Component({
   selector: 'app-autentikacija',
@@ -14,6 +15,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     AsyncPipe,
     PrethodniSljedeciIkonaComponent,
     KrozHrvatskuLogoIkonaComponent,
+    StrelicaIkonaComponent,
   ],
   templateUrl: './autentikacija.component.html',
   styleUrl: './autentikacija.component.scss',
@@ -21,6 +23,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class AutentikacijaComponent {
   private readonly lokacijeHttp = inject(LokacijeHttpService);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly location = inject(Location);
+  private readonly router = inject(Router);
 
   private timerId: ReturnType<typeof setTimeout> | null = null;
 
@@ -42,6 +46,14 @@ export class AutentikacijaComponent {
           this.pokreniAutomatskuPromjenu();
         }
       });
+  }
+
+  idiNatrag(): void {
+    if (window.history.length > 1) {
+      this.location.back();
+      return;
+    }
+    this.router.navigate(['/']);
   }
 
   ngOnDestroy(): void {

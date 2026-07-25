@@ -35,7 +35,12 @@
     @if (authStanje.prijavljen()) {
       <button type="button" (click)="odjava()">Odjava</button>
     } @else {
-      <a routerLink="/autentikacija" routerLinkActive="active">Prijava</a>
+      <a
+        routerLink="/autentikacija"
+        routerLinkActive="active"
+        class="c-button c-button--primarna-inverz"
+        >Prijava</a
+      >
     }
   </div>
 </nav>
