@@ -6,6 +6,9 @@ import { ProfilStanjeService } from '../../../funkcionalnosti/profil/stanje/prof
 import { NovacIkonaComponent } from '../../../dijeljeno/ui/ikone/novac-ikona/novac-ikona.component';
 import { ProfilIkonaComponent } from '../../../dijeljeno/ui/ikone/profil-ikona/profil-ikona.component';
 import { XpNapredakComponent } from '../../../dijeljeno/ui/xp-napredak/xp-napredak.component';
+import { HamburgerIkonaComponent } from '../../../dijeljeno/ui/ikone/hamburger-ikona/hamburger-ikona.component';
+import { ZatovriIkonaComponent } from '../../../dijeljeno/ui/ikone/zatovri-ikona/zatovri-ikona.component';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-navigacija',
@@ -15,6 +18,8 @@ import { XpNapredakComponent } from '../../../dijeljeno/ui/xp-napredak/xp-napred
     KrozHrvatskuLogoIkonaComponent,
     NovacIkonaComponent,
     XpNapredakComponent,
+    HamburgerIkonaComponent,
+    ZatovriIkonaComponent,
   ],
   templateUrl: './navigacija.component.html',
   styleUrl: './navigacija.component.scss',
@@ -22,8 +27,10 @@ import { XpNapredakComponent } from '../../../dijeljeno/ui/xp-napredak/xp-napred
 export class NavigacijaComponent {
   readonly authStanje = inject(AuthStanjeService);
   readonly profilStanje = inject(ProfilStanjeService);
+  private readonly document = inject(DOCUMENT);
 
   izbornikOtvoren = signal(false);
+  mobilniIzbornikOtvoren = signal(false);
 
   promijeniStanjeIzbornika(): void {
     this.izbornikOtvoren.update((otvoren) => !otvoren);
@@ -31,6 +38,16 @@ export class NavigacijaComponent {
 
   zatvoriIzbornik(): void {
     this.izbornikOtvoren.set(false);
+  }
+
+  otovriMobilniIzbornik(): void {
+    this.mobilniIzbornikOtvoren.set(true);
+    this.document.body.classList.add('body--bez-scrolla');
+  }
+
+  zatovriMobilniIzbornik(): void {
+    this.mobilniIzbornikOtvoren.set(false);
+    this.document.body.classList.remove('body--bez-scrolla');
   }
 
   ngOnInit(): void {
@@ -41,6 +58,7 @@ export class NavigacijaComponent {
 
   odjava(): void {
     this.zatvoriIzbornik();
+    this.zatovriMobilniIzbornik();
     this.authStanje.odjava();
   }
 }
