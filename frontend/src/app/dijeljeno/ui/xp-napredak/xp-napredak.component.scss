@@ -1,0 +1,40 @@
+.xp-napredak {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.xp-napredak__zaglavlje {
+  display: flex;
+  align-items: baseline;
+  gap: 2rem;
+}
+
+.xp-napredal__razina {
+  margin: 0;
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  letter-spacing: 0.08rem;
+  text-transform: uppercase;
+  color: var(--clr-primarna-800);
+}
+
+.xp-napredak__vrijednost {
+  margin: 0;
+  font-size: var(--fs-lg);
+  color: var(--clr-text);
+}
+
+.xp-napredak__traka {
+  width: 100%;
+  height: 5px;
+  overflow: hidden;
+  border-radius: var(--radius-zaobljeno);
+  background: hsl(from var(--clr-povrsina-prigusen) h s l / 0.3);
+}
+
+.xp-napredak__ispuna {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--clr-sekundarna-300);
+  transition: width 300ms ease-out;
+}

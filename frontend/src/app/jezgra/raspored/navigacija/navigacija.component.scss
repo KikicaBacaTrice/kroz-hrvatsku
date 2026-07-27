@@ -1,3 +1,5 @@
+@use "../../../../stilovi/postavke" as postavke;
+
 .navigacija {
   background-color: var(--clr-primarna-600);
   padding: 1rem 2rem;
@@ -48,6 +50,105 @@
   &:has(.navigacija__link:hover)::after {
     bottom: anchor(bottom);
     opacity: 0.75;
+  }
+}
+
+.navigacija__korisnik {
+  position: relative;
+}
+
+.navigacija__korisnik-virtulani-novac {
+  background: hsl(from var(--clr-primarna-300) h s l / 0.3);
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-md);
+  position: relative;
+
+  &::after {
+    content: "Virtualni novac";
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.25rem;
+    border-radius: var(--radius-sm);
+    background: hsl(from var(--clr-primarna-800) h s l / 1);
+    color: var(--clr-neutral-400);
+    font-size: var(--fs-xs);
+    width: max-content;
+    opacity: 0;
+    user-select: none;
+    transition: opacity 200ms ease-in-out;
+  }
+
+  &:hover::after {
+    opacity: 0.9;
+  }
+
+  span {
+    color: white;
+    user-select: none;
+  }
+}
+
+.navigacija__korisnik-gumb {
+  display: flex;
+  align-items: center;
+  gap: 0.75;
+  color: inherit;
+}
+
+.navigacija__korisnik-slika,
+.navigacija__korisnik-slika-prvo-slovo {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-zaobljeno);
+}
+
+.navigacija__korisnik-slika-prvo-slovo {
+  display: grid;
+  place-items: center;
+
+  font-family: postavke.$ff-naslovi;
+  font-weight: postavke.$fw-bold;
+  background-color: var(--clr-sekundarna-300);
+  color: var(--clr-primarna-600);
+  font-size: 1.5rem;
+  padding: 0.5rem;
+}
+
+.navigacija__korisnik-izbornik {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  right: 0;
+  z-index: 20;
+
+  min-width: 12rem;
+  padding: 0.5rem;
+  border-radius: var(--radius-md);
+  background: var(--clr-povrsina);
+  color: var(--clr-text);
+  box-shadow: var(--shadow-lg);
+}
+
+.navigacija__korisnik-ime {
+  padding: 0.5rem 0.75rem;
+  margin: 0;
+  font-weight: 700;
+  color: var(--clr-text);
+}
+
+.navigacija__korisnik-izbornik-link {
+  display: block;
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  border-radius: var(--radius-sm);
+  text-align: left;
+  color: var(--clr-text);
+  text-decoration: none;
+  font-size: var(--fs-sm);
+
+  &:hover {
+    background: var(--clr-povrsina-prigusen);
   }
 }
 

@@ -32,8 +32,55 @@
   </div>
 
   <div class="navigacija__autentikacija-spremnik">
-    @if (authStanje.prijavljen()) {
-      <button type="button" (click)="odjava()">Odjava</button>
+    @if (authStanje.prijavljen() && profilStanje.profil(); as profil) {
+      <div class="o-flex o-flex-lg | navigacija__korisnik">
+        <div class="o-flex o-flex-sm | navigacija__korisnik-virtulani-novac">
+          <app-novac-ikona boja="#fff" />
+          <span> {{ profil.virtualniNovac }}</span>
+        </div>
+        <app-xp-napredak [razina]="profil.razina" [xp]="profil.xpBodovi" />
+        <button
+          type="button"
+          class="navigacija__korisnik_gumb"
+          (click)="promijeniStanjeIzbornika()"
+        >
+          @if (profil.profilnaSlikaUrl) {
+            <img
+              [src]="profil.profilnaSlikaUrl"
+              alt="profil.korisnik.korisnickoIme"
+              class="navigacija__korisnik_slika"
+            />
+          } @else {
+            <span class="navigacija__korisnik-slika-prvo-slovo">
+              {{ profil.korisnik.korisnickoIme.charAt(0).toUpperCase() }}
+            </span>
+          }
+        </button>
+
+        @if (izbornikOtvoren()) {
+          <div class="navigacija__korisnik-izbornik" role="menu">
+            <p class="navigacija__korisnik-ime">
+              {{ profil.korisnik.korisnickoIme }}
+            </p>
+            <a
+              routerLink="/profil"
+              role="menuitem"
+              class="navigacija__korisnik-izbornik-link"
+              (click)="zatvoriIzbornik()"
+            >
+              Profil</a
+            >
+            <a
+              type="button"
+              role="menuitme"
+              class="navigacija__korisnik-izbornik-link"
+              (click)="odjava()"
+            >
+              Odjava
+            </a>
+          </div>
+        }
+      </div>
     } @else {
       <a
         routerLink="/autentikacija"
