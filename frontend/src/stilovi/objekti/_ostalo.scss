@@ -1,0 +1,43 @@
+.o-pokrov {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.o-sloj {
+  position: absolute;
+  inset: 0;
+}
+
+.o-stog {
+  display: grid;
+  gap: var(--stog-gap, 1rem);
+
+  &--start {
+    justify-items: start;
+  }
+}
+
+.o-klaster {
+  display: flex;
+  align-items: center;
+  gap: var(--klaster-gap, 1rem);
+}
+
+.o-input-okvir {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.o-podijeli {
+  display: grid;
+  grid-template-columns: var(--podijela-nacin, 1fr);
+  gap: var(--podijela-gap);
+}
+
+.o-centar {
+  display: grid;
+  place-items: center;
+}

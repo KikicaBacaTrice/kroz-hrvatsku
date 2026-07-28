@@ -1,15 +1,17 @@
-<section class="o-grid o-grid--centriraj | autentikacija">
+<section class="o-podijeli | autentikacija">
   @if (lokacije$ | async; as lokacije) {
     <app-autentikacija-carousel [lokacije]="lokacije" [apiUrl]="apiUrl" />
   }
 
-  <div class="autentikacija__spremnik">
+  <div class="o-centar | autentikacija__spremnik">
     <button class="autentikacija__strelica-povratak" (click)="idiNatrag()">
       <app-strelica-ikona [velicina]="32" />
     </button>
     <div class="autentikacija__panel">
-      <div class="autentikacija__logo-spremnik">
-        <app-kroz-hrvatsku-logo-ikona [sirinaLogo]="300" />
+      <div class="o-centar | autentikacija__logo-spremnik">
+        <a routerLink="/">
+          <app-kroz-hrvatsku-logo-ikona [sirinaLogo]="300" />
+        </a>
       </div>
       <router-outlet />
     </div>

@@ -12,23 +12,15 @@
 }
 
 .autentikacija-carousel {
-  &__spremnik {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    isolation: isolate;
+  isolation: isolate;
+  color: var(--clr-primarna-200);
 
-    @include alati.ekranManjiOd(postavke.$breakpoint-md) {
-      display: none;
-    }
+  @include alati.ekranManjiOd(postavke.$breakpoint-md) {
+    display: none;
   }
 
   &__slajd {
-    position: absolute;
-    inset: 0;
     z-index: 0;
-    overflow: hidden;
     transform: translateX(0);
   }
 
@@ -54,8 +46,6 @@
   }
 
   &__slika {
-    position: absolute;
-    inset: 0;
     z-index: 0;
     width: 100%;
     height: 100%;
@@ -67,10 +57,7 @@
     position: absolute;
     bottom: 1.5rem;
     z-index: 2;
-    display: grid;
-    justify-items: start;
     align-content: end;
-    gap: 1.5rem;
     min-height: inherit;
     padding: 2rem;
     color: var(--clr-primarna-200);
@@ -91,19 +78,16 @@
   }
 
   &__lokacija-sadrzaj-spremnik {
-    display: flex;
-    align-items: center;
+    --klaster-gap: 1.5rem;
+
     justify-content: center;
-    gap: 1.5rem;
-
     padding: 1rem;
-
     background: rgba(255, 255, 255, 0.3);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.39);
+    border: 1px solid rgba(255, 255, 255, 0.4);
 
     .odvojna-linija {
       align-self: stretch;
@@ -114,6 +98,8 @@
   }
 
   &__navigacija-spremnik {
+    --klaster-gap: 0.5rem;
+
     display: flex;
     align-items: center;
     justify-content: center;

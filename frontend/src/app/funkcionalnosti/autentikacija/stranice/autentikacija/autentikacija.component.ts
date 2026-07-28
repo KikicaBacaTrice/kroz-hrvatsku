@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { RouterOutlet, Router } from '@angular/router';
+import { RouterOutlet, Router, RouterLinkWithHref } from '@angular/router';
 import { AsyncPipe, Location } from '@angular/common';
 import { LokacijeHttpService } from '../../../lokacije/podaci/lokacije-http.service';
 import { API_URL } from '../../../../jezgra/konfiguracija/api.config';
@@ -15,6 +15,7 @@ import { AutentikacijaCarouselComponent } from '../../ui/autentikacija-carousel/
     KrozHrvatskuLogoIkonaComponent,
     StrelicaIkonaComponent,
     AutentikacijaCarouselComponent,
+    RouterLinkWithHref,
   ],
   templateUrl: './autentikacija.component.html',
   styleUrl: './autentikacija.component.scss',

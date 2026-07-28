@@ -1,14 +1,11 @@
-.c-forma {
-  &__kontrola-spremnik {
-    position: relative;
-  }
+.forma {
+  --stog-gap: 1rem;
+  width: 100%;
 
   &__ikona {
     position: absolute;
     left: 1rem;
-    top: 50%;
     z-index: 2;
-    transform: translateY(-50%);
     color: var(--clr-text-prigusen);
     pointer-events: none;
   }

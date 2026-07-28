@@ -2,28 +2,26 @@
 @use "../../../../../stilovi/alati" as alati;
 
 .autentikacija {
+  --podijela-nacin: 60% 40%;
   height: 100svh;
-  grid-template-columns: 60% 40%;
-  gap: 0;
 
   @include alati.ekranManjiOd(postavke.$breakpoint-lg) {
-    grid-template-columns: 50% 50%;
+    --podijela-nacin: 50% 50%;
   }
   @include alati.ekranManjiOd(postavke.$breakpoint-md) {
-    grid-template-columns: 1fr;
+    --podijela-nacin: 1fr;
   }
 }
 
 .autentikacija__spremnik {
+  position: relative;
   width: 100%;
   height: 100%;
   padding-inline: 3rem;
-  display: grid;
-  align-items: center;
+
   @include alati.ekranManjiOd(postavke.$breakpoint-md) {
     grid-column: 1;
   }
-  position: relative;
 }
 
 .autentikacija__strelica-povratak {
@@ -35,11 +33,8 @@
 
 .autentikacija__panel {
   width: min(100%, 24rem);
-  justify-self: center;
 }
 
 .autentikacija__logo-spremnik {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin-block-end: 1.5rem;
 }

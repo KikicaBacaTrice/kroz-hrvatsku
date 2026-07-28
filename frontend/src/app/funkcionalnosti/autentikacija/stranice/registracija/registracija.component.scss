@@ -1,14 +1,14 @@
 .registracija-forma {
   &__spremnik {
+    --stog-gap: 1.5rem;
+
     p {
       font-size: var(--fs-sm);
     }
   }
 
   &__spremnik-tekst {
-    margin-block: 2rem;
-    display: grid;
-    gap: 0.25rem;
+    --stog-gap: 0.25rem;
 
     h4 {
       font-size: var(--fs-xl);

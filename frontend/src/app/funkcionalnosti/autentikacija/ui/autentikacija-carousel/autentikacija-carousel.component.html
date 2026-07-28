@@ -1,7 +1,7 @@
-<div class="autentikacija-carousel__spremnik">
+<div class="o-pokrov | autentikacija-carousel">
   @for (lokacija of lokacije(); track lokacija.lokacijaId; let i = $index) {
     <div
-      class="autentikacija-carousel__slajd"
+      class="o-sloj | autentikacija-carousel__slajd"
       [class.autentikacija-carousel__slajd--aktivan]="i === aktivniIndex"
       [class.autentikacija-carousel__slajd--prethodni]="i === prethodniIndex"
     >
@@ -9,11 +9,11 @@
         <img
           [src]="apiUrl() + lokacija.slikeLokacije[0].putanjaSlike"
           [alt]="lokacija.slikeLokacije[0].opisSlike || lokacija.naziv"
-          class="autentikacija-carousel__slika"
+          class="o-sloj | autentikacija-carousel__slika"
         />
       }
 
-      <div class="autentikacija-carousel__sadrzaj">
+      <div class="o-stog o-stog--start | autentikacija-carousel__sadrzaj">
         <div>
           <h3>{{ lokacija.naziv }}</h3>
           <p class="autentikacija-carousel__sadrzaj-opis-lokacija">
@@ -25,7 +25,9 @@
           </p>
         </div>
 
-        <div class="autentikacija-carousel__lokacija-sadrzaj-spremnik">
+        <div
+          class="o-klaster | autentikacija-carousel__lokacija-sadrzaj-spremnik"
+        >
           <div class="lokacija-naziv">
             <p>NOVAC</p>
             <h4>+{{ lokacija.nagradaValuta }}</h4>
@@ -44,7 +46,7 @@
       </div>
     </div>
   }
-  <div class="autentikacija-carousel__navigacija-spremnik">
+  <div class="o-klaster | autentikacija-carousel__navigacija-spremnik">
     @for (lokacija of lokacije(); track lokacija.lokacijaId; let i = $index) {
       <span
         class="autentikacija-carousel__navigacija-tocka"
