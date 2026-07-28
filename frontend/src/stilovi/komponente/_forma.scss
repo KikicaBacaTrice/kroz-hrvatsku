@@ -9,6 +9,7 @@
 
   &__label {
     color: var(--clr-text);
+    font-weight: 500;
   }
 
   &__kontrola {
@@ -27,6 +28,6 @@
 
   &__pogreska {
     color: var(--clr-opasnot);
-    font-size: 0.875rem;
+    font-size: var(--fs-sm);
   }
 }

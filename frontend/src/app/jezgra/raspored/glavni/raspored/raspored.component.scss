@@ -1,0 +1,9 @@
+main {
+  min-height: 200vh;
+}
+
+.zaglavlje-stranice {
+  position: sticky;
+  inset: -150px 0 0 0;
+  z-index: 1000;
+}

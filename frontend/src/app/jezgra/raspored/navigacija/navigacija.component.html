@@ -1,19 +1,110 @@
-<header>
-  <a routerLink="/">KrozHrvatsku</a>
+<nav class="o-klaster o-klaster--between | navigacija">
+  <div class="navigacija__logo-spremnik">
+    <a routerLink="/">
+      <app-kroz-hrvatsku-logo-ikona sirinaLogo="150" [jeInverz]="true" />
+    </a>
+  </div>
 
-  <nav>
-    <a
-      routerLink="/"
-      routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: true }"
-      >Počenta</a
-    >
-    <a routerLink="/lokacije" routerLinkActive="active">Lokacije</a>
-    <a routerLink="/profil" routerLinkActive="active">Profil</a>
-    @if (authStanje.prijavljen()) {
-      <button type="button" (click)="odjava()">Odjava</button>
+  <div class="navigacija__linkovi-spremnik">
+    <ul class="o-klaster o-lista-pocetno | navigacija__linkovi-lista">
+      <li class="navigacija__stavka">
+        <a
+          routerLink="/lokacije"
+          routerLinkActive="active"
+          class="navigacija__link"
+          >Lokacije</a
+        >
+      </li>
+      <li class="navigacija__stavka">
+        <a
+          routerLink="/profil"
+          routerLinkActive="active"
+          class="navigacija__link"
+          >Profil</a
+        >
+      </li>
+      <li class="navigacija__stavka">
+        <a routerLink="/" routerLinkActive="active" class="navigacija__link"
+          >Dostignuća</a
+        >
+      </li>
+    </ul>
+  </div>
+
+  <div class="navigacija__autentikacija-spremnik">
+    @if (authStanje.prijavljen() && profilStanje.profil(); as profil) {
+      <div class="o-klaster | navigacija__korisnik">
+        <div class="o-klaster | navigacija__korisnik-virtulani-novac">
+          <app-novac-ikona boja="#fff" velicina="20" />
+          <span> {{ profil.virtualniNovac }}</span>
+        </div>
+
+        <app-xp-napredak [razina]="profil.razina" [xp]="profil.xpBodovi" />
+
+        <button
+          type="button"
+          class="navigacija__korisnik_gumb"
+          (click)="promijeniStanjeIzbornika()"
+        >
+          @if (profil.profilnaSlikaUrl) {
+            <img
+              [src]="profil.profilnaSlikaUrl"
+              alt="profil.korisnik.korisnickoIme"
+              class="navigacija__korisnik_slika"
+            />
+          } @else {
+            <span class="navigacija__korisnik-slika-prvo-slovo">
+              {{ profil.korisnik.korisnickoIme.charAt(0).toUpperCase() }}
+            </span>
+          }
+        </button>
+
+        @if (izbornikOtvoren()) {
+          <div class="navigacija__korisnik-izbornik" role="menu">
+            <p class="navigacija__korisnik-ime">
+              {{ profil.korisnik.korisnickoIme }}
+            </p>
+            <a
+              routerLink="/profil"
+              role="menuitem"
+              class="navigacija__korisnik-izbornik-link"
+              (click)="zatvoriIzbornik()"
+            >
+              Profil</a
+            >
+            <a
+              type="button"
+              role="menuitme"
+              class="navigacija__korisnik-izbornik-link"
+              (click)="odjava()"
+            >
+              Odjava
+            </a>
+          </div>
+        }
+      </div>
     } @else {
-      <a routerLink="/autentikacija" routerLinkActive="active">Prijava</a>
+      <a
+        routerLink="/autentikacija"
+        routerLinkActive="active"
+        class="c-button c-button--primarna-inverz"
+        >Prijava</a
+      >
     }
-  </nav>
-</header>
+  </div>
+  <button
+    type="button"
+    class="navigacija__hamburger"
+    (click)="otovriMobilniIzbornik()"
+  >
+    <app-hamburger-ikona boja="#e7f9f3" velicina="48" />
+  </button>
+</nav>
+
+<app-mobilni-izbornik
+  [otvoren]="mobilniIzbornikOtvoren()"
+  [prijavljen]="authStanje.prijavljen()"
+  [profil]="profilStanje.profil()"
+  (zatvori)="zatovriMobilniIzbornik()"
+  (odjava)="odjava()"
+/>

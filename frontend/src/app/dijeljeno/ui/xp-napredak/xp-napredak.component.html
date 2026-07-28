@@ -1,0 +1,10 @@
+<div class="xp-napredak">
+  <div class="xp-napredak__zaglavlje">
+    <p class="xp-napredak__razina">RAZINA {{ razina() }}</p>
+    <p class="xp-napredak__vrijednost">{{ xp() }}/100</p>
+  </div>
+
+  <div class="xp-napredak__traka">
+    <div class="xp-napredak__ispuna" [style.width.%]="postotakXp()"></div>
+  </div>
+</div>

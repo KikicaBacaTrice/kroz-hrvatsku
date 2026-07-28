@@ -1,13 +1,13 @@
-<form class="c-forma" #forma="ngForm" (ngSubmit)="posalji(forma)">
+<form class="o-stog c-forma" #forma="ngForm" (ngSubmit)="posalji(forma)">
   <div class="c-forma__group">
     <label for="email" class="c-forma__label">Email</label>
-    <div class="c-forma__kontrola-spremnik">
-      <app-email-ikona class="c-forma__ikona" />
+    <div class="o-input-okvir | forma__kontrola-spremnik">
+      <app-email-ikona class="forma__ikona" />
       <input
         type="email"
         id="email"
         name="email"
-        class="c-forma__kontrola c-forma__kontrola--s-ikonom"
+        class="c-forma__kontrola | forma__kontrola--s-ikonom"
         required
         email
         pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
@@ -22,14 +22,14 @@
   </div>
   <div class="c-forma__group">
     <label for="lozinka" class="c-forma__label">Lozinka</label>
-    <div class="c-forma__kontrola-spremnik">
-      <app-lozinka-ikona class="c-forma__ikona" />
+    <div class="o-input-okvir | forma__kontrola-spremnik">
+      <app-lozinka-ikona class="forma__ikona" />
 
       <input
         type="password"
         id="lozinka"
         name="lozinka"
-        class="c-forma__kontrola c-forma__kontrola--s-ikonom"
+        class="c-forma__kontrola | forma__kontrola--s-ikonom"
         required
         minlength="6"
         [(ngModel)]="model.lozinka"

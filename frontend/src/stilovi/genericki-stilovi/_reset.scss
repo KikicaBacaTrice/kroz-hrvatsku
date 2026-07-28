@@ -17,9 +17,11 @@ dd {
   margin: 0;
 }
 
-ul[role="list"],
-ol[role="list"] {
+ul,
+ol {
   list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 html:focus-within {
@@ -30,6 +32,11 @@ body {
   min-height: 100vh;
   text-rendering: optimizeSpeed;
   line-height: 1.5;
+
+  &.body--bez-scrolla {
+    overflow: hidden;
+    touch-action: none;
+  }
 }
 
 a {

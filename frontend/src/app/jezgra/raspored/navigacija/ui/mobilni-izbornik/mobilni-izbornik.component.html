@@ -1,0 +1,75 @@
+<div class="mobilni-izbornik" [class.mobilni-izbornik--otvoren]="otvoren()">
+  <div class="mobilni-izbornik__pozadina" (click)="zatovriIzbornik()"></div>
+
+  <aside class="o-stog | mobilni-izbornik__panel">
+    <div class="o-klaster o-klaster--between | mobilni-izbornik__zaglavlje">
+      <h2>Izbornik</h2>
+      <button
+        type="button"
+        class="mobilni-izbornik__zatvori"
+        (click)="zatovriIzbornik()"
+      >
+        <app-zatovri-ikona />
+      </button>
+    </div>
+
+    @if (prijavljen() && profil(); as profil) {
+      <div class="o-stog | mobilni-izbornik__profil">
+        @if (profil.profilnaSlikaUrl) {
+          <img
+            [src]="profil.profilnaSlikaUrl"
+            alt="profil.korisnik.korisnickoIme"
+            class="navigacija__mobilni-izbornik-slika"
+          />
+        } @else {
+          <span class="navigacija__mobilni-izbornik-slika-prvo-slovo">
+            {{ profil.korisnik.korisnickoIme.charAt(0).toUpperCase() }}
+          </span>
+        }
+
+        <h3>{{ profil.korisnik.korisnickoIme }}</h3>
+        <p>Istraživač</p>
+
+        <app-xp-napredak [razina]="profil.razina" [xp]="profil.xpBodovi" />
+
+        <div class="o-klaster | mobilni-izbornik__novac">
+          <app-novac-ikona boja="#fff" />
+          <span> {{ profil.virtualniNovac }} novčića</span>
+        </div>
+      </div>
+    }
+
+    <ul class="o-stog o-lista-pocetno | mobilni-izbornik__lista">
+      <li>
+        <a routerLink="/" (click)="zatovriIzbornik()">Početna</a>
+      </li>
+      <li>
+        <a routerLink="/lokacije" (click)="zatovriIzbornik()">Lokacije</a>
+      </li>
+      <li>
+        <a routerLink="/profil" (click)="zatovriIzbornik()">Profil</a>
+      </li>
+      <li>
+        <a routerLink="/" (click)="zatovriIzbornik()">Dostignuća</a>
+      </li>
+    </ul>
+
+    @if (prijavljen()) {
+      <button
+        type="button"
+        class="c-button c-button--sekundarna | mobilni-izbornik__odjava"
+        (click)="odjavaKorisnik()"
+      >
+        Odjava
+      </button>
+    } @else {
+      <a
+        type="button"
+        routerLink="/autentikacija"
+        class="c-button c-button--sekundarna | mobilni-izbornik__prijava"
+        (click)="zatovriIzbornik()"
+        >Prijava</a
+      >
+    }
+  </aside>
+</div>

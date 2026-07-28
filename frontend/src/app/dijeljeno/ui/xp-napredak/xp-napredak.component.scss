@@ -1,0 +1,48 @@
+.xp-napredak {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.xp-napredak__zaglavlje {
+  --zaglavlje-font-size: var(--fs-rg);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.xp-napredak__razina {
+  margin: 0;
+  font-size: var(--zaglavlje-font-size);
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--clr-text-prigusen);
+}
+
+.xp-napredak__vrijednost {
+  margin: 0;
+  font-size: var(--zaglavlje-font-size);
+  color: var(--clr-text-prigusen);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.xp-napredak__traka {
+  width: 100%;
+  height: 5px;
+  overflow: hidden;
+  border-radius: var(--radius-zaobljeno);
+  background: hsl(from var(--clr-povrsina-prigusen) h s l / 0.9);
+}
+
+.xp-napredak__ispuna {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--clr-sekundarna-300);
+  background-image: linear-gradient(
+    to right,
+    hsl(from var(--clr-sekundarna-300) h s 90%),
+    var(--clr-sekundarna-300)
+  );
+  transition: width 300ms ease-out;
+}

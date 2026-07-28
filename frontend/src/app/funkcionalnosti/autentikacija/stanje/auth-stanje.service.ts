@@ -4,6 +4,7 @@ import { TokenSpremisteService } from '../../../jezgra/autentikacija/token-sprem
 import { Router } from '@angular/router';
 import { PrijavaZahtjev, RegistracijaZahtjev } from '../modeli/auth.model';
 import { tap } from 'rxjs';
+import { ProfilStanjeService } from '../../profil/stanje/profil-stanje.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +13,7 @@ export class AuthStanjeService {
   private readonly authHttp = inject(AuthHttpService);
   private readonly tokenSpremiste = inject(TokenSpremisteService);
   private readonly router = inject(Router);
+  private readonly profilStanje = inject(ProfilStanjeService);
 
   readonly prijavljen = signal(this.tokenSpremiste.jePrijavljen());
 
@@ -30,6 +32,7 @@ export class AuthStanjeService {
       tap((odgovor) => {
         this.tokenSpremiste.spremiToken(odgovor.accessToken);
         this.prijavljen.set(true);
+        this.profilStanje.ucitajMojProfil();
         this.router.navigate(['/']);
       }),
     );
@@ -38,6 +41,7 @@ export class AuthStanjeService {
   odjava(): void {
     this.tokenSpremiste.obrisiToken();
     this.prijavljen.set(false);
+    this.profilStanje.ucitajMojProfil();
     this.router.navigate(['/autentikacija/prijava']);
   }
 }

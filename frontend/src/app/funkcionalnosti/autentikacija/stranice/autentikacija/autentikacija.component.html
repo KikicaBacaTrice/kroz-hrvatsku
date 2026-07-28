@@ -1,78 +1,17 @@
-<section class="o-grid o-grid--centriraj | autentikacija">
-  <div class="autentikacija-carousel__spremnik">
-    @if (lokacije$ | async; as lokacije) {
-      @for (lokacija of lokacije; track lokacija.lokacijaId; let i = $index) {
-        <div
-          class="autentikacija-carousel__slajd"
-          [class.autentikacija-carousel__slajd--aktivan]="i === aktivniIndex"
-          [class.autentikacija-carousel__slajd--prethodni]="
-            i === prethodniIndex
-          "
-        >
-          @if (lokacija.slikeLokacije[0]) {
-            <img
-              [src]="apiUrl + lokacija.slikeLokacije[0].putanjaSlike"
-              [alt]="lokacija.slikeLokacije[0].opisSlike || lokacija.naziv"
-              class="autentikacija-carousel__slika"
-            />
-          }
+<section class="o-podijeli | autentikacija">
+  @if (lokacije$ | async; as lokacije) {
+    <app-autentikacija-carousel [lokacije]="lokacije" [apiUrl]="apiUrl" />
+  }
 
-          <div class="autentikacija-carousel__sadrzaj">
-            <div>
-              <h3>{{ lokacija.naziv }}</h3>
-              <p class="autentikacija-carousel__sadrzaj-opis-lokacija">
-                {{
-                  lokacija.opis
-                    ? lokacija.opis
-                    : "Postijeti ovu lokaciju i osvoji vrijedne nagrade"
-                }}
-              </p>
-            </div>
-
-            <div class="autentikacija-carousel__lokacija-sadrzaj-spremnik">
-              <div class="lokacija-naziv">
-                <p>NOVAC</p>
-                <h4>+{{ lokacija.nagradaValuta }}</h4>
-              </div>
-              <div class="odvojna-linija"></div>
-              <div class="lokacija-xp">
-                <p>XP</p>
-                <h4>+{{ lokacija.nagradaXp }}</h4>
-              </div>
-              <div class="odvojna-linija"></div>
-              <div class="lokacija-postignuce">
-                <p>KATEGORIJA</p>
-                <h4>{{ lokacija.kategorija.naziv }}</h4>
-              </div>
-            </div>
-          </div>
-        </div>
-      }
-      <div class="autentikacija-carousel__navigacija-spremnik">
-        @for (lokacija of lokacije; track lokacija.lokacijaId; let i = $index) {
-          <span
-            class="autentikacija-carousel__navigacija-tocka"
-            [class.autentikacija-carousel__navigacija-tocka--aktivna]="
-              i === aktivniIndex
-            "
-          ></span>
-        }
-      </div>
-
-      <button
-        type="button"
-        class="autentikacija-carousel__gumb-sljedeci"
-        (click)="sljedeci(lokacije.length)"
-        aria-label="Sljedeća lokacija"
-      >
-        <app-prethodni-sljedeci-ikona [velicina]="40" />
-      </button>
-    }
-  </div>
-  <div class="autentikacija__spremnik">
+  <div class="o-centar | autentikacija__spremnik">
+    <button class="autentikacija__strelica-povratak" (click)="idiNatrag()">
+      <app-strelica-ikona [velicina]="32" />
+    </button>
     <div class="autentikacija__panel">
-      <div class="autentikacija__logo-spremnik">
-        <app-kroz-hrvatsku-logo-ikona [sirinaLogo]="300" />
+      <div class="o-centar | autentikacija__logo-spremnik">
+        <a routerLink="/">
+          <app-kroz-hrvatsku-logo-ikona [sirinaLogo]="300" />
+        </a>
       </div>
       <router-outlet />
     </div>

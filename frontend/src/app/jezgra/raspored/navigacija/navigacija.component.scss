@@ -1,0 +1,208 @@
+@use "../../../../stilovi/postavke" as postavke;
+@use "../../../../stilovi/alati" as alati;
+
+.navigacija {
+  background-color: var(--clr-primarna-600);
+  padding: 1rem 2rem;
+  color: var(--clr-primarna-200);
+
+  width: 100%;
+  margin-inline: auto;
+  box-shadow: var(--shadow-lg);
+
+  animation: navigacija-udi both;
+  animation-timeline: scroll();
+  animation-range-start: 150px;
+  animation-range-end: 400px;
+}
+
+.navigacija__linkovi-lista {
+  --klaster-gap: 0.5rem anchor-name: --lebdeci-link;
+}
+
+.navigacija__link {
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  color: inherit;
+
+  &:hover {
+    anchor-name: --lebdeci-link;
+  }
+}
+
+.navigacija__linkovi-spremnik {
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: anchor(left);
+    right: anchor(right);
+    bottom: calc(anchor(bottom) - 0.5rem);
+    position-anchor: --lebdeci-link;
+    height: 3px;
+    background: var(--clr-primarna-200);
+    border-radius: var(--radius-zaobljeno);
+    opacity: 0;
+    transition: all 250ms ease-out;
+  }
+
+  &:has(.navigacija__link:hover)::after {
+    bottom: anchor(bottom);
+    opacity: 0.75;
+  }
+}
+
+.navigacija__korisnik {
+  position: relative;
+}
+
+.navigacija__korisnik-virtulani-novac {
+  --klaster-gap: 0.5rem;
+
+  background: hsl(from var(--clr-primarna-300) h s l / 0.3);
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-md);
+  font-size: var(--fs-rg);
+  position: relative;
+
+  &::after {
+    content: "Virtualni novac";
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.25rem;
+    border-radius: var(--radius-sm);
+    background: hsl(from var(--clr-primarna-800) h s l / 1);
+    color: var(--clr-neutral-400);
+    font-size: var(--fs-xs);
+    width: max-content;
+    opacity: 0;
+    user-select: none;
+    transition: opacity 200ms ease-in-out;
+  }
+
+  &:hover::after {
+    opacity: 0.9;
+  }
+
+  span {
+    color: white;
+    user-select: none;
+  }
+}
+
+@media (max-width: 1100px) {
+  .navigacija__korisnik-virtulani-novac,
+  .navigacija app-xp-napredak {
+    animation: navigacija-statistika-izadi both;
+    animation-timeline: scroll();
+    animation-range-start: 150px;
+    animation-range-end: 400px;
+  }
+}
+
+.navigacija__korisnik-gumb {
+  display: flex;
+  align-items: center;
+  gap: 0.75;
+  color: inherit;
+}
+
+.navigacija__korisnik-slika,
+.navigacija__korisnik-slika-prvo-slovo {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-zaobljeno);
+}
+
+.navigacija__korisnik-slika-prvo-slovo {
+  display: grid;
+  place-items: center;
+
+  font-family: postavke.$ff-naslovi;
+  font-weight: postavke.$fw-bold;
+  background-color: var(--clr-sekundarna-300);
+  color: var(--clr-primarna-600);
+  font-size: 1.5rem;
+  padding: 0.5rem;
+}
+
+.navigacija__korisnik-izbornik {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  right: 0;
+  z-index: 20;
+
+  min-width: 12rem;
+  padding: 0.5rem;
+  border-radius: var(--radius-md);
+  background: var(--clr-povrsina);
+  color: var(--clr-text);
+  box-shadow: var(--shadow-lg);
+}
+
+.navigacija__korisnik-ime {
+  padding: 0.5rem 0.75rem;
+  margin: 0;
+  font-weight: 700;
+  color: var(--clr-text);
+}
+
+.navigacija__korisnik-izbornik-link {
+  display: block;
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  border-radius: var(--radius-sm);
+  text-align: left;
+  color: var(--clr-text);
+  text-decoration: none;
+  font-size: var(--fs-sm);
+
+  &:hover {
+    background: var(--clr-povrsina-prigusen);
+  }
+}
+
+@keyframes navigacija-udi {
+  100% {
+    width: calc(100% - 5rem);
+    border-radius: var(--radius-zaobljeno);
+    translate: 0 175px; // preko sticky se zalijepi na -150px, a ovo ga spusti za 175px s 25px margine
+  }
+}
+@keyframes navigacija-statistika-izadi {
+  50% {
+    opacity: 0;
+    visibility: hidden;
+    max-width: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+    max-width: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+}
+
+.navigacija__hamburger {
+  display: none;
+}
+
+@include alati.ekranManjiOd(56.25rem) {
+  .navigacija__linkovi-spremnik,
+  .navigacija__autentikacija-spremnik {
+    display: none;
+  }
+
+  .navigacija__hamburger {
+    display: block;
+  }
+}
