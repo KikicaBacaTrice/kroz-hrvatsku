@@ -25,10 +25,9 @@
   width: min(100%, 28rem);
   height: 100%;
   overflow-y: auto;
-  display: grid;
   align-content: start;
-  gap: 1.5rem;
   padding: 1.25rem;
+
   background: var(--clr-pozadina);
   color: var(--clr-text);
   box-shadow: var(--shadow-lg);
@@ -49,10 +48,6 @@
 }
 
 .mobilni-izbornik__zaglavlje {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
   h2 {
     margin: 0;
   }
@@ -64,9 +59,7 @@
 }
 
 .mobilni-izbornik__profil {
-  display: grid;
   justify-items: center;
-  gap: 0.5rem;
   text-align: center;
 }
 
@@ -96,12 +89,6 @@
 }
 
 .mobilni-izbornik__lista {
-  display: grid;
-  gap: 0.35rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-
   a {
     display: block;
     padding: 0.85rem 1rem;

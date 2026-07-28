@@ -1,4 +1,4 @@
-<nav class="navigacija">
+<nav class="o-klaster o-klaster--between | navigacija">
   <div class="navigacija__logo-spremnik">
     <a routerLink="/">
       <app-kroz-hrvatsku-logo-ikona sirinaLogo="150" [jeInverz]="true" />
@@ -6,7 +6,7 @@
   </div>
 
   <div class="navigacija__linkovi-spremnik">
-    <ul class="navigacija__linkovi-lista">
+    <ul class="o-klaster o-lista-pocetno | navigacija__linkovi-lista">
       <li class="navigacija__stavka">
         <a
           routerLink="/lokacije"
@@ -33,8 +33,8 @@
 
   <div class="navigacija__autentikacija-spremnik">
     @if (authStanje.prijavljen() && profilStanje.profil(); as profil) {
-      <div class="o-flex o-flex-lg | navigacija__korisnik">
-        <div class="o-flex | navigacija__korisnik-virtulani-novac">
+      <div class="o-klaster | navigacija__korisnik">
+        <div class="o-klaster | navigacija__korisnik-virtulani-novac">
           <app-novac-ikona boja="#fff" velicina="20" />
           <span> {{ profil.virtualniNovac }}</span>
         </div>

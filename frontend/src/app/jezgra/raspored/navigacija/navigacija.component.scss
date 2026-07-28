@@ -2,14 +2,12 @@
 @use "../../../../stilovi/alati" as alati;
 
 .navigacija {
-  width: 100%;
-  margin-inline: auto;
   background-color: var(--clr-primarna-600);
   padding: 1rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   color: var(--clr-primarna-200);
+
+  width: 100%;
+  margin-inline: auto;
   box-shadow: var(--shadow-lg);
 
   animation: navigacija-udi both;
@@ -19,9 +17,7 @@
 }
 
 .navigacija__linkovi-lista {
-  list-style: none;
-  display: flex;
-  anchor-name: --lebdeci-link;
+  --klaster-gap: 0.5rem anchor-name: --lebdeci-link;
 }
 
 .navigacija__link {
@@ -63,12 +59,13 @@
 }
 
 .navigacija__korisnik-virtulani-novac {
+  --klaster-gap: 0.5rem;
+
   background: hsl(from var(--clr-primarna-300) h s l / 0.3);
   padding: 0.5rem 0.75rem;
   border-radius: var(--radius-md);
   font-size: var(--fs-rg);
   position: relative;
-  gap: 0.5rem;
 
   &::after {
     content: "Virtualni novac";
