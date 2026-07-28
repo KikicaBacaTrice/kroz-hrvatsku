@@ -2,6 +2,8 @@
 @use "../../../../stilovi/alati" as alati;
 
 .navigacija {
+  width: 100%;
+  margin-inline: auto;
   background-color: var(--clr-primarna-600);
   padding: 1rem 2rem;
   display: flex;
@@ -62,7 +64,9 @@
   background: hsl(from var(--clr-primarna-300) h s l / 0.3);
   padding: 0.5rem 0.75rem;
   border-radius: var(--radius-md);
+  font-size: var(--fs-rg);
   position: relative;
+  gap: 0.5rem;
 
   &::after {
     content: "Virtualni novac";
@@ -88,6 +92,16 @@
   span {
     color: white;
     user-select: none;
+  }
+}
+
+@media (max-width: 1100px) {
+  .navigacija__korisnik-virtulani-novac,
+  .navigacija app-xp-napredak {
+    animation: navigacija-statistika-izadi both;
+    animation-timeline: scroll();
+    animation-range-start: 150px;
+    animation-range-end: 400px;
   }
 }
 
@@ -155,14 +169,30 @@
 
 @keyframes navigacija-udi {
   100% {
+    width: calc(100% - 5rem);
     border-radius: var(--radius-zaobljeno);
     translate: 0 175px; // preko sticky se zalijepi na -150px, a ovo ga spusti za 175px s 25px margine
-    position: relative;
-    margin: 0 5rem;
+  }
+}
+@keyframes navigacija-statistika-izadi {
+  50% {
+    opacity: 0;
+    visibility: hidden;
+    max-width: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+    max-width: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
   }
 }
 
-//mobitel
 .navigacija__hamburger {
   display: none;
 }
@@ -176,128 +206,4 @@
   .navigacija__hamburger {
     display: block;
   }
-}
-
-.mobilni-izbornik {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-
-  pointer-events: none;
-}
-
-.mobilni-izbornik__pozadina {
-  position: absolute;
-  inset: 0;
-  background: rgb(0 0 0 / 0.6);
-  backdrop-filter: blur(3px);
-
-  opacity: 0;
-  transition: opacity 200ms ease-out;
-}
-
-.mobilni-izbornik__panel {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: min(100%, 28rem);
-  height: 100%;
-  overflow-y: auto;
-  display: grid;
-  align-content: start;
-  gap: 1.5rem;
-  padding: 1.25rem;
-  background: var(--clr-pozadina);
-  color: var(--clr-text);
-  box-shadow: var(--shadow-lg);
-  transform: translateX(100%);
-  transition: transform 350ms ease-out;
-}
-
-.mobilni-izbornik--otvoren {
-  pointer-events: auto;
-
-  .mobilni-izbornik__pozadina {
-    opacity: 1;
-  }
-
-  .mobilni-izbornik__panel {
-    transform: translateX(0);
-  }
-}
-
-.mobilni-izbornik__zaglavlje {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  h2 {
-    margin: 0;
-  }
-}
-
-.mobilni-izbornik__zatvori {
-  font-size: 1.75rem;
-  line-height: 1;
-}
-
-.mobilni-izbornik__profil {
-  display: grid;
-  justify-items: center;
-  gap: 0.5rem;
-  text-align: center;
-}
-
-.mobilni-izbornik__slika,
-.navigacija__korisnik-slika-prvo-slovo {
-  width: 4rem;
-  height: 4rem;
-  border-radius: var(--radius-zaobljeno);
-}
-
-.navigacija__korisnik-slika-prvo-slovo {
-  display: grid;
-  place-items: center;
-  background: var(--clr-sekundarna-300);
-  color: var(--clr-primarna-800);
-  font-weight: 800;
-  font-size: var(--fs-xl);
-}
-
-.mobilni-izbornik__novac {
-  padding: 0.5rem 1rem;
-  border-radius: var(--radius-zaobljeno);
-  background: var(--clr-sekundarna-300);
-  color: var(--clr-pozadina);
-  user-select: none;
-}
-
-.mobilni-izbornik__lista {
-  display: grid;
-  gap: 0.35rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-
-  a {
-    display: block;
-    padding: 0.85rem 1rem;
-    border-radius: var(--radius-md);
-    color: var(--clr-text);
-    text-decoration: none;
-
-    &:hover {
-      background: var(--clr-povrsina-prigusen);
-    }
-  }
-}
-
-.mobilni-izbornik__odjava,
-.mobilni-izbornik__prijava {
-  display: block;
-  width: 100%;
-  text-align: center;
-  background: color-mix(in srgb, var(--clr-opasnost) 12%, transparent);
-  color: var(--clr-opasnost);
-  font-weight: 700;
 }

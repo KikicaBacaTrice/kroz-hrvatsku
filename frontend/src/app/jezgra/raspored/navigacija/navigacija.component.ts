@@ -9,6 +9,7 @@ import { XpNapredakComponent } from '../../../dijeljeno/ui/xp-napredak/xp-napred
 import { HamburgerIkonaComponent } from '../../../dijeljeno/ui/ikone/hamburger-ikona/hamburger-ikona.component';
 import { ZatovriIkonaComponent } from '../../../dijeljeno/ui/ikone/zatovri-ikona/zatovri-ikona.component';
 import { DOCUMENT } from '@angular/common';
+import { MobilniIzbornikComponent } from './ui/mobilni-izbornik/mobilni-izbornik.component';
 
 @Component({
   selector: 'app-navigacija',
@@ -19,7 +20,7 @@ import { DOCUMENT } from '@angular/common';
     NovacIkonaComponent,
     XpNapredakComponent,
     HamburgerIkonaComponent,
-    ZatovriIkonaComponent,
+    MobilniIzbornikComponent,
   ],
   templateUrl: './navigacija.component.html',
   styleUrl: './navigacija.component.scss',

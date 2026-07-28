@@ -34,11 +34,13 @@
   <div class="navigacija__autentikacija-spremnik">
     @if (authStanje.prijavljen() && profilStanje.profil(); as profil) {
       <div class="o-flex o-flex-lg | navigacija__korisnik">
-        <div class="o-flex o-flex-sm | navigacija__korisnik-virtulani-novac">
-          <app-novac-ikona boja="#fff" />
+        <div class="o-flex | navigacija__korisnik-virtulani-novac">
+          <app-novac-ikona boja="#fff" velicina="20" />
           <span> {{ profil.virtualniNovac }}</span>
         </div>
+
         <app-xp-napredak [razina]="profil.razina" [xp]="profil.xpBodovi" />
+
         <button
           type="button"
           class="navigacija__korisnik_gumb"
@@ -99,81 +101,10 @@
   </button>
 </nav>
 
-<div
-  class="mobilni-izbornik"
-  [class.mobilni-izbornik--otvoren]="mobilniIzbornikOtvoren()"
->
-  <div
-    class="mobilni-izbornik__pozadina"
-    (click)="zatovriMobilniIzbornik()"
-  ></div>
-
-  <aside class="mobilni-izbornik__panel">
-    <div class="mobilni-izbornik__zaglavlje">
-      <h2>Izbornik</h2>
-      <button
-        type="button"
-        class="mobilni-izbornik__zatvori"
-        (click)="zatovriMobilniIzbornik()"
-      >
-        <app-zatovri-ikona />
-      </button>
-    </div>
-
-    @if (authStanje.prijavljen() && profilStanje.profil(); as profil) {
-      <div class="mobilni-izbornik__profil">
-        @if (profil.profilnaSlikaUrl) {
-          <img
-            [src]="profil.profilnaSlikaUrl"
-            alt="profil.korisnik.korisnickoIme"
-            class="navigacija__korisnik_slika"
-          />
-        } @else {
-          <span class="navigacija__korisnik-slika-prvo-slovo">
-            {{ profil.korisnik.korisnickoIme.charAt(0).toUpperCase() }}
-          </span>
-        }
-
-        <h3>{{ profil.korisnik.korisnickoIme }}</h3>
-        <p>Istraživač</p>
-
-        <app-xp-napredak [razina]="profil.razina" [xp]="profil.xpBodovi" />
-
-        <div class="o-flex o-flex-sm | mobilni-izbornik__novac">
-          <app-novac-ikona boja="#fff" />
-          <span> {{ profil.virtualniNovac }} novčića</span>
-        </div>
-      </div>
-    }
-
-    <ul class="mobilni-izbornik__lista">
-      <li>
-        <a routerLink="/" (click)="zatovriMobilniIzbornik()">Početna</a>
-      </li>
-      <li>
-        <a routerLink="/lokacije" (click)="zatovriMobilniIzbornik()"
-          >Lokacije</a
-        >
-      </li>
-      <li>
-        <a routerLink="/profil" (click)="zatovriMobilniIzbornik()">Profil</a>
-      </li>
-      <li>
-        <a routerLink="/" (click)="zatovriMobilniIzbornik()">Dostignuća</a>
-      </li>
-    </ul>
-
-    @if (authStanje.prijavljen()) {
-      <button type="button" class="mobilni-izbornik__odjava" (click)="odjava()">
-        Odjava
-      </button>
-    } @else {
-      <a
-        routerLink="/autentikacija/prijava"
-        class="mobilni-izbornik__prijava"
-        (click)="zatovriMobilniIzbornik()"
-        >Prijava</a
-      >
-    }
-  </aside>
-</div>
+<app-mobilni-izbornik
+  [otvoren]="mobilniIzbornikOtvoren()"
+  [prijavljen]="authStanje.prijavljen()"
+  [profil]="profilStanje.profil()"
+  (zatvori)="zatovriMobilniIzbornik()"
+  (odjava)="odjava()"
+/>

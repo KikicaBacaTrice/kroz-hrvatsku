@@ -4,24 +4,27 @@
 }
 
 .xp-napredak__zaglavlje {
+  --zaglavlje-font-size: var(--fs-rg);
   display: flex;
   align-items: baseline;
+  justify-content: space-between;
   gap: 2rem;
 }
 
-.xp-napredal__razina {
+.xp-napredak__razina {
   margin: 0;
-  font-size: var(--fs-lg);
+  font-size: var(--zaglavlje-font-size);
   font-weight: 600;
-  letter-spacing: 0.08rem;
   text-transform: uppercase;
-  color: var(--clr-primarna-800);
+  color: var(--clr-text-prigusen);
 }
 
 .xp-napredak__vrijednost {
   margin: 0;
-  font-size: var(--fs-lg);
-  color: var(--clr-text);
+  font-size: var(--zaglavlje-font-size);
+  color: var(--clr-text-prigusen);
+  font-weight: 600;
+  text-transform: uppercase;
 }
 
 .xp-napredak__traka {
@@ -36,5 +39,10 @@
   height: 100%;
   border-radius: inherit;
   background: var(--clr-sekundarna-300);
+  background-image: linear-gradient(
+    to right,
+    hsl(from var(--clr-sekundarna-300) h s 90%),
+    var(--clr-sekundarna-300)
+  );
   transition: width 300ms ease-out;
 }
