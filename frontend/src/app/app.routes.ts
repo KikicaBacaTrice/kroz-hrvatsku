@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { RasporedComponent } from './jezgra/raspored/glavni/raspored/raspored.component';
-import { DetaljiLokacijeComponent } from './funkcionalnosti/lokacije/stranice/detalji-lokacije/detalji-lokacije.component';
 import { authGuard } from './jezgra/autentikacija/auth.guard';
 
 export const routes: Routes = [

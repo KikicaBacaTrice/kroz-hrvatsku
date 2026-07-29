@@ -15,4 +15,8 @@ export class LokacijeHttpService {
       .get<Lokacija[]>(`${API_URL}/lokacije`)
       .pipe(map((lokacije) => lokacije.slice(0, 3)));
   }
+
+  dohvatiTrazenuLokaciju(lokacijaId: number) {
+    return this.http.get<Lokacija>(`${API_URL}/lokacije/${lokacijaId}`);
+  }
 }

@@ -2,7 +2,7 @@ export type SlikaLokacije = {
   slikaId: number;
   putanjaSlike: string;
   opisSlike?: string | null;
-  glava: boolean;
+  glavna: boolean;
 };
 
 export type KategorijaLokacije = {
@@ -18,6 +18,7 @@ export type Lokacija = {
   grad: string;
   zupanija: string;
   jePopularna: boolean;
+  brojOcjena: number;
   prosjecnaOcjena?: number | null;
   nagradaXp: number;
   nagradaValuta: number;

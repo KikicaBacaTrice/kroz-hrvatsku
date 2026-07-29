@@ -1,0 +1,76 @@
+.detalji-lokacije__spremnik {
+  width: 100%;
+  display: grid;
+  place-items: center;
+}
+.detalji-lokacije__zaglavlje-spremik {
+  width: min(1200px, 100%);
+  margin-top: 2.5rem;
+}
+
+.lokacija-hero {
+  position: relative;
+  min-height: min(65vh, 35rem);
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  isolation: isolate;
+
+  &__slika {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+      to bottom,
+      hsl(from var(--clr-primarna-800) h s l / 0.1) 0%,
+      hsl(from var(--clr-primarna-800) h s l / 0.5) 45%,
+      hsl(from var(--clr-primarna-800) h s l / 0.9) 100%
+    );
+  }
+
+  &__sadrzaj-spremnik {
+    position: absolute;
+    left: 1.5rem;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    color: var(--clr-primarna-200);
+
+    h1 {
+      margin: 0.5rem 0;
+      font-size: var(--fs-3xl);
+      line-height: 0.95;
+      color: white;
+    }
+  }
+
+  &__meta-podaci {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.25rem;
+    color: white;
+
+    app-zvijezda-ikona {
+      margin-top: 2px;
+    }
+  }
+
+  &__prosjecna-ocjena {
+    font-size: var(--fs-rg);
+    font-weight: bold;
+  }
+
+  &__broj-glasova {
+    font-size: var(--fs-sm);
+    font-weight: thin;
+  }
+}
