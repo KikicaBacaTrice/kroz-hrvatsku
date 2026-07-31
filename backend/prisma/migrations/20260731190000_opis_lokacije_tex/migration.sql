@@ -1,0 +1,2 @@
+ALTER TABLE "lokacija"
+  ALTER COLUMN "opis" TYPE TEXT;

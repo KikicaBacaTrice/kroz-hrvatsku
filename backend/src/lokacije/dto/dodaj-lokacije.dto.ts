@@ -15,7 +15,6 @@ export class DodajLokacijaDto {
 
   @IsOptional()
   @IsString()
-  @MaxLength(1000)
   opis?: string;
 
   @IsString()

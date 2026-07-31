@@ -22,6 +22,8 @@ export type Lokacija = {
   prosjecnaOcjena?: number | null;
   nagradaXp: number;
   nagradaValuta: number;
+  adresa: string;
+  ulaznicaCijena: number;
   kategorija: KategorijaLokacije;
   slikeLokacije: SlikaLokacije[];
 };

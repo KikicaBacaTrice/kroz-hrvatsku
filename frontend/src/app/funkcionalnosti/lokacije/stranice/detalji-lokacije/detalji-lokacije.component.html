@@ -26,6 +26,92 @@
           </div>
         </div>
       </section>
+
+      <section class="lokacija-informacije">
+        <div class="lokacija-informacije__osnovne-informacije-spremnik">
+          <app-kartica-informacije-detalja-lokacije
+            ikona="/slike/ikone/lokacija-ikona.png"
+            opis="Adresa"
+            [vrijednost]="lokacija.adresa"
+          />
+          <app-kartica-informacije-detalja-lokacije
+            ikona="/slike/ikone/novac-ikona.png"
+            opis="Cijena ulaznice"
+            [vrijednost]="formatirajCijenuUlaznice(lokacija.ulaznicaCijena)"
+          />
+          <app-kartica-informacije-detalja-lokacije
+            ikona="/slike/ikone/kategorija-ikona.png"
+            opis="Kategorija"
+            [vrijednost]="lokacija.kategorija.naziv"
+          />
+          <app-kartica-informacije-detalja-lokacije
+            ikona="/slike/ikone/status-ikona.png"
+            opis="Stauts"
+            vrijednost="Nije riješen"
+          />
+        </div>
+      </section>
+
+      <section class="lokacija-sadrzaj">
+        <div class="lokacija-sadrzaj__spremnik">
+          <div class="lokacija-sadrzaj__opis-spremnik">
+            <h3>Osnovne informacije o {{ lokacija.naziv }}</h3>
+            <p>{{ lokacija.opis }}</p>
+          </div>
+
+          <div class="lokacija-sadrzaj__izazov-ljepljivi-spremnik">
+            <div class="lokacija-sadrzaj__kartica-izazov-informacije">
+              <div class="lokacija-sadrzaj__kartica-izazov-zaglavlje">
+                <div
+                  class="lokacija-sadrzaj__kartica-izazov-zaglavlje-spremnik"
+                >
+                  <app-medalja-ikona boja="#edc060" velicina="20" />
+                  <span>AKTIVNI IZAZOV</span>
+                </div>
+                <p>Zabilježi dolazak</p>
+              </div>
+              <div
+                class="lokacija-sadrzaj__kartica-izazov-informacije-spremnik"
+              >
+                <span class="lokacija-sadrzaj__kartica-izazov-informacije-opis">
+                  Zabilježi dolazak na lokaciju "{{ lokacija.naziv }}" tako da
+                  posijetiš ovu lokaciju kategorije
+                  {{ lokacija.kategorija.opis }} te zatim potvrdi svoj dolazak.
+                  Također možeš ostaviti slike lokacije kako bi tvoje uspomene
+                  još dugo trajale
+                </span>
+
+                <div class="lokacija-nagrade">
+                  <div class="lokacija-nagrade__stavke">
+                    <div class="lokacija-nagrade__ikona">
+                      <app-zvijezda-krug-ikona velicina="24" />
+                    </div>
+                    <span class="lokacija-nagrade__naziv">Iskustvo</span>
+                    <span class="lokacija-nagrade__vrijednost">
+                      +{{ lokacija.nagradaXp }}XP
+                    </span>
+                  </div>
+                  <div class="lokacija-nagrade__stavke">
+                    <div class="lokacija-nagrade__ikona">
+                      <app-kovanice-ikona velicina="24" />
+                    </div>
+                    <span class="lokacija-nagrade__naziv">Nagrade</span>
+                    <span class="lokacija-nagrade__vrijednost">
+                      +{{ lokacija.nagradaValuta }} novčića
+                    </span>
+                  </div>
+                </div>
+
+                <button
+                  class="c-button c-button--primarna | lokacije-nagrade__gumb"
+                >
+                  Zabilježi dolazak
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   } @else {
     <p>lokacija nije pronađena</p>
