@@ -103,6 +103,21 @@
   overflow: hidden;
 }
 
+.lokacija-sadrzaj__opis-spremnik {
+  padding: 1rem 1.25rem;
+
+  h3 {
+    font-size: var(--fs-xl);
+    line-height: 1.5;
+  }
+
+  p {
+    font-size: var(--fs-rg);
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+  }
+}
+
 .lokacija-sadrzaj__kartica-izazov {
   &-informacije {
     display: grid;

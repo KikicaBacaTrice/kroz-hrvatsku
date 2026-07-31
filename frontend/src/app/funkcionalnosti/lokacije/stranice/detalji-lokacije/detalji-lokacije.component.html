@@ -56,7 +56,9 @@
         <div class="lokacija-sadrzaj__spremnik">
           <div class="lokacija-sadrzaj__opis-spremnik">
             <h3>Osnovne informacije o {{ lokacija.naziv }}</h3>
-            <p>{{ lokacija.opis }}</p>
+            @for (paragraf of paragrafOpisa(lokacija.opis); track $index) {
+              <p>{{ paragraf }}</p>
+            }
           </div>
 
           <div class="lokacija-sadrzaj__izazov-ljepljivi-spremnik">

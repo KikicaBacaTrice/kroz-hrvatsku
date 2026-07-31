@@ -59,4 +59,8 @@ export class DetaljiLokacijeComponent {
 
     return `${iznos.toFixed(2)}€ po osobi`;
   }
+
+  paragrafOpisa(opis: string | null | undefined): string[] {
+    return opis?.split(/\n\s*\n/).filter(Boolean) ?? [];
+  }
 }
