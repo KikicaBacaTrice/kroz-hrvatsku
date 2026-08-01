@@ -24,6 +24,8 @@ export type Lokacija = {
   nagradaValuta: number;
   adresa: string;
   ulaznicaCijena: number;
+  geoDuzina: number;
+  geoSirina: number;
   kategorija: KategorijaLokacije;
   slikeLokacije: SlikaLokacije[];
 };

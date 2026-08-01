@@ -90,17 +90,29 @@
 
 .lokacija-sadrzaj__spremnik {
   display: grid;
-  grid-template-columns: 70% 30%;
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 24rem);
   gap: 1rem;
+  align-items: stretch;
+}
+
+.lokacija-sadrzaj__glavni-stupac {
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.lokacija-sadrzaj__bocni-stupac {
+  min-width: 0;
+  align-self: stretch;
 }
 
 .lokacija-sadrzaj__opis-spremnik,
-.lokacija-sadrzaj__kartica-izazov-informacije {
+.lokacija-sadrzaj__kartica-izazov-informacije,
+.lokacija-karta__spremnik {
   background: var(--clr-povrsina);
   border: 2px solid var(--clr-obrub);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-md);
-  overflow: hidden;
 }
 
 .lokacija-sadrzaj__opis-spremnik {
@@ -118,9 +130,80 @@
   }
 }
 
+.lokacija-karta {
+  &__spremnik {
+    display: grid;
+    gap: 1rem;
+    position: relative;
+  }
+
+  &__zaglavlje {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: 1.25rem;
+    padding-top: 1rem;
+
+    h4 {
+      font-size: var(--fs-lg);
+    }
+
+    a button {
+      font-size: var(--fs-rg);
+    }
+  }
+
+  &__koordinate-spremnik {
+    position: absolute;
+    bottom: 1rem;
+    left: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+
+    background: var(--clr-povrsina);
+    border: 2px solid var(--clr-obrub);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    padding: 0.5rem 0.75rem;
+
+    img {
+      width: 28px;
+      height: 28px;
+    }
+  }
+
+  &__koodrinate {
+    display: grid;
+
+    span {
+      font-size: var(--fs-rg);
+    }
+
+    &-naziv {
+      font-weight: 600;
+    }
+    &-sirina-duzina {
+      font-weight: 300;
+    }
+  }
+}
+
+.lokacija-sadrzaj {
+  margin-bottom: 10rem;
+}
+
+.lokacija-sadrzaj__kartica-izazov-informacije {
+  position: sticky;
+  top: 7rem;
+}
+
 .lokacija-sadrzaj__kartica-izazov {
   &-informacije {
     display: grid;
+    position: sticky;
+    top: 7rem;
   }
 
   &-zaglavlje {
@@ -132,6 +215,8 @@
     background-color: var(--clr-primarna-600);
     padding: 0.75rem 1rem;
     color: var(--clr-primarna-200);
+    border-top-left-radius: var(--radius-md);
+    border-top-right-radius: var(--radius-md);
 
     &-spremnik {
       display: flex;
