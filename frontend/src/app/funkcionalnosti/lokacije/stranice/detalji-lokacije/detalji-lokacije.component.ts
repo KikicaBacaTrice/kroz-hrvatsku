@@ -7,6 +7,8 @@ import { ZvijezdaIkonaComponent } from '../../../../dijeljeno/ui/ikone/zvijezda-
 import { KarticaInformacijeDetaljaLokacijeComponent } from '../../ui/kartica-informacije-detalja-lokacije/kartica-informacije-detalja-lokacije.component';
 import { KartaLokacijeComponent } from '../../ui/karta-lokacije/karta-lokacije.component';
 import { KarticaIzazovaLokacijeComponent } from '../../ui/kartica-izazova-lokacije/kartica-izazova-lokacije.component';
+import { LokacijaHeroComponent } from '../../ui/lokacija-hero/lokacija-hero.component';
+import { LokacijaOpisComponent } from '../../ui/lokacija-opis/lokacija-opis.component';
 
 @Component({
   selector: 'app-detalji-lokacije',
@@ -15,6 +17,8 @@ import { KarticaIzazovaLokacijeComponent } from '../../ui/kartica-izazova-lokaci
     KarticaInformacijeDetaljaLokacijeComponent,
     KartaLokacijeComponent,
     KarticaIzazovaLokacijeComponent,
+    LokacijaHeroComponent,
+    LokacijaOpisComponent,
   ],
   templateUrl: './detalji-lokacije.component.html',
   styleUrl: './detalji-lokacije.component.scss',
@@ -40,13 +44,6 @@ export class DetaljiLokacijeComponent {
     }
   }
 
-  glavnaSlika(lokacija: Lokacija) {
-    return (
-      lokacija.slikeLokacije.find((slika) => slika.glavna) ??
-      lokacija.slikeLokacije[0]
-    );
-  }
-
   formatirajCijenuUlaznice(cijena: number | string | null | undefined): string {
     const iznos = Number(cijena);
 
@@ -55,10 +52,6 @@ export class DetaljiLokacijeComponent {
     }
 
     return `${iznos.toFixed(2)}€ po osobi`;
-  }
-
-  paragrafOpisa(opis: string | null | undefined): string[] {
-    return opis?.split(/\n\s*\n/).filter(Boolean) ?? [];
   }
 
   naZabiljeziDolazak() {}

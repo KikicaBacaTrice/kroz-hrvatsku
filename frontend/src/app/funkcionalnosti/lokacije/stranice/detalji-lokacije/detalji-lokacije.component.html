@@ -1,31 +1,7 @@
 <div class="detalji-lokacije__spremnik">
   @if (lokacija(); as lokacija) {
     <div class="detalji-lokacije__zaglavlje-spremik">
-      <section class="lokacija-hero">
-        @if (glavnaSlika(lokacija); as slika) {
-          <img
-            [src]="apiUrl + slika.putanjaSlike"
-            [alt]="slika.opisSlike"
-            class="lokacija-hero__slika"
-          />
-        }
-
-        <div class="lokacija-hero__overlay"></div>
-
-        <div class="lokacija-hero__sadrzaj-spremnik">
-          <h1>{{ lokacija.naziv }}</h1>
-
-          <div class="lokacija-hero__meta-podaci">
-            <app-zvijezda-ikona velicina="18" />
-            <div>
-              <span class="lokacija-hero__prosjecna-ocjena">4.8</span>
-              <span class="lokacija-hero__broj-glasova"
-                >({{ lokacija.brojOcjena }} glasova)</span
-              >
-            </div>
-          </div>
-        </div>
-      </section>
+      <app-lokacija-hero [lokacija]="lokacija" />
 
       <section class="lokacija-informacije">
         <div class="lokacija-informacije__osnovne-informacije-spremnik">
@@ -55,12 +31,7 @@
       <section class="lokacija-sadrzaj">
         <div class="lokacija-sadrzaj__spremnik">
           <div class="lokacija-sadrzaj__glavni-stupac">
-            <div class="lokacija-sadrzaj__opis-spremnik">
-              <h3>Osnovne informacije o {{ lokacija.naziv }}</h3>
-              @for (paragraf of paragrafOpisa(lokacija.opis); track $index) {
-                <p>{{ paragraf }}</p>
-              }
-            </div>
+            <app-lokacija-opis [lokacija]="lokacija" />
 
             <app-karta-lokacije [lokacija]="lokacija" />
           </div>
