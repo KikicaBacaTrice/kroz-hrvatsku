@@ -8,13 +8,6 @@
   margin-top: 2.5rem;
 }
 
-.lokacija-informacije__osnovne-informacije-spremnik {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
-  gap: 1rem;
-  padding-block: 2.5rem;
-}
-
 .lokacija-sadrzaj__spremnik {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(18rem, 24rem);
@@ -37,4 +30,8 @@
   display: grid;
   position: sticky;
   top: 7rem;
+}
+
+.detalji-lokacije__spremnik {
+  margin-bottom: 5rem;
 }

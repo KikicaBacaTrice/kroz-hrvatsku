@@ -1,0 +1,40 @@
+<div class="lokacija-galerija">
+  <div class="lokacija-galerija__zaglavlje">
+    <h4>Galerija</h4>
+    <span
+      >Prikaži svih {{ lokacija().slikeLokacije.length }} fotografija/e</span
+    >
+  </div>
+  <div class="lokacija-galerija__resetka-spremnik">
+    <div class="lokacija-galerija__resetka-glavna-slika-spremnik">
+      @let slike = sporedneSlike();
+
+      @if (slike[0]; as prvaSlika) {
+        <img
+          [src]="apiUrl + prvaSlika.putanjaSlike"
+          [alt]="prvaSlika.opisSlike || lokacija().naziv"
+        />
+      }
+    </div>
+    <div class="lokacija-galerija__resetka-sporedna-slika-spremnik">
+      @if (slike[1]; as drugaSlika) {
+        <img
+          [src]="apiUrl + drugaSlika.putanjaSlike"
+          [alt]="drugaSlika.opisSlike || lokacija().naziv"
+        />
+      }
+    </div>
+    <div class="lokacija-galerija__resetka-vise-slika-spremnik">
+      @if (slike[2]; as trecaSlika) {
+        <img
+          [src]="apiUrl + trecaSlika.putanjaSlike"
+          [alt]="trecaSlika.opisSlike || lokacija().naziv"
+        />
+      }
+
+      <div class="lokacija-galerija__restka-jos-slika-prikaz">
+        <span>+{{ lokacija().slikeLokacije.length - 3 }} fotografija </span>
+      </div>
+    </div>
+  </div>
+</div>

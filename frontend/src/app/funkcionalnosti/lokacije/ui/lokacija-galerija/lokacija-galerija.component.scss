@@ -1,0 +1,90 @@
+.lokacija-galerija {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+
+  &__zaglavlje {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    h4 {
+      font-size: var(--fs-lg);
+    }
+
+    span {
+      font-size: var(--fs-sm);
+      color: var(--clr-text-prigusen);
+    }
+  }
+
+  &__resetka-spremnik {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    grid-template-rows: repeat(2, 13rem);
+    gap: 0.75rem;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+  }
+
+  &__resetka-sporedna-slika-spremnik,
+  &__resetka-glavna-slika-spremnik,
+  &__resetka-vise-slika-spremnik {
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    background-color: var(--clr-povrsina-prigusen);
+    cursor: pointer;
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 250ms ease-in-out;
+    }
+
+    &:hover img {
+      transform: scale(1.05);
+    }
+  }
+
+  &__resetka-glavna-slika-spremnik {
+    grid-row: 1/-1;
+    border-top-left-radius: var(--radius-lg);
+    border-bottom-left-radius: var(--radius-lg);
+  }
+
+  &__resetka-sporedna-slika-spremnik {
+    border-top-right-radius: var(--radius-lg);
+  }
+
+  &__resetka-vise-slika-spremnik {
+    border-bottom-right-radius: var(--radius-lg);
+
+    position: relative;
+    z-index: 1;
+
+    img {
+      filter: blur(5px);
+    }
+  }
+
+  &__restka-jos-slika-prikaz {
+    position: absolute;
+    inset: 0;
+    left: 0;
+
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    background: rgb(0 0 0 / 0.3);
+
+    span {
+      color: #fff;
+      font-size: var(--fs-md);
+      user-select: none;
+    }
+  }
+}
