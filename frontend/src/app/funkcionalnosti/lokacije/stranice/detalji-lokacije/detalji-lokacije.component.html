@@ -62,105 +62,15 @@
               }
             </div>
 
-            <div class="lokacija-karta__spremnik">
-              <div class="lokacija-karta__zaglavlje">
-                <h4>Mapa lokacije</h4>
-                <a
-                  [href]="
-                    googleUputeKakoDociUrl(
-                      lokacija.geoSirina,
-                      lokacija.geoDuzina
-                    )
-                  "
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <button class="c-button c-button--primarna">
-                    <app-direkcija-ikona boja="#fff" velicina="24" /> Kako dići
-                  </button>
-                </a>
-              </div>
-
-              <iframe
-                width="100%"
-                height="400"
-                style="border: 0"
-                loading="lazy"
-                allowfullscreen
-                referrerpolicy="strict-origin-when-cross-origin"
-                [src]="googleKarteSrc(lokacija.geoSirina, lokacija.geoDuzina)"
-              >
-              </iframe>
-
-              <div class="lokacija-karta__koordinate-spremnik">
-                <img
-                  src="/slike/ikone/kategorija-ikona.png"
-                  alt="Ikona kategorije"
-                />
-
-                <div class="lokacija-karta__koodrinate">
-                  <span class="lokacija-karta__koodrinate-naziv">{{
-                    lokacija.naziv
-                  }}</span>
-                  <span class="lokacija-karta__koodrinate-sirina-duzina"
-                    >{{ lokacija.geoSirina }}&deg; N,
-                    {{ lokacija.geoDuzina }}&deg; E</span
-                  >
-                </div>
-              </div>
-            </div>
+            <app-karta-lokacije [lokacija]="lokacija" />
           </div>
 
           <aside class="lokacija-sadrzaj__bocni-stupac">
-            <div class="lokacija-sadrzaj__kartica-izazov-informacije">
-              <div class="lokacija-sadrzaj__kartica-izazov-zaglavlje">
-                <div
-                  class="lokacija-sadrzaj__kartica-izazov-zaglavlje-spremnik"
-                >
-                  <app-medalja-ikona boja="#edc060" velicina="20" />
-                  <span>AKTIVNI IZAZOV</span>
-                </div>
-                <p>Zabilježi dolazak</p>
-              </div>
-              <div
-                class="lokacija-sadrzaj__kartica-izazov-informacije-spremnik"
-              >
-                <span class="lokacija-sadrzaj__kartica-izazov-informacije-opis">
-                  Zabilježi dolazak na lokaciju "{{ lokacija.naziv }}" tako da
-                  posijetiš ovu lokaciju kategorije
-                  {{ lokacija.kategorija.opis }} te zatim potvrdi svoj dolazak.
-                  Također možeš ostaviti slike lokacije kako bi tvoje uspomene
-                  još dugo trajale
-                </span>
-
-                <div class="lokacija-nagrade">
-                  <div class="lokacija-nagrade__stavke">
-                    <div class="lokacija-nagrade__ikona">
-                      <app-zvijezda-krug-ikona velicina="24" />
-                    </div>
-                    <span class="lokacija-nagrade__naziv">Iskustvo</span>
-                    <span class="lokacija-nagrade__vrijednost">
-                      +{{ lokacija.nagradaXp }}XP
-                    </span>
-                  </div>
-                  <div class="lokacija-nagrade__stavke">
-                    <div class="lokacija-nagrade__ikona">
-                      <app-kovanice-ikona velicina="24" />
-                    </div>
-                    <span class="lokacija-nagrade__naziv">Nagrade</span>
-                    <span class="lokacija-nagrade__vrijednost">
-                      +{{ lokacija.nagradaValuta }} novčića
-                    </span>
-                  </div>
-                </div>
-
-                <button
-                  class="c-button c-button--primarna | lokacije-nagrade__gumb"
-                >
-                  Zabilježi dolazak
-                </button>
-              </div>
-            </div>
+            <app-kartica-izazova-lokacije
+              class="lokacija-sadrzaj__kartica-izazov"
+              [lokacija]="lokacija"
+              (zabiljeziDolazak)="naZabiljeziDolazak()"
+            />
           </aside>
         </div>
       </section>

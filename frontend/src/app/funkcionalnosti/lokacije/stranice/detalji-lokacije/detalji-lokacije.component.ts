@@ -5,23 +5,16 @@ import { Lokacija } from '../../modeli/lokacija.model';
 import { API_URL } from '../../../../jezgra/konfiguracija/api.config';
 import { ZvijezdaIkonaComponent } from '../../../../dijeljeno/ui/ikone/zvijezda-ikona/zvijezda-ikona.component';
 import { KarticaInformacijeDetaljaLokacijeComponent } from '../../ui/kartica-informacije-detalja-lokacije/kartica-informacije-detalja-lokacije.component';
-import { MedaljaIkonaComponent } from '../../../../dijeljeno/ui/ikone/medalja-ikona/medalja-ikona.component';
-import { ZvijezdaKrugIkonaComponent } from '../../../../dijeljeno/ui/ikone/zvijezda-krug-ikona/zvijezda-krug-ikona.component';
-import { KovaniceIkonaComponent } from '../../../../dijeljeno/ui/ikone/kovanice-ikona/kovanice-ikona.component';
-import { GOOGLE_MAPS_API_KEY } from '../../../../jezgra/konfiguracija/google.config';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { reportUnhandledError } from 'rxjs/internal/util/reportUnhandledError';
-import { DirekcijaIkonaComponent } from '../../../../dijeljeno/ui/ikone/direkcija-ikona/direkcija-ikona.component';
+import { KartaLokacijeComponent } from '../../ui/karta-lokacije/karta-lokacije.component';
+import { KarticaIzazovaLokacijeComponent } from '../../ui/kartica-izazova-lokacije/kartica-izazova-lokacije.component';
 
 @Component({
   selector: 'app-detalji-lokacije',
   imports: [
     ZvijezdaIkonaComponent,
     KarticaInformacijeDetaljaLokacijeComponent,
-    MedaljaIkonaComponent,
-    ZvijezdaKrugIkonaComponent,
-    KovaniceIkonaComponent,
-    DirekcijaIkonaComponent,
+    KartaLokacijeComponent,
+    KarticaIzazovaLokacijeComponent,
   ],
   templateUrl: './detalji-lokacije.component.html',
   styleUrl: './detalji-lokacije.component.scss',
@@ -29,7 +22,6 @@ import { DirekcijaIkonaComponent } from '../../../../dijeljeno/ui/ikone/direkcij
 export class DetaljiLokacijeComponent {
   private readonly route = inject(ActivatedRoute);
   private readonly lokacijaStanje = inject(LokacijaStanjeService);
-  private readonly sanitizer = inject(DomSanitizer);
 
   readonly apiUrl = API_URL;
   readonly lokacija = this.lokacijaStanje.lokacija;
@@ -69,16 +61,5 @@ export class DetaljiLokacijeComponent {
     return opis?.split(/\n\s*\n/).filter(Boolean) ?? [];
   }
 
-  googleKarteSrc(geoSirina: number, geoDuzina: number): SafeResourceUrl {
-    const query = encodeURIComponent(`${geoSirina},${geoDuzina}`);
-    const url = `https://www.google.com/maps/embed/v1/place?key=${GOOGLE_MAPS_API_KEY}&q=${query}`;
-
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
-  }
-
-  googleUputeKakoDociUrl(geoSirina: number, geoDuzina: number): string {
-    const query = encodeURIComponent(`${geoSirina},${geoDuzina}`);
-
-    return `https://www.google.com/maps/dir/?api=1&destination=${query}`;
-  }
+  naZabiljeziDolazak() {}
 }

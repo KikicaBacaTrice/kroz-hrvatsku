@@ -42,4 +42,4 @@ testem.log
 Thumbs.db
 
 
-frontend/src/app/jezgra/konfiguracija/google.config.ts
+src/app/jezgra/konfiguracija/google.config.ts

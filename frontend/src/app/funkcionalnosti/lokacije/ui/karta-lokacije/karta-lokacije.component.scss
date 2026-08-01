@@ -1,0 +1,62 @@
+.lokacija-karta {
+  display: grid;
+  gap: 1rem;
+  position: relative;
+
+  background: var(--clr-povrsina);
+  border: 2px solid var(--clr-obrub);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+
+  &__zaglavlje {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: 1.25rem;
+    padding-top: 1rem;
+
+    h4 {
+      font-size: var(--fs-lg);
+    }
+
+    a button {
+      font-size: var(--fs-rg);
+    }
+  }
+
+  &__koordinate-spremnik {
+    position: absolute;
+    bottom: 1rem;
+    left: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+
+    background: var(--clr-povrsina);
+    border: 2px solid var(--clr-obrub);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    padding: 0.5rem 0.75rem;
+
+    img {
+      width: 28px;
+      height: 28px;
+    }
+  }
+
+  &__koodrinate {
+    display: grid;
+
+    span {
+      font-size: var(--fs-rg);
+    }
+
+    &-naziv {
+      font-weight: 600;
+    }
+    &-sirina-duzina {
+      font-weight: 300;
+    }
+  }
+}

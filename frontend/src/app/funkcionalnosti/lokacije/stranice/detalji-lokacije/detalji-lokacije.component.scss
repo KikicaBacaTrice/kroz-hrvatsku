@@ -106,9 +106,7 @@
   align-self: stretch;
 }
 
-.lokacija-sadrzaj__opis-spremnik,
-.lokacija-sadrzaj__kartica-izazov-informacije,
-.lokacija-karta__spremnik {
+.lokacija-sadrzaj__opis-spremnik {
   background: var(--clr-povrsina);
   border: 2px solid var(--clr-obrub);
   border-radius: var(--radius-md);
@@ -130,167 +128,12 @@
   }
 }
 
-.lokacija-karta {
-  &__spremnik {
-    display: grid;
-    gap: 1rem;
-    position: relative;
-  }
-
-  &__zaglavlje {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-inline: 1.25rem;
-    padding-top: 1rem;
-
-    h4 {
-      font-size: var(--fs-lg);
-    }
-
-    a button {
-      font-size: var(--fs-rg);
-    }
-  }
-
-  &__koordinate-spremnik {
-    position: absolute;
-    bottom: 1rem;
-    left: 4rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-
-    background: var(--clr-povrsina);
-    border: 2px solid var(--clr-obrub);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-md);
-    padding: 0.5rem 0.75rem;
-
-    img {
-      width: 28px;
-      height: 28px;
-    }
-  }
-
-  &__koodrinate {
-    display: grid;
-
-    span {
-      font-size: var(--fs-rg);
-    }
-
-    &-naziv {
-      font-weight: 600;
-    }
-    &-sirina-duzina {
-      font-weight: 300;
-    }
-  }
-}
-
 .lokacija-sadrzaj {
   margin-bottom: 10rem;
 }
 
-.lokacija-sadrzaj__kartica-izazov-informacije {
+.lokacija-sadrzaj__kartica-izazov {
+  display: grid;
   position: sticky;
   top: 7rem;
-}
-
-.lokacija-sadrzaj__kartica-izazov {
-  &-informacije {
-    display: grid;
-    position: sticky;
-    top: 7rem;
-  }
-
-  &-zaglavlje {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    flex-direction: column;
-    gap: 0.25rem;
-    background-color: var(--clr-primarna-600);
-    padding: 0.75rem 1rem;
-    color: var(--clr-primarna-200);
-    border-top-left-radius: var(--radius-md);
-    border-top-right-radius: var(--radius-md);
-
-    &-spremnik {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.25rem;
-
-      span {
-        font-size: var(--fs-sm);
-        letter-spacing: 0.08em;
-      }
-    }
-
-    p {
-      font-size: var(--fs-md);
-      letter-spacing: 0.04em;
-      color: inherit;
-      font-weight: 5600;
-    }
-  }
-
-  &-informacije-spremnik {
-    display: grid;
-    gap: 0.5rem;
-    padding: 0.75rem 1rem;
-  }
-
-  &-informacije-opis {
-    font-size: var(--fs-sm);
-    color: var(--clr-text-prigusen);
-    line-height: 1.3;
-    margin-block: 0.75rem;
-  }
-}
-
-.lokacija-nagrade {
-  display: grid;
-  gap: 0.75rem;
-
-  &__stavke {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    align-items: center;
-    gap: 0.75rem;
-
-    padding: 0.75rem;
-    border: 1px solid var(--clr-obrub);
-    border-radius: var(--radius-md);
-    background: hsl(from var(--clr-sekundarna-200) h s l / 0.5);
-    box-shadow: var(--shadow-sm);
-  }
-
-  &__ikona {
-    display: grid;
-    place-items: center;
-    width: 2rem;
-    height: 2rem;
-    border-radius: var(--radius-zaobljeno);
-    background: var(--clr-sekundarna-300);
-  }
-
-  &__naziv {
-    font-weight: 700;
-    font-size: var(--fs-rg);
-    color: var(--clr-text);
-  }
-
-  &__vrijednost {
-    font-weight: 500;
-    color: var(--clr-primarna-700);
-    white-space: nowrap;
-  }
-}
-
-.lokacije-nagrade__gumb {
-  margin-top: 1rem;
 }
