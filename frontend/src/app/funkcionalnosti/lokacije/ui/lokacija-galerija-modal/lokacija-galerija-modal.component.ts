@@ -1,4 +1,4 @@
-import { Component, EventEmitter, input, Output } from '@angular/core';
+import { Component, EventEmitter, input, OnInit, Output } from '@angular/core';
 import { SlikaLokacije } from '../../modeli/lokacija.model';
 import { PrethodniSljedeciIkonaComponent } from '../../../../dijeljeno/ui/ikone/prethodni-sljedeci-ikona/prethodni-sljedeci-ikona.component';
 import { ZatovriIkonaComponent } from '../../../../dijeljeno/ui/ikone/zatovri-ikona/zatovri-ikona.component';
@@ -9,7 +9,7 @@ import { ZatovriIkonaComponent } from '../../../../dijeljeno/ui/ikone/zatovri-ik
   templateUrl: './lokacija-galerija-modal.component.html',
   styleUrl: './lokacija-galerija-modal.component.scss',
 })
-export class LokacijaGalerijaModalComponent {
+export class LokacijaGalerijaModalComponent implements OnInit {
   slike = input.required<SlikaLokacije[]>();
   pocetniIndex = input(0);
   apiUrl = input.required<string>();

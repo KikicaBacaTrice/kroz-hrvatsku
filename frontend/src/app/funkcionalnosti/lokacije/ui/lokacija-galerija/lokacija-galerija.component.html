@@ -49,12 +49,3 @@
     }
   </div>
 </div>
-
-@if (galerijaOtvorena) {
-  <app-lokacija-galerija-modal
-    [slike]="lokacija().slikeLokacije"
-    [pocetniIndex]="odabranaSlikaIndex"
-    [apiUrl]="apiUrl"
-    (zatvori)="zatovriGaleriju()"
-  />
-}

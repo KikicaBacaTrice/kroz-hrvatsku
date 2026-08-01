@@ -14,6 +14,15 @@
     transform: scale(1.02);
   }
 
+  &__slika-gumb {
+    position: absolute;
+    inset: 0;
+    padding: 0;
+    border: 0;
+    cursor: pointer;
+    background: transparent;
+  }
+
   &__slika {
     position: absolute;
     inset: 0;

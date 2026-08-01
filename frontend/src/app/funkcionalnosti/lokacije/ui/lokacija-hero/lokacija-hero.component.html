@@ -1,10 +1,16 @@
 <section class="lokacija-hero">
   @if (glavnaSlika(); as slika) {
-    <img
-      [src]="apiUrl + slika.putanjaSlike"
-      [alt]="slika.opisSlike"
-      class="lokacija-hero__slika"
-    />
+    <button
+      type="button"
+      class="lokacija-hero__slika-gumb"
+      (click)="otvoriSliku(slika)"
+    >
+      <img
+        [src]="apiUrl + slika.putanjaSlike"
+        [alt]="slika.opisSlike"
+        class="lokacija-hero__slika"
+      />
+    </button>
   }
 
   <div class="lokacija-hero__overlay"></div>

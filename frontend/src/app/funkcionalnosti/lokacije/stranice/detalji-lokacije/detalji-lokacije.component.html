@@ -1,7 +1,10 @@
 <div class="detalji-lokacije__spremnik">
   @if (lokacija(); as lokacija) {
     <div class="detalji-lokacije__zaglavlje-spremik">
-      <app-lokacija-hero [lokacija]="lokacija" />
+      <app-lokacija-hero
+        [lokacija]="lokacija"
+        (slikaKliknuta)="otvoriGaleriju($event)"
+      />
 
       <section class="lokacija-informacije">
         <app-lokacija-informacije [lokacija]="lokacija" />
@@ -14,7 +17,10 @@
 
             <app-karta-lokacije [lokacija]="lokacija" />
 
-            <app-lokacija-galerija [lokacija]="lokacija" />
+            <app-lokacija-galerija
+              [lokacija]="lokacija"
+              (slikaKliknuta)="otvoriGaleriju($event)"
+            />
           </div>
 
           <aside class="lokacija-sadrzaj__bocni-stupac">
@@ -27,6 +33,15 @@
         </div>
       </section>
     </div>
+
+    @if (galerijaOtvorena) {
+      <app-lokacija-galerija-modal
+        [slike]="lokacija.slikeLokacije"
+        [pocetniIndex]="odabranaSlikaIndex"
+        [apiUrl]="apiUrl"
+        (zatvori)="zatvoriGaleriju()"
+      />
+    }
   } @else {
     <p>lokacija nije pronađena</p>
   }
