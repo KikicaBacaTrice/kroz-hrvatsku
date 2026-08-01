@@ -27,6 +27,24 @@
     border-radius: var(--radius-lg);
   }
 
+  &__slika-gumb {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    cursor: pointer;
+    overflow: hidden;
+    background: transparent;
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
   &__resetka-sporedna-slika-spremnik,
   &__resetka-glavna-slika-spremnik,
   &__resetka-vise-slika-spremnik {

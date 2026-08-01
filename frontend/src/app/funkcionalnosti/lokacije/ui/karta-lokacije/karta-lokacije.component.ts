@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import { Lokacija } from '../../modeli/lokacija.model';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { GOOGLE_MAPS_API_KEY } from '../../../../jezgra/konfiguracija/google.config';
@@ -15,21 +15,28 @@ export class KartaLokacijeComponent {
 
   private readonly sanitizer = inject(DomSanitizer);
 
-  googleKarteSrc(): SafeResourceUrl {
+  googleKarteSrc = computed<SafeResourceUrl>(() => {
+    const lokacija = this.lokacija();
+
     const query = encodeURIComponent(
-      `${this.lokacija().geoSirina},${this.lokacija().geoDuzina}`,
+      `${lokacija.geoSirina},${lokacija.geoDuzina}`,
     );
 
     const url = `https://www.google.com/maps/embed/v1/place?key=${GOOGLE_MAPS_API_KEY}&q=${query}`;
 
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
-  }
+  });
 
-  googleUputeKakoDociUrl(): string {
+  googleUputeKakoDociUrl = computed(() => {
+    const lokacija = this.lokacija();
+
     const query = encodeURIComponent(
-      `${this.lokacija().geoSirina},${this.lokacija().geoDuzina}`,
+      `${lokacija.geoSirina},${lokacija.geoDuzina}`,
     );
 
     return `https://www.google.com/maps/dir/?api=1&destination=${query}`;
-  }
+  });
+}
+function comptued<T>(arg0: { const: string; return: SafeResourceUrl }) {
+  throw new Error('Function not implemented.');
 }

@@ -1,0 +1,44 @@
+<div class="galerija-modal" (click)="zatvoriModal()">
+  <button
+    type="button"
+    class="galerija-modal__zatvori"
+    (click)="zatvoriModal(); $event.stopPropagation()"
+  >
+    <app-zatovri-ikona boja="#fff" />
+  </button>
+  <div class="galerija-modal__sadrzaj" (click)="$event.stopPropagation()">
+    @if (slike()[aktivniIndex]; as slika) {
+      <img
+        [src]="apiUrl() + slika.putanjaSlike"
+        [alt]="slika.opisSlike || 'Slika lokacije'"
+        class="galerija-modal__slika"
+      />
+    }
+  </div>
+  <button
+    type="button"
+    class="galerija-modal__navigacija galerija-modal__navigacija--prethodna"
+    (click)="prethodnaSlika(); $event.stopPropagation()"
+  >
+    <app-prethodni-sljedeci-ikona [rotacija]="180" />
+  </button>
+  <button
+    type="button"
+    class="galerija-modal__navigacija galerija-modal__navigacija--sljedeca"
+    (click)="sljedecaSlika(); $event.stopPropagation()"
+  >
+    <app-prethodni-sljedeci-ikona />
+  </button>
+
+  <div class="carousel-navigacija__spremnik" (click)="$event.stopPropagation()">
+    @for (slika of slike(); track slika.slikaId; let i = $index) {
+      <button
+        type="button"
+        class="carousel-navigacija__tocka"
+        [class.carousel-navigacija__tocka--aktivna]="i === aktivniIndex"
+        (click)="postaviAktivnuSliku(i)"
+        [attr.aria-label]="'Prikaži sliku ' + (i + 1)"
+      ></button>
+    }
+  </div>
+</div>

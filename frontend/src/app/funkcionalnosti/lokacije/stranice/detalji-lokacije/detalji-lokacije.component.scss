@@ -27,9 +27,10 @@
 }
 
 .lokacija-sadrzaj__kartica-izazov {
+  --kraj-navigacije: 7rem;
   display: grid;
   position: sticky;
-  top: 7rem;
+  top: calc(var(--kraj-navigacije) + 1rem);
 }
 
 .detalji-lokacije__spremnik {

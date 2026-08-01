@@ -6,35 +6,55 @@
     >
   </div>
   <div class="lokacija-galerija__resetka-spremnik">
-    <div class="lokacija-galerija__resetka-glavna-slika-spremnik">
-      @let slike = sporedneSlike();
+    @let slike = sporedneSlike();
 
-      @if (slike[0]; as prvaSlika) {
+    @if (slike[0]; as prvaSlika) {
+      <button
+        type="button"
+        class="lokacija-galerija__slika-gumb lokacija-galerija__resetka-glavna-slika-spremnik"
+        (click)="otvoriGaleriju(prvaSlika)"
+      >
         <img
           [src]="apiUrl + prvaSlika.putanjaSlike"
           [alt]="prvaSlika.opisSlike || lokacija().naziv"
         />
-      }
-    </div>
-    <div class="lokacija-galerija__resetka-sporedna-slika-spremnik">
-      @if (slike[1]; as drugaSlika) {
+      </button>
+    }
+    @if (slike[1]; as drugaSlika) {
+      <button
+        type="button"
+        class="lokacija-galerija__slika-gumb lokacija-galerija__resetka-sporedna-slika-spremnik"
+        (click)="otvoriGaleriju(drugaSlika)"
+      >
         <img
           [src]="apiUrl + drugaSlika.putanjaSlike"
           [alt]="drugaSlika.opisSlike || lokacija().naziv"
         />
-      }
-    </div>
-    <div class="lokacija-galerija__resetka-vise-slika-spremnik">
-      @if (slike[2]; as trecaSlika) {
+      </button>
+    }
+    @if (slike[2]; as trecaSlika) {
+      <button
+        type="button"
+        class="lokacija-galerija__slika-gumb lokacija-galerija__resetka-vise-slika-spremnik"
+        (click)="otvoriGaleriju(trecaSlika)"
+      >
         <img
           [src]="apiUrl + trecaSlika.putanjaSlike"
           [alt]="trecaSlika.opisSlike || lokacija().naziv"
         />
-      }
-
-      <div class="lokacija-galerija__restka-jos-slika-prikaz">
-        <span>+{{ lokacija().slikeLokacije.length - 3 }} fotografija </span>
-      </div>
-    </div>
+        <div class="lokacija-galerija__restka-jos-slika-prikaz">
+          <span>+{{ lokacija().slikeLokacije.length - 2 }} fotografija/e </span>
+        </div>
+      </button>
+    }
   </div>
 </div>
+
+@if (galerijaOtvorena) {
+  <app-lokacija-galerija-modal
+    [slike]="lokacija().slikeLokacije"
+    [pocetniIndex]="odabranaSlikaIndex"
+    [apiUrl]="apiUrl"
+    (zatvori)="zatovriGaleriju()"
+  />
+}
