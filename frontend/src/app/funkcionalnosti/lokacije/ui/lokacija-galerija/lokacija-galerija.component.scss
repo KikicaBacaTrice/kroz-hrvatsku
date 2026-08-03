@@ -106,3 +106,9 @@
     }
   }
 }
+
+@media (max-width: 700px) {
+  .lokacija-galerija__resetka-spremnik {
+    grid-template-columns: 1fr 1fr;
+  }
+}

@@ -1,6 +1,15 @@
 .lokacija-informacije__osnovne-informacije-spremnik {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(14rem, 1fr) minmax(14rem, 1fr)
+  );
   gap: 1rem;
   padding-block: 2.5rem;
+}
+
+@media (max-width: 550px) {
+  .lokacija-informacije__osnovne-informacije-spremnik {
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  }
 }

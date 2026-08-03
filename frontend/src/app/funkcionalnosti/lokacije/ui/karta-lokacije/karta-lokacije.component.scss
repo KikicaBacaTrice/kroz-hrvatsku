@@ -60,3 +60,28 @@
     }
   }
 }
+
+@media (max-width: 700px) {
+  .lokacija-karta {
+    border-radius: var(--radius-md);
+  }
+
+  .lokacija-karta__zaglavlje {
+    gap: 0.75rem;
+    padding-inline: 1rem;
+    padding-top: 1rem;
+
+    a button {
+      font-size: var(--fs-sm);
+      padding-inline: 0.75rem;
+    }
+  }
+
+  .lokacija-karta iframe {
+    height: 18rem;
+  }
+
+  .lokacija-karta__koodrinate span {
+    font-size: var(--fs-sm);
+  }
+}

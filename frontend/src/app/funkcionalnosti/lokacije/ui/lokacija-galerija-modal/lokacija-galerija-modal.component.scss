@@ -101,3 +101,9 @@
   width: 1.5rem;
   background: var(--clr-sekundarna-400);
 }
+
+@media (max-width: 700px) {
+  .galerija-modal {
+    padding: 0.5rem;
+  }
+}
