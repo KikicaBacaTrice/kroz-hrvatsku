@@ -29,13 +29,18 @@
 }
 
 .lokacija-sadrzaj__kartica-izazov {
-  --kraj-navigacije: 7rem;
+  --kraj-navigacije: 0.5rem;
   display: grid;
   position: sticky;
   top: calc(var(--kraj-navigacije) + 1rem);
 }
+@supports (animation-timeline: scroll()) {
+  // ako je navigacija sticky onda offsetaj sticky:top od kartice za veličinu navigacije
+  .lokacija-sadrzaj__kartica-izazov {
+    --kraj-navigacije: 7rem;
+  }
+}
 
-/* Tablet */
 @media (max-width: 1100px) {
   .detalji-lokacije__zaglavlje-spremik {
     width: min(100% - 2rem, 56rem);
@@ -55,7 +60,6 @@
   }
 }
 
-/* Mobitel */
 @media (max-width: 700px) {
   .detalji-lokacije__spremnik {
     padding-inline: 0;
