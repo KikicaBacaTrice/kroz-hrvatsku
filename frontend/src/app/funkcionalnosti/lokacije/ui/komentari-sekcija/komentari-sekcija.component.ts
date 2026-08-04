@@ -23,9 +23,11 @@ export class KomentariSekcijaComponent {
 
     if (komentari.length === 0) return 0;
 
-    const zbroj = komentari.reduce((ukupno, komentari) => {
-      return ukupno + komentari.ocjena;
-    }, 0);
+    let zbroj = 0;
+
+    for (const komentar of komentari) {
+      zbroj += komentar.ocjena;
+    }
 
     return zbroj / komentari.length;
   });
