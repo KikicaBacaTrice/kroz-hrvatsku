@@ -1,0 +1,26 @@
+<article class="komentar-kartica">
+  <div class="komentar-kartica__zaglavlje">
+    <div class="komentar-kartica__korisnik">
+      <div class="komentar-kartica__avatar">
+        {{
+          komentar().korisnik.ime?.[0] || komentar().korisnik.korisnickoIme[0]
+        }}
+      </div>
+
+      <div class="komentar-kartica__podaci-korisnika">
+        <h4 class="komentar-kartica__ime">
+          {{ komentar().korisnik.ime || komentar().korisnik.korisnickoIme }}
+        </h4>
+        <p class="komentar-kartica__datum">
+          {{ komentar().datum | date: "dd.MM.yyyy." }}
+        </p>
+      </div>
+    </div>
+
+    <app-ocjena-zvijezdice [ocjena]="komentar().ocjena" [velicina]="22" />
+  </div>
+
+  <p class="komentar-kartica__tekst">
+    {{ komentar().tekst }}
+  </p>
+</article>

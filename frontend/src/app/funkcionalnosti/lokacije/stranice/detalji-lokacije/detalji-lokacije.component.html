@@ -21,6 +21,8 @@
               [lokacija]="lokacija"
               (slikaKliknuta)="otvoriGaleriju($event)"
             />
+
+            <app-komentari-sekcija [lokacijaId]="lokacija.lokacijaId" />
           </div>
 
           <aside class="lokacija-sadrzaj__bocni-stupac">

@@ -1,0 +1,87 @@
+.komentari {
+  background: var(--clr-povrsina);
+  border: 2px solid var(--clr-obrub);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+
+  padding: 1.25rem 1.5rem;
+  display: grid;
+  gap: 1.5rem;
+
+  h3 {
+    font-size: var(--fs-xl);
+  }
+
+  &__zaglavlje {
+    display: grid;
+    gap: 1rem;
+  }
+
+  &__statistika-spremnik {
+    display: grid;
+    align-items: center;
+    grid-template-columns: auto 1px minmax(16rem, 1fr);
+    gap: 2.5rem;
+  }
+
+  &__ocjene-sveobuhvatno {
+    display: grid;
+    place-items: center;
+    gap: 0.4rem;
+    min-width: 10rem;
+  }
+
+  &__prosjecna-ocjena {
+    font-size: var(--fs-2xl);
+    font-weight: 800;
+    line-height: 1.5;
+  }
+
+  &__broj-komentara {
+    font-size: var(--fs-rg);
+    font-weight: 300;
+    color: var(--clr-text-prigusen);
+  }
+
+  &__razdjelnik {
+    height: 80%;
+    width: 1px;
+    background: var(--clr-obrub);
+  }
+
+  &__ocjene-graf {
+    width: 100%;
+    display: grid;
+    gap: 1rem;
+  }
+
+  &__ocjena-redak {
+    display: grid;
+    grid-template-columns: 1.5rem minmax(0, 1fr);
+    align-items: center;
+  }
+
+  &__ocjena-labela {
+    font-weight: 700;
+    font-size: var(--fs-rg);
+    color: var(--clr-primarna-600);
+  }
+
+  &__traka {
+    height: 0.5rem;
+    overflow: hidden;
+    border-radius: var(--radius-zaobljeno);
+    background: var(--clr-povrsina-prigusen);
+  }
+
+  &__traka-popunjena {
+    height: 100%;
+    border-radius: inherit;
+    background-color: var(--clr-primarna-400);
+  }
+
+  &__svi-komentari {
+    display: grid;
+    gap: 1rem;
+  }
+}

@@ -1,0 +1,61 @@
+.komentar-kartica {
+  display: grid;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  border: 1px solid var(--clr-obrub);
+  border-radius: var(--radius-md);
+  background: var(--clr-povrsina);
+
+  &__zaglavlje {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  &__korisnik {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    min-width: 0;
+  }
+
+  &__avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    border-radius: var(--radius-zaobljeno);
+    background-color: var(--clr-primarna-200);
+    color: var(--clr-primarna-600);
+    font-size: var(--fs-rg);
+    font-weight: 700;
+  }
+
+  &__podaci-korisnika {
+    display: grid;
+    gap: 0.2rem;
+    min-width: 0;
+  }
+
+  &__ime {
+    margin: 0;
+    font-size: var(--fs-rg);
+    font-weight: 800;
+    color: var(--clr-text);
+  }
+
+  &__datum {
+    margin: 0;
+    font-size: var(--fs-xs);
+    color: var(--clr-text-prigusen);
+  }
+
+  &__tekst {
+    margin: 0;
+    max-width: 65ch;
+    line-height: 1.25;
+    color: var(--clr-text);
+    font-size: var(--fs-rg);
+  }
+}

@@ -10,6 +10,7 @@ import { LokacijaGalerijaComponent } from '../../ui/lokacija-galerija/lokacija-g
 import { LokacijaInformacijeComponent } from '../../ui/lokacija-informacije/lokacija-informacije.component';
 import { SlikaLokacije } from '../../modeli/lokacija.model';
 import { LokacijaGalerijaModalComponent } from '../../ui/lokacija-galerija-modal/lokacija-galerija-modal.component';
+import { KomentariSekcijaComponent } from '../../ui/komentari-sekcija/komentari-sekcija.component';
 
 @Component({
   selector: 'app-detalji-lokacije',
@@ -21,6 +22,7 @@ import { LokacijaGalerijaModalComponent } from '../../ui/lokacija-galerija-modal
     LokacijaGalerijaComponent,
     LokacijaInformacijeComponent,
     LokacijaGalerijaModalComponent,
+    KomentariSekcijaComponent,
   ],
   templateUrl: './detalji-lokacije.component.html',
   styleUrl: './detalji-lokacije.component.scss',
