@@ -30,6 +30,9 @@
       </div>
     </div>
   </div>
+
+  <app-dodaj-komentar-forma />
+
   @if (komentariStanje.ucitavanje()) {
     <p class="komentari__stanje">Učitavanje komentara...</p>
   } @else if (komentariStanje.greska()) {

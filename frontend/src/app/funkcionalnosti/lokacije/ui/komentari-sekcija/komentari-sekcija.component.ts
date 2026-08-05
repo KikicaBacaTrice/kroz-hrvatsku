@@ -3,10 +3,16 @@ import { OcjenaZvijezdiceComponent } from './ocjena-zvijezdice/ocjena-zvijezdice
 import { KomentarKarticaComponent } from './komentar-kartica/komentar-kartica.component';
 import { KomentariLokacijeStanjeService } from '../../stanje/komentari-lokacije-stanje.service';
 import { DecimalPipe } from '@angular/common';
+import { DodajKomentarFormaComponent } from './dodaj-komentar-forma/dodaj-komentar-forma.component';
 
 @Component({
   selector: 'app-komentari-sekcija',
-  imports: [OcjenaZvijezdiceComponent, KomentarKarticaComponent, DecimalPipe],
+  imports: [
+    OcjenaZvijezdiceComponent,
+    KomentarKarticaComponent,
+    DecimalPipe,
+    DodajKomentarFormaComponent,
+  ],
   templateUrl: './komentari-sekcija.component.html',
   styleUrl: './komentari-sekcija.component.scss',
 })

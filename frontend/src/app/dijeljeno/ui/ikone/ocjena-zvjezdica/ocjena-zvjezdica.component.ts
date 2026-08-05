@@ -34,6 +34,9 @@ import { Component, computed, input } from '@angular/core';
 
       <path
         [attr.fill]="'url(#' + napraviIdZvjezdice() + ')'"
+        [attr.stroke]="bojaRuba()"
+        stroke-width="1.8"
+        stroke-linejoin="round"
         d="M12 2.5l2.92 5.92 6.53.95-4.73 4.61 1.12 6.5L12 17.41l-5.84 3.07 1.12-6.5-4.73-4.61 6.53-.95L12 2.5z"
       />
     </svg>
@@ -53,7 +56,8 @@ export class OcjenaZvjezdicaComponent {
   ispuna = input.required<number>();
   velicina = input(24);
   bojaIspune = input('var(--clr-sekundarna-400)');
-  bojaPrazna = input('var(--clr-povrsina-prigusen)');
+  bojaPrazna = input('transparent');
+  bojaRuba = input('var(--clr-sekundarna-400)');
 
   napraviIdZvjezdice = computed(() => {
     return `zvjezdica-${Math.random().toString(36).slice(2)}`;
