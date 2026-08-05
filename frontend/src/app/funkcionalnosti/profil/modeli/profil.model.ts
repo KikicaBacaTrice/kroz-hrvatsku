@@ -1,6 +1,6 @@
 export type MojProfil = {
   profilId: number;
-  korisnikid: number;
+  korisnikId: number;
   opisProfila: string | null;
   profilnaSlikaUrl: string | null;
   razina: number;

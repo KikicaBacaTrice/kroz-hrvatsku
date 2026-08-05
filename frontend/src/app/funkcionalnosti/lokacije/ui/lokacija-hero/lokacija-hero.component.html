@@ -18,11 +18,14 @@
   <div class="lokacija-hero__sadrzaj-spremnik">
     <h1>{{ lokacija().naziv }}</h1>
 
-    <div class="lokacija-hero__meta-podaci">
-      <app-zvijezda-ikona velicina="18" />
+    <div class="lokacija-hero__ocjena">
+      <app-ocjena-zvijezdice
+        [ocjena]="lokacija().prosjecnaOcjena ?? 0"
+        [velicina]="18"
+      />
       <div>
         <span class="lokacija-hero__prosjecna-ocjena">{{
-          lokacija().prosjecnaOcjena ?? 0
+          lokacija().prosjecnaOcjena ?? 0 | number: "1.1-1"
         }}</span>
         <span class="lokacija-hero__broj-glasova"
           >({{ lokacija().brojOcjena }} glasova)</span

@@ -11,3 +11,8 @@ export type KomentarLokacije = {
     prezime?: string | null;
   };
 };
+
+export type DodajKomentarLokacijeZahtjev = {
+  tekst: string;
+  ocjena: number;
+};

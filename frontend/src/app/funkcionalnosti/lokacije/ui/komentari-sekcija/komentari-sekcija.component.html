@@ -31,7 +31,7 @@
     </div>
   </div>
 
-  <app-dodaj-komentar-forma />
+  <app-dodaj-komentar-forma (dodajKomentar)="dodajKomentar($event)" />
 
   @if (komentariStanje.ucitavanje()) {
     <p class="komentari__stanje">Učitavanje komentara...</p>
@@ -45,7 +45,12 @@
         komentar of komentariStanje.komentari();
         track komentar.povratnaInformacijaId
       ) {
-        <app-komentar-kartica [komentar]="komentar" />
+        <app-komentar-kartica
+          [komentar]="komentar"
+          [prijavljeniKorisnikId]="profilStanje.profil()?.korisnikId ?? null"
+          (obrisi)="obrisiKomentar($event)"
+          (uredi)="zapocniUredivanjeKomentara($event)"
+        />
       }
     </div>
   }

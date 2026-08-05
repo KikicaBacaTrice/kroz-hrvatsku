@@ -1,11 +1,12 @@
 import { Component, EventEmitter, input, Output, output } from '@angular/core';
 import { Lokacija, SlikaLokacije } from '../../modeli/lokacija.model';
 import { API_URL } from '../../../../jezgra/konfiguracija/api.config';
-import { ZvijezdaIkonaComponent } from '../../../../dijeljeno/ui/ikone/zvijezda-ikona/zvijezda-ikona.component';
+import { OcjenaZvijezdiceComponent } from '../komentari-sekcija/ocjena-zvijezdice/ocjena-zvijezdice.component';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-lokacija-hero',
-  imports: [ZvijezdaIkonaComponent],
+  imports: [OcjenaZvijezdiceComponent, DecimalPipe],
   templateUrl: './lokacija-hero.component.html',
   styleUrl: './lokacija-hero.component.scss',
 })

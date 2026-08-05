@@ -10,6 +10,7 @@
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
+    gap: 1rem;
   }
 
   &__korisnik {
@@ -49,6 +50,63 @@
     margin: 0;
     font-size: var(--fs-xs);
     color: var(--clr-text-prigusen);
+  }
+
+  &__akcije {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  &__izbornik-spremnik {
+    position: relative;
+  }
+
+  &__izbornik-gumb {
+    width: 2rem;
+    height: 2rem;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: var(--radius-zaobljeno);
+    cursor: pointer;
+    background: transparent;
+    color: var(--clr-text-prigusen);
+    font-size: var(--fs-rg);
+
+    &:hover {
+      background: var(--clr-povrsina-prigusen);
+    }
+  }
+
+  &__izbornik {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    z-index: 10;
+    min-width: 9rem;
+    display: grid;
+    padding: 0.5rem;
+    border: 1px solid var(--clr-obrub);
+    border-radius: var(--radius-sm);
+    background: var(--clr-povrsina);
+    box-shadow: var(--shadow-md);
+
+    button {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border: 0;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      text-align: left;
+      background: transparent;
+      color: var(--clr-text);
+      font-size: var(--fs-sm);
+
+      &:hover {
+        background: var(--clr-povrsina-prigusen);
+      }
+    }
   }
 
   &__tekst {

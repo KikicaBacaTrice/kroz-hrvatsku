@@ -3,7 +3,10 @@ import { inject, Injectable } from '@angular/core';
 import { Lokacija } from '../modeli/lokacija.model';
 import { API_URL } from '../../../jezgra/konfiguracija/api.config';
 import { map } from 'rxjs';
-import { KomentarLokacije } from '../modeli/komentarLokacije.model';
+import {
+  DodajKomentarLokacijeZahtjev,
+  KomentarLokacije,
+} from '../modeli/komentarLokacije.model';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +27,22 @@ export class LokacijeHttpService {
   dohvatiKomentareLokacije(lokacijaId: number) {
     return this.http.get<KomentarLokacije[]>(
       `${API_URL}/povratne-informacije/${lokacijaId}`,
+    );
+  }
+
+  dodajKomentarLokacije(
+    lokacijaId: number,
+    zahtjev: DodajKomentarLokacijeZahtjev,
+  ) {
+    return this.http.post<KomentarLokacije>(
+      `${API_URL}/povratne-informacije/${lokacijaId}`,
+      zahtjev,
+    );
+  }
+
+  obrisiKomentarLokacije(lokacijaId: number, povratnaInformacijaId: number) {
+    return this.http.delete<KomentarLokacije>(
+      `${API_URL}/povratne-informacije/${lokacijaId}/${povratnaInformacijaId}`,
     );
   }
 }

@@ -6,13 +6,32 @@ import { Lokacija } from '../modeli/lokacija.model';
   providedIn: 'root',
 })
 export class LokacijaStanjeService {
-  private readonly lokacijaHttp = inject(LokacijeHttpService);
-  readonly lokacija = signal<Lokacija | null>(null);
+  private readonly lokacijeHttp = inject(LokacijeHttpService);
 
-  dohvatiPodatkeLokacije(lokacijaId: number): void {
-    this.lokacijaHttp.dohvatiTrazenuLokaciju(lokacijaId).subscribe({
+  readonly lokacija = signal<Lokacija | null>(null);
+  readonly ucitavanje = signal(false);
+  readonly greska = signal<string | null>(null);
+
+  ucitajLokaciju(lokacijaId: number): void {
+    this.ucitavanje.set(true);
+    this.greska.set(null);
+
+    this.lokacijeHttp.dohvatiTrazenuLokaciju(lokacijaId).subscribe({
+      next: (lokacija) => {
+        this.lokacija.set(lokacija);
+        this.ucitavanje.set(false);
+      },
+      error: () => {
+        this.lokacija.set(null);
+        this.greska.set('Lokacija se trenutno ne može učitati.');
+        this.ucitavanje.set(false);
+      },
+    });
+  }
+
+  osvjeziLokaciju(lokacijaId: number): void {
+    this.lokacijeHttp.dohvatiTrazenuLokaciju(lokacijaId).subscribe({
       next: (lokacija) => this.lokacija.set(lokacija),
-      error: () => this.lokacija.set(null),
     });
   }
 }

@@ -11,6 +11,7 @@ import { LokacijaInformacijeComponent } from '../../ui/lokacija-informacije/loka
 import { SlikaLokacije } from '../../modeli/lokacija.model';
 import { LokacijaGalerijaModalComponent } from '../../ui/lokacija-galerija-modal/lokacija-galerija-modal.component';
 import { KomentariSekcijaComponent } from '../../ui/komentari-sekcija/komentari-sekcija.component';
+import { KomentariLokacijeStanjeService } from '../../stanje/komentari-lokacije-stanje.service';
 
 @Component({
   selector: 'app-detalji-lokacije',
@@ -30,6 +31,7 @@ import { KomentariSekcijaComponent } from '../../ui/komentari-sekcija/komentari-
 export class DetaljiLokacijeComponent implements OnInit, OnDestroy {
   private readonly route = inject(ActivatedRoute);
   private readonly lokacijaStanje = inject(LokacijaStanjeService);
+  private readonly komentariStanje = inject(KomentariLokacijeStanjeService);
 
   readonly apiUrl = API_URL;
   readonly lokacija = this.lokacijaStanje.lokacija;
@@ -37,17 +39,12 @@ export class DetaljiLokacijeComponent implements OnInit, OnDestroy {
   odabranaSlikaIndex = 0;
   galerijaOtvorena = false;
 
-  constructor() {
-    effect(() => {
-      console.log(this.lokacija());
-    });
-  }
-
   ngOnInit(): void {
     const lokacijaId = Number(this.route.snapshot.paramMap.get('id'));
 
     if (!Number.isNaN(lokacijaId)) {
-      this.lokacijaStanje.dohvatiPodatkeLokacije(lokacijaId);
+      this.lokacijaStanje.ucitajLokaciju(lokacijaId);
+      this.komentariStanje.ucitajKomentare(lokacijaId);
     }
   }
 

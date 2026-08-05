@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, inject, input, Output } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { OcjenaZvjezdicaComponent } from '../../../../../dijeljeno/ui/ikone/ocjena-zvjezdica/ocjena-zvjezdica.component';
+import { KomentariLokacijeStanjeService } from '../../../stanje/komentari-lokacije-stanje.service';
+import { DodajKomentarLokacijeZahtjev } from '../../../modeli/komentarLokacije.model';
 
 @Component({
   selector: 'app-dodaj-komentar-forma',
@@ -9,6 +11,8 @@ import { OcjenaZvjezdicaComponent } from '../../../../../dijeljeno/ui/ikone/ocje
   styleUrl: './dodaj-komentar-forma.component.scss',
 })
 export class DodajKomentarFormaComponent {
+  @Output() dodajKomentar = new EventEmitter<DodajKomentarLokacijeZahtjev>();
+
   model = {
     ocjena: 0,
     tekst: '',
@@ -24,7 +28,10 @@ export class DodajKomentarFormaComponent {
       return;
     }
 
-    console.log(this.model);
+    this.dodajKomentar.emit({
+      tekst: this.model.tekst,
+      ocjena: this.model.ocjena,
+    });
 
     forma.resetForm({
       ocjena: 0,
