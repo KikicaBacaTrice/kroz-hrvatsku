@@ -1,4 +1,4 @@
-import { Component, computed, inject, input } from '@angular/core';
+import { Component, computed, inject, input, signal } from '@angular/core';
 import { OcjenaZvijezdiceComponent } from './ocjena-zvijezdice/ocjena-zvijezdice.component';
 import { KomentarKarticaComponent } from './komentar-kartica/komentar-kartica.component';
 import { KomentariLokacijeStanjeService } from '../../stanje/komentari-lokacije-stanje.service';
@@ -6,11 +6,13 @@ import { DecimalPipe } from '@angular/common';
 import { DodajKomentarFormaComponent } from './dodaj-komentar-forma/dodaj-komentar-forma.component';
 import { ProfilStanjeService } from '../../../profil/stanje/profil-stanje.service';
 import {
+  AzurirajKomentarLokacijeZahtjev,
   DodajKomentarLokacijeZahtjev,
   KomentarLokacije,
 } from '../../modeli/komentarLokacije.model';
 import { AuthStanjeService } from '../../../autentikacija/stanje/auth-stanje.service';
 import { LokacijaStanjeService } from '../../stanje/lokacija-stanje.service';
+import { UrediKomentarModalComponent } from './uredi-komentar-modal/uredi-komentar-modal.component';
 
 @Component({
   selector: 'app-komentari-sekcija',
@@ -19,6 +21,7 @@ import { LokacijaStanjeService } from '../../stanje/lokacija-stanje.service';
     KomentarKarticaComponent,
     DecimalPipe,
     DodajKomentarFormaComponent,
+    UrediKomentarModalComponent,
   ],
   templateUrl: './komentari-sekcija.component.html',
   styleUrl: './komentari-sekcija.component.scss',
@@ -29,6 +32,9 @@ export class KomentariSekcijaComponent {
   readonly authStanje = inject(AuthStanjeService);
   readonly lokacijaStanje = inject(LokacijaStanjeService);
   lokacijaId = input.required<number>();
+
+  komentarZaUredivanje = signal<KomentarLokacije | null>(null);
+  brojPrikazanihKomentara = signal(3);
 
   brojKomentara = computed(() => {
     return this.lokacijaStanje.lokacija()?.brojOcjena ?? 0;
@@ -55,6 +61,18 @@ export class KomentariSekcijaComponent {
     });
   });
 
+  prikazaniKomentari = computed(() => {
+    return this.komentariStanje
+      .komentari()
+      .slice(0, this.brojPrikazanihKomentara());
+  });
+
+  imaJosKomentara = computed(() => {
+    return (
+      this.brojPrikazanihKomentara() < this.komentariStanje.komentari().length
+    );
+  });
+
   ngOnInit(): void {
     this.komentariStanje.ucitajKomentare(this.lokacijaId());
 
@@ -63,13 +81,35 @@ export class KomentariSekcijaComponent {
     }
   }
 
+  prikaziViseKomentara(): void {
+    this.brojPrikazanihKomentara.update((broj) => broj + 3);
+  }
+
   dodajKomentar(komentar: DodajKomentarLokacijeZahtjev) {
     this.komentariStanje.dodajKomentar(this.lokacijaId(), komentar);
   }
 
   zapocniUredivanjeKomentara(komentar: KomentarLokacije) {
-    console.log('uredi', komentar);
+    this.komentarZaUredivanje.set(komentar);
   }
+  zatovriUredivanjeKomentara(): void {
+    this.komentarZaUredivanje.set(null);
+  }
+
+  spremiUredeniKomentar(zahtjev: AzurirajKomentarLokacijeZahtjev): void {
+    const kometar = this.komentarZaUredivanje();
+
+    if (!kometar) return;
+
+    this.komentariStanje.urediKomentar(
+      this.lokacijaId(),
+      kometar.povratnaInformacijaId,
+      zahtjev,
+    );
+
+    this.komentarZaUredivanje.set(null);
+  }
+
   obrisiKomentar(komentar: KomentarLokacije) {
     const potvrdeno = confirm('Jeste li sigurni da želite obrisati komentar');
 

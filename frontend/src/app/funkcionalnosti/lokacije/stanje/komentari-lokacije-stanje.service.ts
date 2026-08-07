@@ -1,6 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { LokacijeHttpService } from '../podaci/lokacije-http.service';
 import {
+  AzurirajKomentarLokacijeZahtjev,
   DodajKomentarLokacijeZahtjev,
   KomentarLokacije,
 } from '../modeli/komentarLokacije.model';
@@ -95,6 +96,29 @@ export class KomentariLokacijeStanjeService {
           }
 
           this.greska.set('Dogodila se pogreška pri brisanju komentara.');
+        },
+      });
+  }
+
+  urediKomentar(
+    lokacijaId: number,
+    povratnaInformacijaId: number,
+    zahtjev: AzurirajKomentarLokacijeZahtjev,
+  ) {
+    this.ucitavanje.set(true);
+    this.greska.set(null);
+
+    this.lokacijeHttp
+      .urediKomentarLokacije(lokacijaId, povratnaInformacijaId, zahtjev)
+      .subscribe({
+        next: () => {
+          this.ucitavanje.set(false);
+          this.ucitajKomentare(lokacijaId);
+          this.lokacijaStanje.osvjeziLokaciju(lokacijaId);
+        },
+        error: () => {
+          this.ucitavanje.set(false);
+          this.greska.set('Komentar nije moguće urediti');
         },
       });
   }

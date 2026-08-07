@@ -42,7 +42,7 @@
   } @else {
     <div class="komentari__svi-komentari">
       @for (
-        komentar of komentariStanje.komentari();
+        komentar of prikazaniKomentari();
         track komentar.povratnaInformacijaId
       ) {
         <app-komentar-kartica
@@ -52,6 +52,26 @@
           (uredi)="zapocniUredivanjeKomentara($event)"
         />
       }
+
+      @if (imaJosKomentara()) {
+        <button
+          type="button"
+          class="komentari__prikazi-vise"
+          (click)="prikaziViseKomentara()"
+        >
+          Prikaži više ({{ brojPrikazanihKomentara() }}/{{
+            komentariStanje.komentari().length
+          }})
+        </button>
+      }
     </div>
   }
 </div>
+
+@if (komentarZaUredivanje(); as komentar) {
+  <app-uredi-komentar-modal
+    [komentar]="komentar"
+    (zatvori)="zatovriUredivanjeKomentara()"
+    (spremi)="spremiUredeniKomentar($event)"
+  />
+}

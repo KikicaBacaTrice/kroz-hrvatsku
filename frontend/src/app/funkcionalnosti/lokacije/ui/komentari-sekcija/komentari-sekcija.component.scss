@@ -84,4 +84,11 @@
     display: grid;
     gap: 1rem;
   }
+
+  &__prikazi-vise {
+    justify-self: flex-end;
+    cursor: pointer;
+    color: var(--clr-primarna-600);
+    font-size: var(--fs-sm);
+  }
 }

@@ -16,3 +16,8 @@ export type DodajKomentarLokacijeZahtjev = {
   tekst: string;
   ocjena: number;
 };
+
+export type AzurirajKomentarLokacijeZahtjev = {
+  tekst?: string;
+  ocjena?: number;
+};

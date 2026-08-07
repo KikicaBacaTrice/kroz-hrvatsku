@@ -4,6 +4,7 @@ import { Lokacija } from '../modeli/lokacija.model';
 import { API_URL } from '../../../jezgra/konfiguracija/api.config';
 import { map } from 'rxjs';
 import {
+  AzurirajKomentarLokacijeZahtjev,
   DodajKomentarLokacijeZahtjev,
   KomentarLokacije,
 } from '../modeli/komentarLokacije.model';
@@ -43,6 +44,17 @@ export class LokacijeHttpService {
   obrisiKomentarLokacije(lokacijaId: number, povratnaInformacijaId: number) {
     return this.http.delete<KomentarLokacije>(
       `${API_URL}/povratne-informacije/${lokacijaId}/${povratnaInformacijaId}`,
+    );
+  }
+
+  urediKomentarLokacije(
+    lokacijaId: number,
+    povratnaInformacijaId: number,
+    zahtjev: AzurirajKomentarLokacijeZahtjev,
+  ) {
+    return this.http.patch<KomentarLokacije>(
+      `${API_URL}/povratne-informacije/${lokacijaId}/${povratnaInformacijaId}`,
+      zahtjev,
     );
   }
 }

@@ -1,0 +1,89 @@
+<div class="uredi-komentar-modal" (click)="zatvoriModal()">
+  <section
+    class="uredi-komentar-modal__sadrzaj"
+    (click)="$event.stopPropagation()"
+  >
+    <header class="uredi-komentar-modal__zaglavlje">
+      <h3>Uredi komentar</h3>
+
+      <button
+        type="button"
+        class="uredi-komentar-modal__zatvori"
+        (click)="zatvoriModal()"
+        aria-label="Zatvori"
+      >
+        <app-zatovri-ikona velicina="20" />
+      </button>
+    </header>
+
+    <form
+      class="uredi-komentar-modal__forma"
+      #forma="ngForm"
+      (ngSubmit)="posalji(forma)"
+    >
+      <div class="uredi-komentar-modal__grupa">
+        <label class="uredi-komentar-modal__labela">Vaša ocjena</label>
+
+        <div class="uredi-komentar-modal__ocjena">
+          @for (vrijednost of [1, 2, 3, 4, 5]; track vrijednost) {
+            <button
+              type="button"
+              class="uredi-komentar-modal__zvjezdica"
+              (click)="postaviOcjenu(vrijednost)"
+            >
+              <app-ocjena-zvjezdica
+                [ispuna]="vrijednost <= model.ocjena ? 100 : 0"
+                [velicina]="22"
+                bojaIspune="var(--clr-sekundarna-400)"
+                bojaPrazna="transparent"
+                bojaRuba="var(--clr-sekundarna-400)"
+              />
+            </button>
+          }
+        </div>
+
+        @if (forma.submitted && model.ocjena === 0) {
+          <p class="uredi-komentar-modal__greska">Odaberite ocjenu.</p>
+        }
+      </div>
+
+      <div class="uredi-komentar-modal__grupa">
+        <label for="uredi-komentar-tekst" class="uredi-komentar-modal__labela">
+          Komentar
+        </label>
+
+        <textarea
+          id="uredi-komentar-tekst"
+          name="tekst"
+          class="uredi-komentar-modal__unos"
+          rows="6"
+          required
+          minlength="10"
+          maxlength="1000"
+          [(ngModel)]="model.tekst"
+          #tekst="ngModel"
+        ></textarea>
+
+        @if (forma.submitted && tekst.invalid) {
+          <p class="uredi-komentar-modal__greska">
+            Komentar mora imati barem 10 znakova.
+          </p>
+        }
+      </div>
+
+      <footer class="uredi-komentar-modal__akcije">
+        <button
+          type="button"
+          class="c-button c-button--primarna-inverz"
+          (click)="zatvoriModal()"
+        >
+          Odustani
+        </button>
+
+        <button type="submit" class="c-button c-button--primarna">
+          Spremi promjene
+        </button>
+      </footer>
+    </form>
+  </section>
+</div>
