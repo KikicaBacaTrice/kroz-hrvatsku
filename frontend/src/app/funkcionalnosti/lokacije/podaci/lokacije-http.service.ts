@@ -15,6 +15,10 @@ import {
 export class LokacijeHttpService {
   private readonly http = inject(HttpClient);
 
+  dohvatiSveLokacije() {
+    return this.http.get<Lokacija[]>(`${API_URL}/lokacije`);
+  }
+
   dohvatiPrveTriLokacije() {
     return this.http
       .get<Lokacija[]>(`${API_URL}/lokacije`)

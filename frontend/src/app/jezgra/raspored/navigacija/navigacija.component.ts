@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, OnInit, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthStanjeService } from '../../../funkcionalnosti/autentikacija/stanje/auth-stanje.service';
 import { KrozHrvatskuLogoIkonaComponent } from '../../../dijeljeno/ui/ikone/kroz-hrvatsku-logo-ikona/kroz-hrvatsku-logo-ikona.component';
@@ -32,6 +32,12 @@ export class NavigacijaComponent implements OnInit {
 
   izbornikOtvoren = signal(false);
   mobilniIzbornikOtvoren = signal(false);
+
+  constructor() {
+    effect(() => {
+      console.log('Profil stanje:', this.profilStanje.profil());
+    });
+  }
 
   ngOnInit(): void {
     if (this.authStanje.prijavljen()) {

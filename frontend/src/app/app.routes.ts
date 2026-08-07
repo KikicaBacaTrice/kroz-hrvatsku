@@ -36,6 +36,13 @@ export const routes: Routes = [
             (m) => m.ProfilComponent,
           ),
       },
+      {
+        path: 'uredivanje',
+        loadChildren: () =>
+          import('./funkcionalnosti/uredivanje/uredivanje.routes').then(
+            (m) => m.UREDIVANJE_ROUTES,
+          ),
+      },
     ],
   },
   {

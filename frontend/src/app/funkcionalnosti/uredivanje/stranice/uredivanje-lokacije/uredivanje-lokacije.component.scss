@@ -1,0 +1,56 @@
+.uredivanje-lokacija {
+  display: grid;
+  gap: 1.5rem;
+  width: 100%;
+  margin-inline: auto;
+  padding: 2rem 1rem;
+
+  &__zaglavlje {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  &__tablica-spremnik {
+    overflow-x: auto;
+    border: 1px solid var(--clr-obrub);
+    border-radius: var(--radius-md);
+    background: var(--clr-povrsina);
+    box-shadow: var(--shadow-md);
+  }
+
+  &__tablica {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 52rem;
+
+    th,
+    td {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--clr-obrub);
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    th {
+      font-size: var(--fs-sm);
+      text-transform: uppercase;
+      color: var(--clr-text-prigusen);
+      background: var(--clr-povrsina-prigusen);
+    }
+  }
+
+  &__slika {
+    width: 5rem;
+    height: 3.5rem;
+    display: block;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+  }
+
+  &__akcije {
+    display: flex;
+    gap: 0.5rem;
+  }
+}

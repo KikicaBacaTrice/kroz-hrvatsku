@@ -17,6 +17,7 @@ export class ProfilService {
         korisnik: {
           select: {
             korisnikId: true,
+            ulogaId: true,
             ime: true,
             prezime: true,
             korisnickoIme: true,

@@ -1,0 +1,67 @@
+<section class="uredivanje-lokacija">
+  <header class="uredivanje-lokacija__zaglavlje">
+    <h1>Uređivanje lokacija</h1>
+
+    <a routerLink="/uredivanje">Natrag</a>
+  </header>
+
+  @if (ucitavanje()) {
+    <p>Učitavanje lokacija...</p>
+  } @else if (greska()) {
+    <p>{{ greska() }}</p>
+  } @else {
+    <div class="uredivanje-lokacija__tablica-spremnik">
+      <table class="uredivanje-lokacija__tablica">
+        <thead>
+          <tr>
+            <th>Slika</th>
+            <th>ID</th>
+            <th>Naziv</th>
+            <th>XP</th>
+            <th>Novac</th>
+            <th>Akcije</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (lokacija of lokacije(); track lokacija.lokacijaId) {
+            <tr>
+              <td>
+                @if (glavnaSlika(lokacija); as slika) {
+                  <img
+                    [src]="apiUrl + slika.putanjaSlike"
+                    [alt]="slika.opisSlike || lokacija.naziv"
+                    class="uredivanje-lokacija__slika"
+                  />
+                }
+              </td>
+
+              <td>{{ lokacija.lokacijaId }}</td>
+              <td>{{ lokacija.naziv }}</td>
+              <td>{{ lokacija.nagradaXp }}</td>
+              <td>{{ lokacija.nagradaValuta }}</td>
+
+              <td>
+                <div class="uredivanje-lokacija__akcije">
+                  <a
+                    [routerLink]="['/uredivanje/lokacije', lokacija.lokacijaId]"
+                    class="c-button c-button--primarna"
+                    >Uredi
+                  </a>
+
+                  <button
+                    type="button"
+                    class="c-button c-button-opasnost"
+                    (click)="obrisiLokaciju(lokacija)"
+                  >
+                    Obriši
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>

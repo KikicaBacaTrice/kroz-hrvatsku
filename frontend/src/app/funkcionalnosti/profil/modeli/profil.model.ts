@@ -7,7 +7,8 @@ export type MojProfil = {
   xpBodovi: number;
   virtualniNovac: number;
   korisnik: {
-    korinsikId: number;
+    korisnikId: number;
+    ulogaId: number;
     ime: string | null;
     prezime: string | null;
     korisnickoIme: string;
