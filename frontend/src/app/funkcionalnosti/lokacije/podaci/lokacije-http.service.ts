@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Lokacija, SlikaLokacije } from '../modeli/lokacija.model';
 import { API_URL } from '../../../jezgra/konfiguracija/api.config';
@@ -9,6 +9,7 @@ import {
   KomentarLokacije,
 } from '../modeli/komentarLokacije.model';
 import { LokacijaFormaModel } from '../../uredivanje/modeli/lokacija-forma.mode';
+import { FilterLokacija } from '../modeli/filter-lokacija.model';
 
 @Injectable({
   providedIn: 'root',
@@ -17,8 +18,23 @@ export class LokacijeHttpService {
   private readonly http = inject(HttpClient);
 
   /* Lokacije */
-  dohvatiSveLokacije() {
-    return this.http.get<Lokacija[]>(`${API_URL}/lokacije`);
+  dohvatiSveLokacije(filter?: FilterLokacija) {
+    let params = new HttpParams();
+
+    if (filter?.pretraziNaziv) {
+      params = params.set('pretraziNaziv', filter.pretraziNaziv);
+    }
+    if (filter?.zupanija) {
+      params = params.set('zupanija', filter.zupanija);
+    }
+    if (filter?.grad) {
+      params = params.set('grad', filter.grad);
+    }
+    if (filter?.kategorija) {
+      params = params.set('kategorija', filter.kategorija);
+    }
+
+    return this.http.get<Lokacija[]>(`${API_URL}/lokacije`, { params });
   }
 
   dohvatiPrveTriLokacije() {

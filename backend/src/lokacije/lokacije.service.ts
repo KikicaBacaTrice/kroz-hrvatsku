@@ -392,20 +392,10 @@ export class LokacijeService {
         },
       }),
       ...(filter?.pretraziNaziv && {
-        OR: [
-          {
-            naziv: {
-              contains: filter.pretraziNaziv,
-              mode: 'insensitive',
-            },
-          },
-          {
-            opis: {
-              contains: filter.pretraziNaziv,
-              mode: 'insensitive',
-            },
-          },
-        ],
+        naziv: {
+          contains: filter.pretraziNaziv,
+          mode: 'insensitive',
+        },
       }),
     };
   }

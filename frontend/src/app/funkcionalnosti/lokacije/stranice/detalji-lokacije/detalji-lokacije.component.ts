@@ -40,12 +40,12 @@ export class DetaljiLokacijeComponent implements OnInit, OnDestroy {
   galerijaOtvorena = false;
 
   ngOnInit(): void {
-    const lokacijaId = Number(this.route.snapshot.paramMap.get('id'));
+    this.route.paramMap.subscribe((parametri) => {
+      const lokacijaId = Number(parametri.get('id'));
 
-    if (!Number.isNaN(lokacijaId)) {
       this.lokacijaStanje.ucitajLokaciju(lokacijaId);
       this.komentariStanje.ucitajKomentare(lokacijaId);
-    }
+    });
   }
 
   otvoriGaleriju(slika: SlikaLokacije): void {

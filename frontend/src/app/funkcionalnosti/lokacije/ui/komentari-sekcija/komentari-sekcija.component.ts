@@ -74,8 +74,6 @@ export class KomentariSekcijaComponent {
   });
 
   ngOnInit(): void {
-    this.komentariStanje.ucitajKomentare(this.lokacijaId());
-
     if (!this.profilStanje.profil()) {
       this.profilStanje.ucitajMojProfil();
     }

@@ -21,6 +21,7 @@ export class KomentariLokacijeStanjeService {
   ucitajKomentare(lokacijaId: number): void {
     this.ucitavanje.set(true);
     this.greska.set(null);
+    this.komentari.set([]);
 
     this.lokacijeHttp.dohvatiKomentareLokacije(lokacijaId).subscribe({
       next: (komentari) => {

@@ -1,1 +1,74 @@
-<p>lista-lokacija works!</p>
+<section class="lokacije-stranica">
+  <header class="lokacije-stranica__zaglavlje">
+    <h1>Lokacije</h1>
+  </header>
+
+  <form class="lokacije-filter" (submit)="primijeniFilter()">
+    <label class="lokacije-filter__polje">
+      Pretraži naziv
+      <input
+        class="lokacije-filter__kontrola"
+        type="text"
+        name="pretraziNaziv"
+        placeholder="npr. Trakošćan"
+        [(ngModel)]="filter.pretraziNaziv"
+      />
+    </label>
+    <label class="lokacije-filter__polje">
+      Županija
+      <input
+        class="lokacije-filter__kontrola"
+        type="text"
+        name="zupanija"
+        placeholder="npr. Varaždinska"
+        [(ngModel)]="filter.zupanija"
+      />
+    </label>
+    <label class="lokacije-filter__polje">
+      Grad
+      <input
+        class="lokacije-filter__kontrola"
+        type="text"
+        name="grad"
+        placeholder="npr. Varaždin"
+        [(ngModel)]="filter.grad"
+      />
+    </label>
+    <label class="lokacije-filter__polje">
+      Kategorija
+      <input
+        class="lokacije-filter__kontrola"
+        type="text"
+        name="kategorija"
+        placeholder="npr. Dvorac"
+        [(ngModel)]="filter.kategorija"
+      />
+    </label>
+
+    <div class="lokacije-filter__akcije">
+      <button type="submit" class="c-button c-button--primarna">
+        Primijeni
+      </button>
+
+      <button
+        type="button"
+        class="c-button c-button--primarna-inverz"
+        (click)="resetirajFilter()"
+      >
+        Resetiraj
+      </button>
+    </div>
+  </form>
+
+  @if (ucitavanje()) {
+    <p>Učitavanje lokacija</p>
+  } @else if (greska()) {
+    <p>{{ greska() }}</p>
+  } @else {
+    <div class="lokacije-stranica__resetka">
+      @for (lokacija of lokacije(); track lokacija.lokacijaId) {
+        <app-kartica-lokacije [lokacija]="lokacija" />
+      }
+    </div>
+  }
+</section>
