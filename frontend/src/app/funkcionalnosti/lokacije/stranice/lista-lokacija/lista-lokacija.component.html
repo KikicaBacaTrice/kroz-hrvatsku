@@ -36,13 +36,20 @@
     </label>
     <label class="lokacije-filter__polje">
       Kategorija
-      <input
+
+      <select
         class="lokacije-filter__kontrola"
-        type="text"
         name="kategorija"
-        placeholder="npr. Dvorac"
         [(ngModel)]="filter.kategorija"
-      />
+      >
+        <option value="">Sve kategorije</option>
+
+        @for (kategorija of kategorije(); track kategorija.kategorijaId) {
+          <option [value]="kategorija.naziv">
+            {{ kategorija.naziv }}
+          </option>
+        }
+      </select>
     </label>
 
     <div class="lokacije-filter__akcije">

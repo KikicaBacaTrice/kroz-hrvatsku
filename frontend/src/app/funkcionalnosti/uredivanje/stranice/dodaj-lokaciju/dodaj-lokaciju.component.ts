@@ -6,6 +6,7 @@ import { LokacijaFormaComponent } from '../../ui/lokacija-forma/lokacija-forma.c
 import { KategorijeHttpService } from '../../../lokacije/podaci/kategorije-http.service';
 import { single } from 'rxjs';
 import { KategorijaLokacije } from '../../../lokacije/modeli/lokacija.model';
+import { KategorijeStanjeService } from '../../../lokacije/stanje/kategorije-stanje.service';
 
 @Component({
   selector: 'app-dodaj-lokaciju',
@@ -16,14 +17,12 @@ import { KategorijaLokacije } from '../../../lokacije/modeli/lokacija.model';
 export class DodajLokacijuComponent implements OnInit {
   private readonly lokacijeHttp = inject(LokacijeHttpService);
   private readonly router = inject(Router);
-  private readonly kateogrijeHttp = inject(KategorijeHttpService);
+  private readonly kateogrijeStanje = inject(KategorijeStanjeService);
 
-  readonly kategorije = signal<KategorijaLokacije[]>([]);
+  readonly kategorije = this.kateogrijeStanje.kategorije;
 
   ngOnInit(): void {
-    this.kateogrijeHttp.dohvatiSveKategorije().subscribe({
-      next: (kategorije) => this.kategorije.set(kategorije),
-    });
+    this.kateogrijeStanje.ucitajKategorije();
   }
 
   dodajLokaciju(zahtjev: LokacijaFormaModel): void {

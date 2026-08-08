@@ -7,9 +7,9 @@ import {
 } from '../../../lokacije/modeli/lokacija.model';
 import { LokacijaFormaModel } from '../../modeli/lokacija-forma.mode';
 import { LokacijaFormaComponent } from '../../ui/lokacija-forma/lokacija-forma.component';
-import { KategorijeHttpService } from '../../../lokacije/podaci/kategorije-http.service';
 import { FormsModule } from '@angular/forms';
 import { UrediSlikeLokacijeComponent } from '../../ui/uredi-slike-lokacije/uredi-slike-lokacije.component';
+import { KategorijeStanjeService } from '../../../lokacije/stanje/kategorije-stanje.service';
 
 @Component({
   selector: 'app-uredi-lokaciju',
@@ -21,13 +21,13 @@ export class UrediLokacijuComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly lokacijeHttp = inject(LokacijeHttpService);
-  private readonly kateogrijeHttp = inject(KategorijeHttpService);
+  private readonly kateogrijeStanje = inject(KategorijeStanjeService);
 
   readonly lokacija = signal<Lokacija | null>(null);
+  readonly kategorije = this.kateogrijeStanje.kategorije;
   readonly pocetnaVrijednostForme = signal<Partial<LokacijaFormaModel> | null>(
     null,
   );
-  readonly kategorije = signal<KategorijaLokacije[]>([]);
   private lokacijaId = 0;
 
   ngOnInit(): void {
@@ -37,9 +37,7 @@ export class UrediLokacijuComponent implements OnInit {
       this.ucitajLokaciju();
     }
 
-    this.kateogrijeHttp.dohvatiSveKategorije().subscribe({
-      next: (kategorije) => this.kategorije.set(kategorije),
-    });
+    this.kateogrijeStanje.ucitajKategorije();
   }
 
   mapirajLokacijuUFormu(lokacija: Lokacija): Partial<LokacijaFormaModel> {

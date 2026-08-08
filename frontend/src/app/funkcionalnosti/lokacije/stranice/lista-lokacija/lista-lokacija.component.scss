@@ -53,6 +53,22 @@
   }
 }
 
+select.lokacije-filter__kontrola {
+  appearance: none;
+  cursor: pointer;
+  padding-right: 2.75rem;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--clr-text) 50%),
+    linear-gradient(135deg, var(--clr-text) 50%, transparent 50%);
+  background-position:
+    calc(100% - 1.25rem) 50%,
+    calc(100% - 0.9rem) 50%;
+  background-size:
+    0.35rem 0.35rem,
+    0.35rem 0.35rem;
+  background-repeat: no-repeat;
+}
+
 @media (max-width: 1000px) {
   .lokacije-filter {
     grid-template-columns: repeat(2, minmax(0, 1fr));
