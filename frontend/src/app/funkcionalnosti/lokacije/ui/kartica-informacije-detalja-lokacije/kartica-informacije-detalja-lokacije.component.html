@@ -1,0 +1,15 @@
+<div class="lokacija-informacije__kartica">
+  <div class="lokacija-informacije__kartica-ikona-spremnik">
+    <img
+      [src]="ikona()"
+      [alt]="opis()"
+      class="lokacija-informacije__kartica-ikona"
+    />
+  </div>
+  <div class="lokacija-informacije__kartica-sadrzaj">
+    <span class="lokacija-informacije__kartica-opis">{{ opis() }}</span>
+    <span class="lokacija-informacije__kartica-informacija">
+      {{ vrijednost() }}
+    </span>
+  </div>
+</div>

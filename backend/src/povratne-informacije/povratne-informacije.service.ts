@@ -23,6 +23,15 @@ export class PovratneInformacijeService {
       orderBy: {
         datum: 'desc',
       },
+      include: {
+        korisnik: {
+          select: {
+            korisnickoIme: true,
+            ime: true,
+            prezime: true,
+          },
+        },
+      },
     });
   }
 

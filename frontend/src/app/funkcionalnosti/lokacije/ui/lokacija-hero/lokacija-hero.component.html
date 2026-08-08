@@ -1,0 +1,36 @@
+<section class="o-media-pokrov | lokacija-hero">
+  @if (glavnaSlika(); as slika) {
+    <button
+      type="button"
+      class="lokacija-hero__slika-gumb"
+      (click)="otvoriSliku(slika)"
+    >
+      <img
+        [src]="apiUrl + slika.putanjaSlike"
+        [alt]="slika.opisSlike"
+        class="lokacija-hero__slika"
+      />
+    </button>
+  }
+
+  <div class="lokacija-hero__overlay"></div>
+
+  <div class="o-stog | lokacija-hero__sadrzaj-spremnik">
+    <h1>{{ lokacija().naziv }}</h1>
+
+    <div class="o-klaster | lokacija-hero__ocjena">
+      <app-ocjena-zvijezdice
+        [ocjena]="lokacija().prosjecnaOcjena ?? 0"
+        [velicina]="18"
+      />
+      <div>
+        <span class="lokacija-hero__prosjecna-ocjena">{{
+          lokacija().prosjecnaOcjena ?? 0 | number: "1.1-1"
+        }}</span>
+        <span class="lokacija-hero__broj-glasova"
+          >({{ lokacija().brojOcjena }} glasova)</span
+        >
+      </div>
+    </div>
+  </div>
+</section>

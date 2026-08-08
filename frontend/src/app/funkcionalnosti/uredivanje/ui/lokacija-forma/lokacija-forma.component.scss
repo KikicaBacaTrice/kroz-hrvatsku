@@ -1,0 +1,76 @@
+.lokacija-forma {
+  width: min(100% - 2rem, 72rem);
+  margin: 2rem auto;
+  padding: 1.5rem;
+  border: 1px solid var(--clr-obrub);
+  border-radius: var(--radius-lg);
+  background: var(--clr-povrsina);
+  box-shadow: var(--shadow-md);
+
+  &__zaglavlje h2,
+  &__sekcija h3 {
+    margin: 0;
+  }
+
+  &__sekcija {
+    display: grid;
+    gap: 1rem;
+  }
+
+  &__resetka {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  &__resetka--tri {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  // }
+
+  &__polje--puno {
+    grid-column: 1 / -1;
+  }
+
+  &__textarea {
+    min-height: 15rem;
+    resize: vertical;
+    box-shadow: var(--shadow-md);
+  }
+
+  &__kontrola:focus {
+    border-color: var(--clr-primarna-400);
+    outline: 3px solid
+      color-mix(in srgb, var(--clr-primarna-400) 25%, transparent);
+  }
+
+  &__akcije {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--clr-obrub);
+  }
+}
+
+select.c-forma__kontrola {
+  cursor: pointer;
+  font-size: var(--fs-rg);
+}
+
+@media (max-width: 700px) {
+  .lokacija-forma {
+    width: 100%;
+    margin: 1rem 0;
+    border-radius: var(--radius-md);
+
+    &__resetka,
+    &__resetka--tri {
+      grid-template-columns: 1fr;
+    }
+
+    &__akcije {
+      flex-direction: column-reverse;
+    }
+  }
+}

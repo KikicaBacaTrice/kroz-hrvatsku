@@ -41,7 +41,7 @@ export class AuthStanjeService {
   odjava(): void {
     this.tokenSpremiste.obrisiToken();
     this.prijavljen.set(false);
-    this.profilStanje.ucitajMojProfil();
+    this.profilStanje.ocistiProfil();
     this.router.navigate(['/autentikacija/prijava']);
   }
 }

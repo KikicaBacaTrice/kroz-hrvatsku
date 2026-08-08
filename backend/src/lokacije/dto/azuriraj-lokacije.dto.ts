@@ -16,7 +16,6 @@ export class AzurirajLokacijuDto {
 
   @IsOptional()
   @IsString()
-  @MaxLength(1000)
   opis?: string;
 
   @IsOptional()

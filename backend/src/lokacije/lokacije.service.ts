@@ -11,6 +11,8 @@ import { DodajSlikuDto } from './dto/dodaj-sliku.dto';
 import { AzurirajSlikuLokacijeDto } from './dto/azuriraj-sliku-lokacije.dto';
 import { NagradeService } from 'src/nagrade/nagrade.service';
 import { Prisma } from '@prisma/client';
+import { join } from 'path';
+import { unlink } from 'fs/promises';
 
 type LokacijaZaRjesavanje = {
   lokacijaId: number;
@@ -118,7 +120,7 @@ export class LokacijeService {
     return rijesenaLokacija;
   }
 
-  async dodajLokaciju(dto: DodajLokacijaDto) {
+  async dodajLokaciju(dto: DodajLokacijaDto, korisnikId: number) {
     const novaLokacija = await this.prisma.lokacija.create({
       data: {
         naziv: dto.naziv,
@@ -131,7 +133,7 @@ export class LokacijeService {
         geoDuzina: dto.geoDuzina,
         nagradaXp: dto.nagradaXp,
         nagradaValuta: dto.nagradaValuta,
-        dodaoKorisnikId: dto.dodaoKorisnikId,
+        dodaoKorisnikId: korisnikId,
         kategorijaId: dto.kategorijaId,
       },
     });
@@ -265,9 +267,20 @@ export class LokacijeService {
       throw new NotFoundException('SLika za ovu lokaciju nije pronađena');
     }
 
-    return this.prisma.slikaLokacije.delete({
+    const obrisanaSlika = await this.prisma.slikaLokacije.delete({
       where: { slikaId },
     });
+
+    const relativnaPutanja = obrisanaSlika.putanjaSlike.replace(/^\/+/, '');
+    const punaPutanja = join(process.cwd(), 'prijenos', relativnaPutanja);
+
+    try {
+      await unlink(punaPutanja);
+    } catch {
+      // Datoteka možda više ne postoji na disku, ali zapis iz baze je obrisan
+    }
+
+    return obrisanaSlika;
   }
 
   async provjeriPostojiLiLokacija(id: number) {
@@ -379,20 +392,10 @@ export class LokacijeService {
         },
       }),
       ...(filter?.pretraziNaziv && {
-        OR: [
-          {
-            naziv: {
-              contains: filter.pretraziNaziv,
-              mode: 'insensitive',
-            },
-          },
-          {
-            opis: {
-              contains: filter.pretraziNaziv,
-              mode: 'insensitive',
-            },
-          },
-        ],
+        naziv: {
+          contains: filter.pretraziNaziv,
+          mode: 'insensitive',
+        },
       }),
     };
   }

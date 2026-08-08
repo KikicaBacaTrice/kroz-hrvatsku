@@ -1,0 +1,165 @@
+<form
+  class="c-forma | lokacija-forma"
+  #forma="ngForm"
+  (ngSubmit)="posalji(forma)"
+>
+  <header class="lokacija-forma__zaglavlje">
+    <h2>{{ nacin() === "dodavanje" ? "Dodaj lokaciju" : "Uredi lokaciju" }}</h2>
+  </header>
+
+  <section class="lokacija-forma__sekcija">
+    <h3>Osnovni podaci</h3>
+
+    <label class="c-forma__group lokacija-forma__polje">
+      Naziv
+      <input
+        class="c-forma__kontrola"
+        name="naziv"
+        required
+        maxlength="200"
+        [(ngModel)]="model.naziv"
+      />
+    </label>
+
+    <label
+      class="c-forma__group lokacija-forma__polje lokacija-forma__polje--puno"
+    >
+      Opis
+      <textarea
+        class="c-forma__kontrola lokacija-forma__textarea"
+        name="opis"
+        rows="7"
+        [(ngModel)]="model.opis"
+      ></textarea>
+    </label>
+  </section>
+
+  <section class="lokacija-forma__sekcija">
+    <h3>Lokacija</h3>
+
+    <div class="lokacija-forma__resetka">
+      <label
+        class="c-forma__group lokacija-forma__polje lokacija-forma__polje--puno"
+      >
+        Adresa
+        <input
+          class="c-forma__kontrola"
+          name="adresa"
+          required
+          maxlength="200"
+          [(ngModel)]="model.adresa"
+        />
+      </label>
+
+      <label class="c-forma__group lokacija-forma__polje">
+        Grad
+        <input
+          class="c-forma__kontrola"
+          name="grad"
+          required
+          maxlength="200"
+          [(ngModel)]="model.grad"
+        />
+      </label>
+
+      <label class="c-forma__group lokacija-forma__polje">
+        Županija
+        <input
+          class="c-forma__kontrola"
+          name="zupanija"
+          required
+          maxlength="200"
+          [(ngModel)]="model.zupanija"
+        />
+      </label>
+
+      <label class="c-forma__group lokacija-forma__polje">
+        Geografksa širina (npr: 46.258099)
+        <input
+          class="c-forma__kontrola"
+          type="text"
+          name="geoSirina"
+          required
+          [(ngModel)]="model.geoSirina"
+        />
+      </label>
+
+      <label class="c-forma__group lokacija-forma__polje">
+        Geografksa dužina (npr: 46.258099)
+        <input
+          class="c-forma__kontrola"
+          type="text"
+          name="geoDuzina"
+          required
+          [(ngModel)]="model.geoDuzina"
+        />
+      </label>
+    </div>
+  </section>
+
+  <section class="lokacija-forma__sekcija">
+    <h3>Nagrade i kategorija</h3>
+
+    <div class="lokacija-forma__resetka lokacija-forma__resetka--tri">
+      <label class="c-forma__group lokacija-forma__polje">
+        Cijena ulaznice (po osobi u eurima)
+        <input
+          class="c-forma__kontrola"
+          type="text"
+          name="ulaznicaCijena"
+          [(ngModel)]="model.ulaznicaCijena"
+        />
+      </label>
+
+      <label class="c-forma__group lokacija-forma__polje">
+        XP nagrada
+        <input
+          class="c-forma__kontrola"
+          type="text"
+          name="nagradaXp"
+          required
+          [(ngModel)]="model.nagradaXp"
+        />
+      </label>
+
+      <label class="c-forma__group lokacija-forma__polje">
+        Novac nagrada
+        <input
+          class="c-forma__kontrola"
+          type="text"
+          name="nagradaValuta"
+          required
+          [(ngModel)]="model.nagradaValuta"
+        />
+      </label>
+
+      <select
+        name="kategorijaId"
+        required
+        class="c-forma__kontrola"
+        [(ngModel)]="model.kategorijaId"
+      >
+        <option [ngValue]="null" disabled>Odaberite kategoriju</option>
+
+        @for (kategorija of kategorije(); track kategorija.kategorijaId) {
+          <option [ngValue]="kategorija.kategorijaId">
+            {{ kategorija.naziv }}
+          </option>
+        }
+      </select>
+    </div>
+  </section>
+
+  <div class="lokacija-forma__akcije">
+    <button
+      type="button"
+      class="c-button c-button--primarna-inverz"
+      (click)="odustani.emit()"
+    >
+      Odustani
+    </button>
+    <button type="submit" class="c-button c-button--primarna">
+      {{ nacin() === "dodavanje" ? "Dodaj" : "Spremi promjene" }}
+    </button>
+  </div>
+</form>

@@ -2,6 +2,8 @@
 @use "../../../../stilovi/alati" as alati;
 
 .navigacija {
+  --margine-sticky-navigacija: 5rem;
+
   background-color: var(--clr-primarna-600);
   padding: 1rem 2rem;
   color: var(--clr-primarna-200);
@@ -9,11 +11,15 @@
   width: 100%;
   margin-inline: auto;
   box-shadow: var(--shadow-lg);
+}
 
-  animation: navigacija-udi both;
-  animation-timeline: scroll();
-  animation-range-start: 150px;
-  animation-range-end: 400px;
+@supports (animation-timeline: scroll()) {
+  .navigacija {
+    animation: navigacija-udi both;
+    animation-timeline: scroll();
+    animation-range-start: 150px;
+    animation-range-end: 400px;
+  }
 }
 
 .navigacija__linkovi-lista {
@@ -95,12 +101,14 @@
 }
 
 @media (max-width: 1100px) {
-  .navigacija__korisnik-virtulani-novac,
-  .navigacija app-xp-napredak {
-    animation: navigacija-statistika-izadi both;
-    animation-timeline: scroll();
-    animation-range-start: 150px;
-    animation-range-end: 400px;
+  @supports (animation-timeline: scroll()) {
+    .navigacija__korisnik-virtulani-novac,
+    .navigacija app-xp-napredak {
+      animation: navigacija-statistika-izadi both;
+      animation-timeline: scroll();
+      animation-range-start: 150px;
+      animation-range-end: 400px;
+    }
   }
 }
 
@@ -168,7 +176,7 @@
 
 @keyframes navigacija-udi {
   100% {
-    width: calc(100% - 5rem);
+    width: calc(100% - var(--margine-sticky-navigacija));
     border-radius: var(--radius-zaobljeno);
     translate: 0 175px; // preko sticky se zalijepi na -150px, a ovo ga spusti za 175px s 25px margine
   }
@@ -204,5 +212,11 @@
 
   .navigacija__hamburger {
     display: block;
+  }
+}
+
+@media (max-width: 700px) {
+  .navigacija {
+    --margine-sticky-navigacija: 2rem;
   }
 }

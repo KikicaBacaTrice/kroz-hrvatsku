@@ -1,0 +1,77 @@
+<section class="o-kartica o-stog | komentari">
+  <header class="komentari__zaglavlje">
+    <h3>Ocjene posjetitelja</h3>
+    <div class="komentari__statistika-spremnik">
+      <div class="komentari__ocjene-sveobuhvatno">
+        <span class="komentari__prosjecna-ocjena">{{
+          prosjecnaOcjena() | number: "1.1-1"
+        }}</span>
+        <div class="komentari__prosjek-zvijezdice-spremnik">
+          <app-ocjena-zvijezdice [ocjena]="prosjecnaOcjena()" [velicina]="28" />
+        </div>
+        <span class="komentari__broj-komentara">
+          {{ brojKomentara() }} komentara
+        </span>
+      </div>
+      <div class="komentari__razdjelnik"></div>
+      <div class="komentari__ocjene-graf">
+        @for (stavka of raspodjelaOcjena(); track stavka.ocjena) {
+          <div class="komentari__ocjena-redak">
+            <span class="komentari__ocjena-labela">{{ stavka.ocjena }}</span>
+
+            <div class="komentari__traka">
+              <div
+                class="komentari__traka-popunjena"
+                [style.width.%]="stavka.postotak"
+              ></div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </header>
+
+  <app-dodaj-komentar-forma (dodajKomentar)="dodajKomentar($event)" />
+
+  @if (komentariStanje.ucitavanje()) {
+    <p class="komentari__stanje">Učitavanje komentara...</p>
+  } @else if (komentariStanje.greska()) {
+    <p class="komentari__greska">{{ komentariStanje.greska() }}</p>
+  } @else if (komentariStanje.komentari().length === 0) {
+    <p class="komentari__prazno">Još nema komentar za ovu lokaciju</p>
+  } @else {
+    <div class="o-stog | komentari__lista">
+      @for (
+        komentar of prikazaniKomentari();
+        track komentar.povratnaInformacijaId
+      ) {
+        <app-komentar-kartica
+          [komentar]="komentar"
+          [prijavljeniKorisnikId]="profilStanje.profil()?.korisnikId ?? null"
+          (obrisi)="obrisiKomentar($event)"
+          (uredi)="zapocniUredivanjeKomentara($event)"
+        />
+      }
+
+      @if (imaJosKomentara()) {
+        <button
+          type="button"
+          class="komentari__prikazi-vise"
+          (click)="prikaziViseKomentara()"
+        >
+          Prikaži više ({{ brojPrikazanihKomentara() }}/{{
+            komentariStanje.komentari().length
+          }})
+        </button>
+      }
+    </div>
+  }
+</section>
+
+@if (komentarZaUredivanje(); as komentar) {
+  <app-uredi-komentar-modal
+    [komentar]="komentar"
+    (zatvori)="zatovriUredivanjeKomentara()"
+    (spremi)="spremiUredeniKomentar($event)"
+  />
+}

@@ -1,0 +1,89 @@
+<section class="uredi-slike-lokacije">
+  <header class="uredi-slike-lokacije__zaglavlje">
+    <div>
+      <h2 class="uredi-slike-lokacije__naslov">Slike lokacije</h2>
+      <p class="uredi-slike-lokacije__opis">
+        Dodaj slike, obriši postojeće ili odaberi glavnu sliku lokacije.
+      </p>
+    </div>
+  </header>
+
+  <form class="uredi-slike-lokacije__forma" (submit)="dodajSliku($event)">
+    <label class="uredi-slike-lokacije__polje">
+      Slika
+      <input
+        class="uredi-slike-lokacije__kontrola"
+        type="file"
+        accept="image/*"
+        (change)="odaberiSliku($event)"
+      />
+    </label>
+
+    <label class="uredi-slike-lokacije__polje">
+      Opis slike
+      <input
+        class="uredi-slike-lokacije__kontrola"
+        type="text"
+        name="opisSlike"
+        [(ngModel)]="opisSlike"
+      />
+    </label>
+
+    <label class="uredi-slike-lokacije__checkbox-polje">
+      <input
+        class="uredi-slike-lokacije__checkbox"
+        type="checkbox"
+        name="slikaJeGlavna"
+        [(ngModel)]="slikaJeGlavna"
+      />
+      Postavi kao glavnu
+    </label>
+
+    <button type="submit" class="c-button c-button--primarna">
+      Dodaj sliku
+    </button>
+  </form>
+
+  <div class="uredi-slike-lokacije__resetka">
+    @for (slika of sortiraneSlike(); track slika.slikaId) {
+      <article class="uredi-slike-lokacije__kartica">
+        <div class="uredi-slike-lokacije__slika-spremnik">
+          <img
+            class="uredi-slike-lokacije__slika"
+            [src]="apiUrl + slika.putanjaSlike"
+            [alt]="slika.opisSlike || 'Slika lokacije'"
+          />
+
+          @if (slika.glavna) {
+            <span class="uredi-slike-lokacije__oznaka">Glavna</span>
+          }
+        </div>
+
+        @if (slika.opisSlike) {
+          <p class="uredi-slike-lokacije__opis-slike">
+            {{ slika.opisSlike }}
+          </p>
+        }
+
+        <div class="uredi-slike-lokacije__akcije">
+          <button
+            type="button"
+            class="uredi-slike-lokacije__gumb"
+            [disabled]="slika.glavna"
+            (click)="postaviKaoGlavnu(slika.slikaId)"
+          >
+            Postavi kao glavnu
+          </button>
+
+          <button
+            type="button"
+            class="uredi-slike-lokacije__gumb uredi-slike-lokacije__gumb--opasno"
+            (click)="obrisiSliku(slika.slikaId)"
+          >
+            Obriši
+          </button>
+        </div>
+      </article>
+    }
+  </div>
+</section>

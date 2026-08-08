@@ -1,8 +1,27 @@
 .o-pokrov {
   position: relative;
+  inset: 0;
   width: 100%;
   height: 100%;
   overflow: hidden;
+}
+
+.o-media-pokrov {
+  position: relative;
+  overflow: hidden;
+
+  img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.o-kartica {
+  padding: var(--o-card-padding, 1.25rem);
+  border-radius: var(--o-card-radius, var(--radius-md));
 }
 
 .o-sloj {

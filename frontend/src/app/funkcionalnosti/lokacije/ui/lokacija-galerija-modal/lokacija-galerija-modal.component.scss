@@ -1,0 +1,109 @@
+:host {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+}
+
+.galerija-modal {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+  background: rgb(0 0 0 / 0.85);
+
+  &__sadrzaj {
+    position: relative;
+    max-width: 92vw;
+    max-height: 85vh;
+    display: grid;
+    place-items: center;
+  }
+
+  &__slika {
+    display: block;
+    height: min(78vh, 42rem);
+    width: auto;
+    max-width: min(92vw, 90rem);
+    object-fit: contain;
+    border-radius: var(--radius-lg);
+  }
+
+  &__zatvori,
+  &__navigacija {
+    position: absolute;
+    border: 0;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    color: white;
+    background: hsl(from var(--clr-primarna-800) h s l / 0.5);
+    opacity: 0.6;
+    transition: opacity 150ms ease-in-out;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  &__zatvori {
+    top: 2.5rem;
+    right: 2.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--radius-zaobljeno);
+    font-size: 2rem;
+  }
+
+  &__navigacija {
+    top: 50%;
+    translate: 0 -50%;
+    width: 3rem;
+    height: 3rem;
+
+    &--prethodna {
+      left: 1rem;
+    }
+    &--sljedeca {
+      right: 1rem;
+    }
+  }
+}
+
+.carousel-navigacija__spremnik {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translate(-50%, 0);
+  z-index: 3;
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-zaobljeno);
+  background: rgb(0 0 0 / 35%);
+}
+
+.carousel-navigacija__tocka {
+  width: 0.65rem;
+  height: 0.65rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-zaobljeno);
+  cursor: pointer;
+  background: rgb(255 255 255 / 0.4);
+
+  transition:
+    width 150ms ease-in-out,
+    background 150ms ease-in-out;
+}
+
+.carousel-navigacija__tocka--aktivna {
+  width: 1.5rem;
+  background: var(--clr-sekundarna-400);
+}
+
+@media (max-width: 700px) {
+  .galerija-modal {
+    padding: 0.5rem;
+  }
+}

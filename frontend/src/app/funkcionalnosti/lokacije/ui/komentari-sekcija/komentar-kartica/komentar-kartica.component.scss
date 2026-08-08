@@ -1,0 +1,119 @@
+.komentar-kartica {
+  display: grid;
+  gap: 1.25rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--clr-obrub);
+  border-radius: var(--radius-md);
+  background: var(--clr-povrsina);
+
+  &__zaglavlje {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  &__korisnik {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    min-width: 0;
+  }
+
+  &__avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    border-radius: var(--radius-zaobljeno);
+    background-color: var(--clr-primarna-200);
+    color: var(--clr-primarna-600);
+    font-size: var(--fs-rg);
+    font-weight: 700;
+  }
+
+  &__podaci-korisnika {
+    display: grid;
+    gap: 0.2rem;
+    min-width: 0;
+  }
+
+  &__ime {
+    margin: 0;
+    font-size: var(--fs-rg);
+    font-weight: 800;
+    color: var(--clr-text);
+  }
+
+  &__datum {
+    margin: 0;
+    font-size: var(--fs-xs);
+    color: var(--clr-text-prigusen);
+  }
+
+  &__akcije {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  &__izbornik-spremnik {
+    position: relative;
+  }
+
+  &__izbornik-gumb {
+    width: 2rem;
+    height: 2rem;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: var(--radius-zaobljeno);
+    cursor: pointer;
+    background: transparent;
+    color: var(--clr-text-prigusen);
+    font-size: var(--fs-rg);
+
+    &:hover {
+      background: var(--clr-povrsina-prigusen);
+    }
+  }
+
+  &__izbornik {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    z-index: 10;
+    min-width: 9rem;
+    display: grid;
+    padding: 0.5rem;
+    border: 1px solid var(--clr-obrub);
+    border-radius: var(--radius-sm);
+    background: var(--clr-povrsina);
+    box-shadow: var(--shadow-md);
+
+    button {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border: 0;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      text-align: left;
+      background: transparent;
+      color: var(--clr-text);
+      font-size: var(--fs-sm);
+
+      &:hover {
+        background: var(--clr-povrsina-prigusen);
+      }
+    }
+  }
+
+  &__tekst {
+    margin: 0;
+    max-width: 65ch;
+    line-height: 1.25;
+    color: var(--clr-text);
+    font-size: var(--fs-rg);
+  }
+}

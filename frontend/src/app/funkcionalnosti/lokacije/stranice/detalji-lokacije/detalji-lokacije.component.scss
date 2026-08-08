@@ -1,0 +1,81 @@
+.detalji-lokacije {
+  &__spremnik {
+    width: 100%;
+    display: grid;
+    place-items: center;
+    padding-inline: 1rem;
+    margin-bottom: 5rem;
+  }
+
+  &__zaglavlje-spremik {
+    width: min(1200px, 100%);
+    margin-top: 2.5rem;
+  }
+}
+
+.lokacija-sadrzaj {
+  &__spremnik {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, 24rem);
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  &__glavni-stupac {
+    display: grid;
+    gap: 1rem;
+    min-width: 0;
+  }
+
+  &__bocni-stupac {
+    min-width: 0;
+    align-self: stretch;
+  }
+}
+
+.lokacija-sadrzaj__kartica-izazov {
+  --kraj-navigacije: 0.5rem;
+  display: grid;
+  position: sticky;
+  top: calc(var(--kraj-navigacije) + 1rem);
+}
+@supports (animation-timeline: scroll()) {
+  // ako je navigacija sticky onda offsetaj sticky:top od kartice za veličinu navigacije
+  .lokacija-sadrzaj__kartica-izazov {
+    --kraj-navigacije: 7rem;
+  }
+}
+
+@media (max-width: 1100px) {
+  .detalji-lokacije {
+    &__zaglavlje-spremik {
+      width: min(100% - 2rem, 56rem);
+      margin-top: 1.5rem;
+    }
+
+    &__spremnik {
+      grid-template-columns: 1fr;
+    }
+    &__bocni-stupac {
+      order: -1;
+    }
+
+    &__kartica-izazov {
+      position: static;
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  .detalji-lokacije__spremnik {
+    padding-inline: 0;
+  }
+
+  .detalji-lokacije__zaglavlje-spremik {
+    width: calc(100% - 1rem);
+  }
+
+  .lokacija-sadrzaj__glavni-stupac {
+    gap: 1rem;
+  }
+}

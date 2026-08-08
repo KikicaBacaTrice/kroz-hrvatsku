@@ -1,0 +1,69 @@
+.komentar-forma {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--clr-obrub);
+  border-radius: var(--radius-md);
+  background: var(--clr-pozadina);
+
+  &__naslov {
+    margin: 0;
+    font-size: var(--fs-md);
+    color: var(--clr-text);
+  }
+
+  &__grupa {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  &__labela {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--clr-text);
+  }
+
+  &__ocjena {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+  }
+
+  &__zvjezdica {
+    display: inline-grid;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    cursor: pointer;
+    background: transparent;
+
+    &:hover {
+      scale: 1.08;
+    }
+  }
+
+  &__unos {
+    width: 100%;
+    min-height: 7rem;
+    resize: vertical;
+    padding: 1rem;
+    border: 1px solid var(--clr-obrub);
+    border-radius: var(--radius-sm);
+    background: var(--clr-povrsina);
+    color: var(--clr-text);
+    font-size: var(--fs-rg);
+
+    &:focus {
+      outline: 3px solid
+        color-mix(in srgb, var(--clr-primarna-400) 25%, transparent);
+      border-color: var(--clr-primarna-400);
+    }
+  }
+
+  &__greska {
+    margin: 0;
+    font-size: var(--fs-sm);
+    color: var(--clr-opasnost);
+  }
+}

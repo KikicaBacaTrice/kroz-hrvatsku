@@ -1,1 +1,50 @@
-<p>detalji-lokacije works!</p>
+<div class="detalji-lokacije__spremnik">
+  @if (lokacija(); as lokacija) {
+    <div class="detalji-lokacije__zaglavlje-spremik">
+      <app-lokacija-hero
+        [lokacija]="lokacija"
+        (slikaKliknuta)="otvoriGaleriju($event)"
+      />
+
+      <section class="lokacija-informacije">
+        <app-lokacija-informacije [lokacija]="lokacija" />
+      </section>
+
+      <section class="lokacija-sadrzaj">
+        <div class="lokacija-sadrzaj__spremnik">
+          <div class="lokacija-sadrzaj__glavni-stupac">
+            <app-lokacija-opis [lokacija]="lokacija" />
+
+            <app-karta-lokacije [lokacija]="lokacija" />
+
+            <app-lokacija-galerija
+              [lokacija]="lokacija"
+              (slikaKliknuta)="otvoriGaleriju($event)"
+            />
+
+            <app-komentari-sekcija [lokacijaId]="lokacija.lokacijaId" />
+          </div>
+
+          <aside class="lokacija-sadrzaj__bocni-stupac">
+            <app-kartica-izazova-lokacije
+              class="lokacija-sadrzaj__kartica-izazov"
+              [lokacija]="lokacija"
+              (zabiljeziDolazak)="naZabiljeziDolazak()"
+            />
+          </aside>
+        </div>
+      </section>
+    </div>
+
+    @if (galerijaOtvorena) {
+      <app-lokacija-galerija-modal
+        [slike]="lokacija.slikeLokacije"
+        [pocetniIndex]="odabranaSlikaIndex"
+        [apiUrl]="apiUrl"
+        (zatvori)="zatvoriGaleriju()"
+      />
+    }
+  } @else {
+    <p>lokacija nije pronađena</p>
+  }
+</div>

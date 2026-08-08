@@ -1,0 +1,51 @@
+<div class="o-stog | lokacija-galerija">
+  <div class="o-klaster o-klaster--between | lokacija-galerija__zaglavlje">
+    <h4>Galerija</h4>
+    <span
+      >Prikaži svih {{ lokacija().slikeLokacije.length }} fotografija/e</span
+    >
+  </div>
+  <div class="lokacija-galerija__resetka">
+    @let slike = sporedneSlike();
+
+    @if (slike[0]; as prvaSlika) {
+      <button
+        type="button"
+        class="lokacija-galerija__slika-gumb lokacija-galerija__resetka-glavna-slika-spremnik"
+        (click)="otvoriGaleriju(prvaSlika)"
+      >
+        <img
+          [src]="apiUrl + prvaSlika.putanjaSlike"
+          [alt]="prvaSlika.opisSlike || lokacija().naziv"
+        />
+      </button>
+    }
+    @if (slike[1]; as drugaSlika) {
+      <button
+        type="button"
+        class="lokacija-galerija__slika-gumb lokacija-galerija__resetka-sporedna-slika-spremnik"
+        (click)="otvoriGaleriju(drugaSlika)"
+      >
+        <img
+          [src]="apiUrl + drugaSlika.putanjaSlike"
+          [alt]="drugaSlika.opisSlike || lokacija().naziv"
+        />
+      </button>
+    }
+    @if (slike[2]; as trecaSlika) {
+      <button
+        type="button"
+        class="lokacija-galerija__slika-gumb lokacija-galerija__resetka-vise-slika-spremnik"
+        (click)="otvoriGaleriju(trecaSlika)"
+      >
+        <img
+          [src]="apiUrl + trecaSlika.putanjaSlike"
+          [alt]="trecaSlika.opisSlike || lokacija().naziv"
+        />
+        <div class="lokacija-galerija__restka-jos-slika-prikaz">
+          <span>+{{ lokacija().slikeLokacije.length - 2 }} fotografija/e </span>
+        </div>
+      </button>
+    }
+  </div>
+</div>

@@ -15,7 +15,6 @@ export class DodajLokacijaDto {
 
   @IsOptional()
   @IsString()
-  @MaxLength(1000)
   opis?: string;
 
   @IsString()
@@ -55,11 +54,6 @@ export class DodajLokacijaDto {
   @IsInt()
   @Min(0)
   nagradaValuta?: number;
-
-  @Type(() => Number)
-  @IsInt()
-  @Min(1)
-  dodaoKorisnikId!: number;
 
   @Type(() => Number)
   @IsInt()

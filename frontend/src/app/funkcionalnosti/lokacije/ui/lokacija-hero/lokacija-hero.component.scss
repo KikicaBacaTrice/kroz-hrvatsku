@@ -1,0 +1,78 @@
+:host {
+  display: block;
+}
+
+.lokacija-hero {
+  min-height: 32rem;
+  isolation: isolate;
+  display: grid;
+  align-items: end;
+  isolation: isolate;
+
+  border-radius: var(--radius-lg);
+  color: white;
+  box-shadow: var(--shadow-md);
+
+  &__slika-gumb {
+    position: absolute;
+    inset: 0;
+    padding: 0;
+    border: 0;
+    cursor: pointer;
+    background: transparent;
+  }
+
+  &__slika {
+    z-index: -2;
+
+    transition: transform 250ms ease-out;
+  }
+  &:hover &__slika {
+    transform: scale(1.02);
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+      to bottom,
+      hsl(from var(--clr-primarna-800) h s l / 0.1) 0%,
+      hsl(from var(--clr-primarna-800) h s l / 0.5) 45%,
+      hsl(from var(--clr-primarna-800) h s l / 0.9) 100%
+    );
+  }
+
+  &__sadrzaj-spremnik {
+    --o-stog-gap: 1rem;
+    color: var(--clr-primarna-200);
+    padding: 1.5rem;
+
+    h1 {
+      font-size: var(--fs-3xl);
+      line-height: 0.5;
+      color: white;
+    }
+  }
+
+  &__ocjena {
+    --klaster-gap: 0.5rem;
+    color: white;
+
+    app-ocjena-zvijezdice {
+      margin-top: 5px;
+    }
+  }
+
+  &__prosjecna-ocjena {
+    font-size: var(--fs-rg);
+    font-weight: bold;
+    color: white;
+  }
+
+  &__broj-glasova {
+    font-size: var(--fs-sm);
+    font-weight: thin;
+    color: white;
+  }
+}

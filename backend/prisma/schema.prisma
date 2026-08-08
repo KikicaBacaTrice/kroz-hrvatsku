@@ -72,7 +72,7 @@ model KategorijaLokacije {
 model Lokacija {
   lokacijaId      Int      @id @default(autoincrement()) @map("lokacija_id")
   naziv           String   @db.VarChar(200)
-  opis            String?  @db.VarChar(1000)
+  opis            String?  @db.Text
   adresa          String   @db.VarChar(200)
   grad            String   @db.VarChar(200)
   zupanija        String   @db.VarChar(200)

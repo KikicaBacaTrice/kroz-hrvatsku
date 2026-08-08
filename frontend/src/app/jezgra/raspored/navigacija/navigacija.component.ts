@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, effect, inject, OnInit, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthStanjeService } from '../../../funkcionalnosti/autentikacija/stanje/auth-stanje.service';
 import { KrozHrvatskuLogoIkonaComponent } from '../../../dijeljeno/ui/ikone/kroz-hrvatsku-logo-ikona/kroz-hrvatsku-logo-ikona.component';
@@ -25,13 +25,25 @@ import { MobilniIzbornikComponent } from './ui/mobilni-izbornik/mobilni-izbornik
   templateUrl: './navigacija.component.html',
   styleUrl: './navigacija.component.scss',
 })
-export class NavigacijaComponent {
+export class NavigacijaComponent implements OnInit {
   readonly authStanje = inject(AuthStanjeService);
   readonly profilStanje = inject(ProfilStanjeService);
   private readonly document = inject(DOCUMENT);
 
   izbornikOtvoren = signal(false);
   mobilniIzbornikOtvoren = signal(false);
+
+  constructor() {
+    effect(() => {
+      console.log('Profil stanje:', this.profilStanje.profil());
+    });
+  }
+
+  ngOnInit(): void {
+    if (this.authStanje.prijavljen()) {
+      this.profilStanje.ucitajMojProfil();
+    }
+  }
 
   promijeniStanjeIzbornika(): void {
     this.izbornikOtvoren.update((otvoren) => !otvoren);
@@ -49,12 +61,6 @@ export class NavigacijaComponent {
   zatovriMobilniIzbornik(): void {
     this.mobilniIzbornikOtvoren.set(false);
     this.document.body.classList.remove('body--bez-scrolla');
-  }
-
-  ngOnInit(): void {
-    if (this.authStanje.prijavljen()) {
-      this.profilStanje.ucitajMojProfil();
-    }
   }
 
   odjava(): void {

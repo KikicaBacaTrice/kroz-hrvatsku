@@ -1,0 +1,55 @@
+<form class="komentar-forma" #forma="ngForm" (ngSubmit)="posalji(forma)">
+  <h4 class="komentar-forma__naslov">Ostavite Vaš doživljaj</h4>
+
+  <div class="komentar-forma__grupa">
+    <label class="komentar-forma__labela">Vaša ocjena</label>
+
+    <div class="komentar-forma__ocjena">
+      @for (vrijednost of [1, 2, 3, 4, 5]; track vrijednost) {
+        <button
+          type="button"
+          class="komentar-forma__zvjezdica"
+          [class.komentar-forma__zvjezdica--aktivna]="
+            vrijednost <= model.ocjena
+          "
+          (click)="postaviOcjenu(vrijednost)"
+        >
+          <app-ocjena-zvjezdica
+            [ispuna]="vrijednost <= model.ocjena ? 100 : 0"
+            [velicina]="20"
+            bojaIspune="var(--clr-sekundarna-400)"
+            bojaPrazna="transparent"
+            bojaRuba="var(--clr-sekundarna-400)"
+          />
+        </button>
+      }
+    </div>
+
+    @if (forma.submitted && model.ocjena === 0) {
+      <p class="komentar-forma__greska">Odaberite ocjenu</p>
+    }
+  </div>
+
+  <div class="komentar-forma__grupa">
+    <label class="komentar-forma__labela">Vaš komentar</label>
+
+    <textarea
+      name="tekst"
+      id="teskt"
+      class="komentar-forma__unos"
+      rows="5"
+      required
+      minlength="10"
+      maxlength="1000"
+      placeholder="Podijelite svoje iskustvo s drugima"
+      [(ngModel)]="model.tekst"
+      #teskt="ngModel"
+    ></textarea>
+
+    @if (forma.submitted && teskt.invalid) {
+      <p class="komentar-forma__greska">Komentar mora imati barem 10 znakova</p>
+    }
+  </div>
+
+  <button type="submit" class="c-button c-button--primarna">Objavi</button>
+</form>

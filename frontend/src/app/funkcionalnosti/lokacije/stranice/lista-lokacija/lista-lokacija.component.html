@@ -1,1 +1,80 @@
-<p>lista-lokacija works!</p>
+<section class="o-stog | lokacije-stranica">
+  <header class="o-stog | lokacije-stranica__zaglavlje">
+    <h1>Lokacije</h1>
+  </header>
+
+  <form class="c-forma | lokacije-filter" (submit)="primijeniFilter()">
+    <label class="c-forma__group | lokacije-filter__polje">
+      <span class="c-forma__label">Pretraži naziv</span>
+      <input
+        class="c-forma__kontrola | lokacije-filter__kontrola"
+        type="text"
+        name="pretraziNaziv"
+        placeholder="npr. Trakošćan"
+        [(ngModel)]="filter.pretraziNaziv"
+      />
+    </label>
+    <label class="c-forma__group | lokacije-filter__polje">
+      <span class="c-forma__label">Županija</span>
+      <input
+        class="c-forma__kontrola | lokacije-filter__kontrola"
+        type="text"
+        name="zupanija"
+        placeholder="npr. Varaždinska"
+        [(ngModel)]="filter.zupanija"
+      />
+    </label>
+    <label class="c-forma__group | lokacije-filter__polje">
+      <span class="c-forma__label">Grad</span>
+      <input
+        class="c-forma__kontrola | lokacije-filter__kontrola"
+        type="text"
+        name="grad"
+        placeholder="npr. Varaždin"
+        [(ngModel)]="filter.grad"
+      />
+    </label>
+    <label class="c-forma__group | lokacije-filter__polje">
+      <span class="c-forma__label">Kategorija</span>
+      <select
+        class="c-forma__kontrola | lokacije-filter__kontrola"
+        name="kategorija"
+        [(ngModel)]="filter.kategorija"
+      >
+        <option value="">Sve kategorije</option>
+
+        @for (kategorija of kategorije(); track kategorija.kategorijaId) {
+          <option [value]="kategorija.naziv">
+            {{ kategorija.naziv }}
+          </option>
+        }
+      </select>
+    </label>
+
+    <div class="o-klaster | lokacije-filter__akcije">
+      <button type="submit" class="c-button c-button--primarna">
+        Primijeni
+      </button>
+
+      <button
+        type="button"
+        class="c-button c-button--primarna-inverz"
+        (click)="resetirajFilter()"
+      >
+        Resetiraj
+      </button>
+    </div>
+  </form>
+
+  @if (ucitavanje()) {
+    <p>Učitavanje lokacija</p>
+  } @else if (greska()) {
+    <p>{{ greska() }}</p>
+  } @else {
+    <div class="lokacije-stranica__resetka">
+      @for (lokacija of lokacije(); track lokacija.lokacijaId) {
+        <app-kartica-lokacije [lokacija]="lokacija" />
+      }
+    </div>
+  }
+</section>

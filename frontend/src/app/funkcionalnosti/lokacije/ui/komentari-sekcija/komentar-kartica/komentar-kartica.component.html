@@ -1,0 +1,47 @@
+<article class="komentar-kartica">
+  <div class="komentar-kartica__zaglavlje">
+    <div class="komentar-kartica__korisnik">
+      <div class="komentar-kartica__avatar">
+        {{
+          komentar().korisnik.ime?.[0] || komentar().korisnik.korisnickoIme[0]
+        }}
+      </div>
+
+      <div class="komentar-kartica__podaci-korisnika">
+        <h4 class="komentar-kartica__ime">
+          {{ komentar().korisnik.ime || komentar().korisnik.korisnickoIme }}
+        </h4>
+        <p class="komentar-kartica__datum">
+          {{ komentar().datum | date: "dd.MM.yyyy." }}
+        </p>
+      </div>
+    </div>
+
+    <div class="komentar-kartica__akcije">
+      <app-ocjena-zvijezdice [ocjena]="komentar().ocjena" [velicina]="22" />
+
+      @if (jeAutorKomentar()) {
+        <div class="komentar-kartica__izbornik-spremnik">
+          <button
+            type="button"
+            class="komentar-kartica__izbornik-gumb"
+            (click)="promijeniIzbotnik()"
+          >
+            <app-tri-tocke-ikona [velicina]="20" />
+          </button>
+
+          @if (izbornikOtvoren()) {
+            <div class="komentar-kartica__izbornik">
+              <button type="button" (click)="urediKomentar()">Uredi</button>
+              <button type="button" (click)="obrisiKomentar()">Obriši</button>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </div>
+
+  <p class="komentar-kartica__tekst">
+    {{ komentar().tekst }}
+  </p>
+</article>
