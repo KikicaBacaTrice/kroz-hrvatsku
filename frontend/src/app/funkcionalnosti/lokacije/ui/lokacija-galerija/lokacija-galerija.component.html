@@ -1,11 +1,11 @@
-<div class="lokacija-galerija">
-  <div class="lokacija-galerija__zaglavlje">
+<div class="o-stog | lokacija-galerija">
+  <div class="o-klaster o-klaster--between | lokacija-galerija__zaglavlje">
     <h4>Galerija</h4>
     <span
       >Prikaži svih {{ lokacija().slikeLokacije.length }} fotografija/e</span
     >
   </div>
-  <div class="lokacija-galerija__resetka-spremnik">
+  <div class="lokacija-galerija__resetka">
     @let slike = sporedneSlike();
 
     @if (slike[0]; as prvaSlika) {

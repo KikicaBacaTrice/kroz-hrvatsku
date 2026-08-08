@@ -1,11 +1,11 @@
-<div class="lokacija-sadrzaj__kartica">
-  <div class="lokacija-sadrzaj__kartica-izazov-zaglavlje">
+<article class="o-stog | lokacija-sadrzaj__kartica">
+  <header class="o-stog | lokacija-sadrzaj__kartica-izazov-zaglavlje">
     <div class="lokacija-sadrzaj__kartica-izazov-zaglavlje-spremnik">
       <app-medalja-ikona boja="#edc060" velicina="20" />
       <span>AKTIVNI IZAZOV</span>
     </div>
     <p>Zabilježi dolazak</p>
-  </div>
+  </header>
   <div class="lokacija-sadrzaj__kartica-izazov-informacije-spremnik">
     <span class="lokacija-sadrzaj__kartica-izazov-informacije-opis">
       Zabilježi dolazak na lokaciju "{{ lokacija().naziv }}" tako da posijetiš
@@ -14,8 +14,8 @@
       još dugo trajale
     </span>
 
-    <div class="lokacija-nagrade">
-      <div class="lokacija-nagrade__stavke">
+    <div class="o-stog | lokacija-nagrade">
+      <div class="o-klaster | lokacija-nagrade__stavke">
         <div class="lokacija-nagrade__ikona">
           <app-zvijezda-krug-ikona velicina="24" />
         </div>
@@ -24,7 +24,8 @@
           +{{ lokacija().nagradaXp }}XP
         </span>
       </div>
-      <div class="lokacija-nagrade__stavke">
+
+      <div class="o-klaster | lokacija-nagrade__stavke">
         <div class="lokacija-nagrade__ikona">
           <app-kovanice-ikona velicina="24" />
         </div>
@@ -39,4 +40,4 @@
       Zabilježi dolazak
     </button>
   </div>
-</div>
+</article>

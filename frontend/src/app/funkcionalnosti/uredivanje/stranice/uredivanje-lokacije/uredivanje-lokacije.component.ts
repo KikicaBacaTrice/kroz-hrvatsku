@@ -1,7 +1,6 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { LokacijeHttpService } from '../../../lokacije/podaci/lokacije-http.service';
 import { API_URL } from '../../../../jezgra/konfiguracija/api.config';
-import { single } from 'rxjs';
 import { Lokacija } from '../../../lokacije/modeli/lokacija.model';
 import { RouterLink } from '@angular/router';
 import { StrelicaIkonaComponent } from '../../../../dijeljeno/ui/ikone/strelica-ikona/strelica-ikona.component';

@@ -1,4 +1,4 @@
-<section class="lokacija-hero">
+<section class="o-media-pokrov | lokacija-hero">
   @if (glavnaSlika(); as slika) {
     <button
       type="button"
@@ -15,10 +15,10 @@
 
   <div class="lokacija-hero__overlay"></div>
 
-  <div class="lokacija-hero__sadrzaj-spremnik">
+  <div class="o-stog | lokacija-hero__sadrzaj-spremnik">
     <h1>{{ lokacija().naziv }}</h1>
 
-    <div class="lokacija-hero__ocjena">
+    <div class="o-klaster | lokacija-hero__ocjena">
       <app-ocjena-zvijezdice
         [ocjena]="lokacija().prosjecnaOcjena ?? 0"
         [velicina]="18"

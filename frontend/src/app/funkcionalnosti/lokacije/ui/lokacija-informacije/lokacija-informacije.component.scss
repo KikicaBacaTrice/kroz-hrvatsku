@@ -1,4 +1,4 @@
-.lokacija-informacije__osnovne-informacije-spremnik {
+.lokacija-informacije__resetka {
   display: grid;
   grid-template-columns: repeat(
     auto-fit,
@@ -9,7 +9,7 @@
 }
 
 @media (max-width: 550px) {
-  .lokacija-informacije__osnovne-informacije-spremnik {
+  .lokacija-informacije__resetka {
     grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
   }
 }

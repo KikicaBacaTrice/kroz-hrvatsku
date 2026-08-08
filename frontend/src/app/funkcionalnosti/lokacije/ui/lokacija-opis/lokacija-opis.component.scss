@@ -1,19 +1,16 @@
-.lokacija-sadrzaj__opis-spremnik {
+.lokacija-opis {
+  --stog-gap: 0.5rem;
+
   background: var(--clr-povrsina);
   border: 2px solid var(--clr-obrub);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-md);
-}
 
-.lokacija-sadrzaj__opis-spremnik {
-  padding: 1rem 1.25rem;
-
-  h3 {
+  &__naslov {
     font-size: var(--fs-xl);
-    line-height: 1.5;
+    line-height: 1.25;
   }
-
-  p {
+  &__tekst {
     font-size: var(--fs-rg);
     line-height: 1.3;
     margin-bottom: 0.5rem;

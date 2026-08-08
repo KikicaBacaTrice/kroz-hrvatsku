@@ -21,13 +21,13 @@
     color: var(--clr-text);
 
     &:focus {
-      border-color: var(--color-primarna);
+      border-color: var(--clr-primarna-400);
       outline: none;
     }
   }
 
   &__pogreska {
-    color: var(--clr-opasnot);
+    color: var(--clr-opasnost);
     font-size: var(--fs-sm);
   }
 }

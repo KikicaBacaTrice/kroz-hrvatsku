@@ -3,16 +3,15 @@
 }
 
 .lokacija-hero {
-  position: relative;
-  min-height: min(65vh, 35rem);
-  overflow: hidden;
-  border-radius: var(--radius-lg);
+  min-height: 32rem;
   isolation: isolate;
-  box-shadow: var(--shadow-md);
+  display: grid;
+  align-items: end;
+  isolation: isolate;
 
-  &:hover &__slika {
-    transform: scale(1.02);
-  }
+  border-radius: var(--radius-lg);
+  color: white;
+  box-shadow: var(--shadow-md);
 
   &__slika-gumb {
     position: absolute;
@@ -24,14 +23,12 @@
   }
 
   &__slika {
-    position: absolute;
-    inset: 0;
     z-index: -2;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center center;
+
     transition: transform 250ms ease-out;
+  }
+  &:hover &__slika {
+    transform: scale(1.02);
   }
 
   &__overlay {
@@ -47,24 +44,19 @@
   }
 
   &__sadrzaj-spremnik {
-    position: absolute;
-    left: 1.5rem;
-    right: 1.5rem;
-    bottom: 1.5rem;
+    --o-stog-gap: 1rem;
     color: var(--clr-primarna-200);
+    padding: 1.5rem;
 
     h1 {
-      margin: 0.5rem 0;
       font-size: var(--fs-3xl);
-      line-height: 0.95;
+      line-height: 0.5;
       color: white;
     }
   }
 
   &__ocjena {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
+    --klaster-gap: 0.5rem;
     color: white;
 
     app-ocjena-zvijezdice {

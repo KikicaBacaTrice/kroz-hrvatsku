@@ -1,6 +1,10 @@
-<div class="lokacija-sadrzaj__opis-spremnik">
-  <h3>Osnovne informacije o {{ lokacija().naziv }}</h3>
-  @for (paragraf of paragrafOpisa(lokacija().opis); track $index) {
-    <p>{{ paragraf }}</p>
-  }
-</div>
+<section class="o-kartica o-stog | lokacija-opis">
+  <h3 class="lokacija-opis__naslov">
+    Osnovne informacije o {{ lokacija().naziv }}
+  </h3>
+  <div class="lokacija-opis__tekst">
+    @for (paragraf of paragrafOpisa(lokacija().opis); track $index) {
+      <p>{{ paragraf }}</p>
+    }
+  </div>
+</section>

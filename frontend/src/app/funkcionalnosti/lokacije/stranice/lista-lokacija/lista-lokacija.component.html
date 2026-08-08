@@ -1,44 +1,43 @@
-<section class="lokacije-stranica">
-  <header class="lokacije-stranica__zaglavlje">
+<section class="o-stog | lokacije-stranica">
+  <header class="o-stog | lokacije-stranica__zaglavlje">
     <h1>Lokacije</h1>
   </header>
 
-  <form class="lokacije-filter" (submit)="primijeniFilter()">
-    <label class="lokacije-filter__polje">
-      Pretraži naziv
+  <form class="c-forma | lokacije-filter" (submit)="primijeniFilter()">
+    <label class="c-forma__group | lokacije-filter__polje">
+      <span class="c-forma__label">Pretraži naziv</span>
       <input
-        class="lokacije-filter__kontrola"
+        class="c-forma__kontrola | lokacije-filter__kontrola"
         type="text"
         name="pretraziNaziv"
         placeholder="npr. Trakošćan"
         [(ngModel)]="filter.pretraziNaziv"
       />
     </label>
-    <label class="lokacije-filter__polje">
-      Županija
+    <label class="c-forma__group | lokacije-filter__polje">
+      <span class="c-forma__label">Županija</span>
       <input
-        class="lokacije-filter__kontrola"
+        class="c-forma__kontrola | lokacije-filter__kontrola"
         type="text"
         name="zupanija"
         placeholder="npr. Varaždinska"
         [(ngModel)]="filter.zupanija"
       />
     </label>
-    <label class="lokacije-filter__polje">
-      Grad
+    <label class="c-forma__group | lokacije-filter__polje">
+      <span class="c-forma__label">Grad</span>
       <input
-        class="lokacije-filter__kontrola"
+        class="c-forma__kontrola | lokacije-filter__kontrola"
         type="text"
         name="grad"
         placeholder="npr. Varaždin"
         [(ngModel)]="filter.grad"
       />
     </label>
-    <label class="lokacije-filter__polje">
-      Kategorija
-
+    <label class="c-forma__group | lokacije-filter__polje">
+      <span class="c-forma__label">Kategorija</span>
       <select
-        class="lokacije-filter__kontrola"
+        class="c-forma__kontrola | lokacije-filter__kontrola"
         name="kategorija"
         [(ngModel)]="filter.kategorija"
       >
@@ -52,7 +51,7 @@
       </select>
     </label>
 
-    <div class="lokacije-filter__akcije">
+    <div class="o-klaster | lokacije-filter__akcije">
       <button type="submit" class="c-button c-button--primarna">
         Primijeni
       </button>

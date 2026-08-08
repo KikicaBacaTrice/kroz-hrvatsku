@@ -1,6 +1,6 @@
 .lokacije-stranica {
-  display: grid;
-  gap: 2rem;
+  --stog-gap: 2rem;
+
   width: min(100% - 2rem, 80rem);
   margin-inline: auto;
   padding-block: 2rem;
@@ -18,27 +18,15 @@
   align-items: end;
   gap: 1rem;
   padding: 1rem;
+
   border: 1px solid var(--clr-obrub);
   border-radius: var(--radius-lg);
   background: var(--clr-povrsina);
   box-shadow: var(--shadow-sm);
 
-  &__polje {
-    display: grid;
-    gap: 0.35rem;
-    color: var(--clr-text);
-    font-weight: 700;
-  }
-
   &__kontrola {
     min-height: 2.75rem;
-    padding: 0.7rem 0.9rem;
-    border: 1px solid var(--clr-obrub);
-    border-radius: var(--radius-sm);
-    background: var(--clr-povrsina);
-    color: var(--clr-text);
-    font: inherit;
-    font-weight: 400;
+    width: 100%;
 
     &:focus {
       border-color: var(--clr-primarna-400);
@@ -48,8 +36,8 @@
   }
 
   &__akcije {
-    display: flex;
-    gap: 0.5rem;
+    --klaster-gap: 0.5rem;
+    align-self: end;
   }
 }
 

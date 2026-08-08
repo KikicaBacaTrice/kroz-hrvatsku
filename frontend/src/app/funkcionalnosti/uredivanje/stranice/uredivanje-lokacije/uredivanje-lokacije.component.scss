@@ -1,26 +1,16 @@
 .uredivanje-lokacija {
-  display: grid;
-  gap: 1.5rem;
-  width: 100%;
+  --stog-gap: 1.5rem;
+  width: min(100% - 2rem, 96rem);
   margin-inline: auto;
   padding: 2rem 1rem;
 
-  &__zaglavlje {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
+  &__zaglavlje-akcije {
+    --klaster-gap: 1rem;
+    margin: 0;
   }
 
-  &__zaglavlje-akcije {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 2rem;
-
-    .uredivanje-lokacija__dodaj-lokaciju-gumb:hover {
-      color: white;
-    }
+  &__dodaj-lokaciju-gumb:hover {
+    color: white;
   }
 
   &__natrag-akcija {
@@ -67,11 +57,23 @@
   }
 
   &__akcije {
-    display: flex;
-    gap: 0.5rem;
+    --klaster-gap: 0.5rem;
 
     a:hover {
       color: white;
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  .uredivanje-lokacija {
+    &__zaglavlje {
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    &__zaglavlje-akcije {
+      justify-content: space-between;
     }
   }
 }

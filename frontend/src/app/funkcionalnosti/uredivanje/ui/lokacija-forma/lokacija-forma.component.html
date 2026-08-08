@@ -1,4 +1,8 @@
-<form class="lokacija-forma" #forma="ngForm" (ngSubmit)="posalji(forma)">
+<form
+  class="c-forma | lokacija-forma"
+  #forma="ngForm"
+  (ngSubmit)="posalji(forma)"
+>
   <header class="lokacija-forma__zaglavlje">
     <h2>{{ nacin() === "dodavanje" ? "Dodaj lokaciju" : "Uredi lokaciju" }}</h2>
   </header>
@@ -6,10 +10,10 @@
   <section class="lokacija-forma__sekcija">
     <h3>Osnovni podaci</h3>
 
-    <label class="lokacija-forma__polje">
+    <label class="c-forma__group lokacija-forma__polje">
       Naziv
       <input
-        class="lokacija-forma__kontrola"
+        class="c-forma__kontrola"
         name="naziv"
         required
         maxlength="200"
@@ -17,10 +21,12 @@
       />
     </label>
 
-    <label class="lokacija-forma__polje lokacija-forma__polje--puno">
+    <label
+      class="c-forma__group lokacija-forma__polje lokacija-forma__polje--puno"
+    >
       Opis
       <textarea
-        class="lokacija-forma__kontrola lokacija-forma__kontrola--textarea"
+        class="c-forma__kontrola lokacija-forma__textarea"
         name="opis"
         rows="7"
         [(ngModel)]="model.opis"
@@ -32,10 +38,12 @@
     <h3>Lokacija</h3>
 
     <div class="lokacija-forma__resetka">
-      <label class="lokacija-forma__polje lokacija-forma__polje--puno">
+      <label
+        class="c-forma__group lokacija-forma__polje lokacija-forma__polje--puno"
+      >
         Adresa
         <input
-          class="lokacija-forma__kontrola"
+          class="c-forma__kontrola"
           name="adresa"
           required
           maxlength="200"
@@ -43,10 +51,10 @@
         />
       </label>
 
-      <label class="lokacija-forma__polje">
+      <label class="c-forma__group lokacija-forma__polje">
         Grad
         <input
-          class="lokacija-forma__kontrola"
+          class="c-forma__kontrola"
           name="grad"
           required
           maxlength="200"
@@ -54,10 +62,10 @@
         />
       </label>
 
-      <label class="lokacija-forma__polje">
+      <label class="c-forma__group lokacija-forma__polje">
         Županija
         <input
-          class="lokacija-forma__kontrola"
+          class="c-forma__kontrola"
           name="zupanija"
           required
           maxlength="200"
@@ -65,10 +73,10 @@
         />
       </label>
 
-      <label class="lokacija-forma__polje">
+      <label class="c-forma__group lokacija-forma__polje">
         Geografksa širina (npr: 46.258099)
         <input
-          class="lokacija-forma__kontrola"
+          class="c-forma__kontrola"
           type="text"
           name="geoSirina"
           required
@@ -76,10 +84,10 @@
         />
       </label>
 
-      <label class="lokacija-forma__polje">
+      <label class="c-forma__group lokacija-forma__polje">
         Geografksa dužina (npr: 46.258099)
         <input
-          class="lokacija-forma__kontrola"
+          class="c-forma__kontrola"
           type="text"
           name="geoDuzina"
           required
@@ -93,20 +101,20 @@
     <h3>Nagrade i kategorija</h3>
 
     <div class="lokacija-forma__resetka lokacija-forma__resetka--tri">
-      <label class="lokacija-forma__polje">
+      <label class="c-forma__group lokacija-forma__polje">
         Cijena ulaznice (po osobi u eurima)
         <input
-          class="lokacija-forma__kontrola"
+          class="c-forma__kontrola"
           type="text"
           name="ulaznicaCijena"
           [(ngModel)]="model.ulaznicaCijena"
         />
       </label>
 
-      <label class="lokacija-forma__polje">
+      <label class="c-forma__group lokacija-forma__polje">
         XP nagrada
         <input
-          class="lokacija-forma__kontrola"
+          class="c-forma__kontrola"
           type="text"
           name="nagradaXp"
           required
@@ -114,10 +122,10 @@
         />
       </label>
 
-      <label class="lokacija-forma__polje">
+      <label class="c-forma__group lokacija-forma__polje">
         Novac nagrada
         <input
-          class="lokacija-forma__kontrola"
+          class="c-forma__kontrola"
           type="text"
           name="nagradaValuta"
           required
@@ -128,7 +136,7 @@
       <select
         name="kategorijaId"
         required
-        class="lokacija-forma__kontrola"
+        class="c-forma__kontrola"
         [(ngModel)]="model.kategorijaId"
       >
         <option [ngValue]="null" disabled>Odaberite kategoriju</option>
