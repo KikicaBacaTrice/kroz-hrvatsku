@@ -15,4 +15,18 @@ export const UREDIVANJE_ROUTES: Routes = [
         (m) => m.UredivanjeLokacijeComponent,
       ),
   },
+  {
+    path: 'lokacije/dodaj',
+    loadComponent: () =>
+      import('./stranice/dodaj-lokaciju/dodaj-lokaciju.component').then(
+        (m) => m.DodajLokacijuComponent,
+      ),
+  },
+  {
+    path: 'lokacije/:id',
+    loadComponent: () =>
+      import('./stranice/uredi-lokaciju/uredi-lokaciju.component').then(
+        (m) => m.UrediLokacijuComponent,
+      ),
+  },
 ];

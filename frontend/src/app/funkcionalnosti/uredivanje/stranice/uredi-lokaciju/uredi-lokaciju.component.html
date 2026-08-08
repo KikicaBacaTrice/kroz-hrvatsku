@@ -1,0 +1,11 @@
+@if (pocetnaVrijednostForme(); as pocetnaVrijednost) {
+  <app-lokacija-forma
+    nacin="uredivanje"
+    [pocetnaVrijednost]="pocetnaVrijednost"
+    [kategorije]="kategorije()"
+    (spremi)="azurirajLokaciju($event)"
+    (odustani)="odustani()"
+  />
+} @else {
+  <p>Učitavanje lokacije</p>
+}

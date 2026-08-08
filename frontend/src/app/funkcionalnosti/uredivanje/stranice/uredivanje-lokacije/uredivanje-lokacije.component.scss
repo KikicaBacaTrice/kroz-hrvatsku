@@ -12,6 +12,23 @@
     gap: 1rem;
   }
 
+  &__zaglavlje-akcije {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+
+    .uredivanje-lokacija__dodaj-lokaciju-gumb:hover {
+      color: white;
+    }
+  }
+
+  &__natrag-akcija {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   &__tablica-spremnik {
     overflow-x: auto;
     border: 1px solid var(--clr-obrub);
@@ -27,7 +44,7 @@
 
     th,
     td {
-      padding: 0.85rem 1rem;
+      padding: 0.75rem 1rem;
       border-bottom: 1px solid var(--clr-obrub);
       text-align: left;
       vertical-align: middle;
@@ -52,5 +69,9 @@
   &__akcije {
     display: flex;
     gap: 0.5rem;
+
+    a:hover {
+      color: white;
+    }
   }
 }

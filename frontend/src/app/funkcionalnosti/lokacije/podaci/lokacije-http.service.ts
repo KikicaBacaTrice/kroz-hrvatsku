@@ -8,6 +8,7 @@ import {
   DodajKomentarLokacijeZahtjev,
   KomentarLokacije,
 } from '../modeli/komentarLokacije.model';
+import { LokacijaFormaModel } from '../../uredivanje/modeli/lokacija-forma.mode';
 
 @Injectable({
   providedIn: 'root',
@@ -27,6 +28,21 @@ export class LokacijeHttpService {
 
   dohvatiTrazenuLokaciju(lokacijaId: number) {
     return this.http.get<Lokacija>(`${API_URL}/lokacije/${lokacijaId}`);
+  }
+
+  dodajLokaciju(zahtjev: LokacijaFormaModel) {
+    return this.http.post<Lokacija>(`${API_URL}/lokacije`, zahtjev);
+  }
+
+  azurirajLokaciju(lokacijaId: number, zahtjev: Partial<LokacijaFormaModel>) {
+    return this.http.patch<Lokacija>(
+      `${API_URL}/lokacije/${lokacijaId}`,
+      zahtjev,
+    );
+  }
+
+  obrisiLokaciju(lokacijaId: number) {
+    return this.http.delete<Lokacija>(`${API_URL}/lokacije/${lokacijaId}`);
   }
 
   dohvatiKomentareLokacije(lokacijaId: number) {

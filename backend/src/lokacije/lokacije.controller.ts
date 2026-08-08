@@ -61,8 +61,8 @@ export class LokacijeController {
   @UseGuards(JwtAuthGuard, UlogeGuard)
   @Uloge(1)
   @Post()
-  dodajLokaciju(@Body() dto: DodajLokacijaDto) {
-    return this.lokacijeServis.dodajLokaciju(dto);
+  dodajLokaciju(@Body() dto: DodajLokacijaDto, @Req() req: any) {
+    return this.lokacijeServis.dodajLokaciju(dto, req.user.userId);
   }
 
   @UseGuards(JwtAuthGuard, UlogeGuard)

@@ -118,7 +118,7 @@ export class LokacijeService {
     return rijesenaLokacija;
   }
 
-  async dodajLokaciju(dto: DodajLokacijaDto) {
+  async dodajLokaciju(dto: DodajLokacijaDto, korisnikId: number) {
     const novaLokacija = await this.prisma.lokacija.create({
       data: {
         naziv: dto.naziv,
@@ -131,7 +131,7 @@ export class LokacijeService {
         geoDuzina: dto.geoDuzina,
         nagradaXp: dto.nagradaXp,
         nagradaValuta: dto.nagradaValuta,
-        dodaoKorisnikId: dto.dodaoKorisnikId,
+        dodaoKorisnikId: korisnikId,
         kategorijaId: dto.kategorijaId,
       },
     });

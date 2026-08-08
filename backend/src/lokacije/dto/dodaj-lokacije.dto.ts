@@ -58,10 +58,5 @@ export class DodajLokacijaDto {
   @Type(() => Number)
   @IsInt()
   @Min(1)
-  dodaoKorisnikId!: number;
-
-  @Type(() => Number)
-  @IsInt()
-  @Min(1)
   kategorijaId!: number;
 }
