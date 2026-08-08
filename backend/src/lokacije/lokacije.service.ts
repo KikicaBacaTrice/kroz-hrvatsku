@@ -11,6 +11,8 @@ import { DodajSlikuDto } from './dto/dodaj-sliku.dto';
 import { AzurirajSlikuLokacijeDto } from './dto/azuriraj-sliku-lokacije.dto';
 import { NagradeService } from 'src/nagrade/nagrade.service';
 import { Prisma } from '@prisma/client';
+import { join } from 'path';
+import { unlink } from 'fs/promises';
 
 type LokacijaZaRjesavanje = {
   lokacijaId: number;
@@ -265,9 +267,20 @@ export class LokacijeService {
       throw new NotFoundException('SLika za ovu lokaciju nije pronađena');
     }
 
-    return this.prisma.slikaLokacije.delete({
+    const obrisanaSlika = await this.prisma.slikaLokacije.delete({
       where: { slikaId },
     });
+
+    const relativnaPutanja = obrisanaSlika.putanjaSlike.replace(/^\/+/, '');
+    const punaPutanja = join(process.cwd(), 'prijenos', relativnaPutanja);
+
+    try {
+      await unlink(punaPutanja);
+    } catch {
+      // Datoteka možda više ne postoji na disku, ali zapis iz baze je obrisan
+    }
+
+    return obrisanaSlika;
   }
 
   async provjeriPostojiLiLokacija(id: number) {

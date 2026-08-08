@@ -28,7 +28,8 @@ export class DodajLokacijuComponent implements OnInit {
 
   dodajLokaciju(zahtjev: LokacijaFormaModel): void {
     this.lokacijeHttp.dodajLokaciju(zahtjev).subscribe({
-      next: () => this.router.navigate(['./uredivanje/lokacije']),
+      next: (lokacija) =>
+        this.router.navigate(['./uredivanje/lokacije', lokacija.lokacijaId]),
     });
   }
 

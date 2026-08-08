@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Lokacija } from '../modeli/lokacija.model';
+import { Lokacija, SlikaLokacije } from '../modeli/lokacija.model';
 import { API_URL } from '../../../jezgra/konfiguracija/api.config';
 import { map } from 'rxjs';
 import {
@@ -16,6 +16,7 @@ import { LokacijaFormaModel } from '../../uredivanje/modeli/lokacija-forma.mode'
 export class LokacijeHttpService {
   private readonly http = inject(HttpClient);
 
+  /* Lokacije */
   dohvatiSveLokacije() {
     return this.http.get<Lokacija[]>(`${API_URL}/lokacije`);
   }
@@ -45,6 +46,39 @@ export class LokacijeHttpService {
     return this.http.delete<Lokacija>(`${API_URL}/lokacije/${lokacijaId}`);
   }
 
+  /* Lokacija slike */
+  dodajSlikuLokacije(
+    lokacijaId: number,
+    slika: File,
+    opisSlike: string,
+    glavna: boolean,
+  ) {
+    const formData = new FormData();
+
+    formData.append('slika', slika);
+    formData.append('opisSlike', opisSlike);
+    formData.append('glavna', String(glavna));
+
+    return this.http.post<SlikaLokacije>(
+      `${API_URL}/lokacije/${lokacijaId}/slike/upload`,
+      formData,
+    );
+  }
+
+  postaviGlavnuSliku(lokacijaId: number, slikaId: number) {
+    return this.http.patch<SlikaLokacije>(
+      `${API_URL}/lokacije/${lokacijaId}/slike/${slikaId}`,
+      { glavna: true },
+    );
+  }
+
+  obrisiSlikuLokacije(lokacijaId: number, slikaId: number) {
+    return this.http.delete<SlikaLokacije>(
+      `${API_URL}/lokacije/${lokacijaId}/slike/${slikaId}`,
+    );
+  }
+
+  /* Komentar */
   dohvatiKomentareLokacije(lokacijaId: number) {
     return this.http.get<KomentarLokacije[]>(
       `${API_URL}/povratne-informacije/${lokacijaId}`,

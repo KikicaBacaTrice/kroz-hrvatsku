@@ -8,10 +8,12 @@ import {
 import { LokacijaFormaModel } from '../../modeli/lokacija-forma.mode';
 import { LokacijaFormaComponent } from '../../ui/lokacija-forma/lokacija-forma.component';
 import { KategorijeHttpService } from '../../../lokacije/podaci/kategorije-http.service';
+import { FormsModule } from '@angular/forms';
+import { UrediSlikeLokacijeComponent } from '../../ui/uredi-slike-lokacije/uredi-slike-lokacije.component';
 
 @Component({
   selector: 'app-uredi-lokaciju',
-  imports: [LokacijaFormaComponent],
+  imports: [LokacijaFormaComponent, FormsModule, UrediSlikeLokacijeComponent],
   templateUrl: './uredi-lokaciju.component.html',
   styleUrl: './uredi-lokaciju.component.scss',
 })
@@ -32,12 +34,7 @@ export class UrediLokacijuComponent implements OnInit {
     this.lokacijaId = Number(this.route.snapshot.paramMap.get('id'));
 
     if (!Number.isNaN(this.lokacijaId)) {
-      this.lokacijeHttp.dohvatiTrazenuLokaciju(this.lokacijaId).subscribe({
-        next: (lokacija) => {
-          this.lokacija.set(lokacija);
-          this.pocetnaVrijednostForme.set(this.mapirajLokacijuUFormu(lokacija));
-        },
-      });
+      this.ucitajLokaciju();
     }
 
     this.kateogrijeHttp.dohvatiSveKategorije().subscribe({
@@ -77,5 +74,14 @@ export class UrediLokacijuComponent implements OnInit {
 
   odustani(): void {
     this.router.navigate(['/uredivanje/lokacije']);
+  }
+
+  ucitajLokaciju(): void {
+    this.lokacijeHttp.dohvatiTrazenuLokaciju(this.lokacijaId).subscribe({
+      next: (lokacija) => {
+        this.lokacija.set(lokacija);
+        this.pocetnaVrijednostForme.set(this.mapirajLokacijuUFormu(lokacija));
+      },
+    });
   }
 }

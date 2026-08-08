@@ -10,6 +10,8 @@ import {
   Query,
   Req,
   UseGuards,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { LokacijeService } from './lokacije.service';
 import { AzurirajLokacijuDto } from './dto/azuriraj-lokacije.dto';
@@ -20,6 +22,9 @@ import { AzurirajSlikuLokacijeDto } from './dto/azuriraj-sliku-lokacije.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { UlogeGuard } from 'src/auth/uloge.guard';
 import { Uloge } from 'src/auth/uloge.decorator';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { extname, join } from 'path';
 
 @Controller('lokacije')
 export class LokacijeController {
@@ -73,6 +78,34 @@ export class LokacijeController {
     @Body() dto: DodajSlikuDto,
   ) {
     return this.lokacijeServis.dodajSlikuZaLokaciju(id, dto);
+  }
+
+  @UseGuards(JwtAuthGuard, UlogeGuard)
+  @Uloge(1)
+  @Post(':id/slike/upload')
+  @UseInterceptors(
+    FileInterceptor('slika', {
+      storage: diskStorage({
+        destination: join(process.cwd(), 'prijenos', 'lokacije'),
+        filename: (req, file, callback) => {
+          const jedinstveniNaziv = `${Date.now()}-${Math.round(Math.random() * 1e9)}${extname(file.originalname)}`;
+
+          callback(null, jedinstveniNaziv);
+        },
+      }),
+    }),
+  )
+  dodajUploadSlikuZaLokaciju(
+    @Param('id', ParseIntPipe) id: number,
+    @UploadedFile() slika: Express.Multer.File,
+    @Body('opisSlike') opisSlike?: string,
+    @Body('glavna') glavna?: string,
+  ) {
+    return this.lokacijeServis.dodajSlikuZaLokaciju(id, {
+      putanjaSlike: `/prijenos/lokacije/${slika.filename}`,
+      opisSlike,
+      glavna: glavna === 'true',
+    });
   }
 
   @UseGuards(JwtAuthGuard)

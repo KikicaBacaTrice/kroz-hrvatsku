@@ -6,6 +6,13 @@
     (spremi)="azurirajLokaciju($event)"
     (odustani)="odustani()"
   />
+
+  @if (lokacija(); as lokacija) {
+    <app-uredi-slike-lokacije
+      [lokacija]="lokacija"
+      (slikePromijenjene)="ucitajLokaciju()"
+    />
+  }
 } @else {
   <p>Učitavanje lokacije</p>
 }
