@@ -16,8 +16,11 @@ import { KovaniceIkonaComponent } from '../../../../dijeljeno/ui/ikone/kovanice-
 })
 export class KarticaIzazovaLokacijeComponent {
   lokacija = input.required<Lokacija>();
+  rijesena = input(false);
+  spremanje = input(false);
 
   @Output() zabiljeziDolazak = new EventEmitter<void>();
+  @Output() pogledajUspomene = new EventEmitter<void>();
 
   naZabiljeziDolazak(): void {
     this.zabiljeziDolazak.emit();

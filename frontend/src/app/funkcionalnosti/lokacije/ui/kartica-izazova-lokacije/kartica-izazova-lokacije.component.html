@@ -2,9 +2,9 @@
   <header class="o-stog | lokacija-sadrzaj__kartica-izazov-zaglavlje">
     <div class="lokacija-sadrzaj__kartica-izazov-zaglavlje-spremnik">
       <app-medalja-ikona boja="#edc060" velicina="20" />
-      <span>AKTIVNI IZAZOV</span>
+      <span>{{ rijesena() ? "IZAZOV ZAVRŠEN" : "AKTIVNI IZAZOV" }}</span>
     </div>
-    <p>Zabilježi dolazak</p>
+    <p>{{ rijesena() ? "Pogledajte uspomenu" : "Zabilježi dolazak" }}</p>
   </header>
   <div class="lokacija-sadrzaj__kartica-izazov-informacije-spremnik">
     <span class="lokacija-sadrzaj__kartica-izazov-informacije-opis">
@@ -36,8 +36,20 @@
       </div>
     </div>
 
-    <button class="c-button c-button--primarna | lokacije-nagrade__gumb">
-      Zabilježi dolazak
+    <button
+      class="c-button | lokacije-nagrade__gumb"
+      [class.c-button--primarna-inverz]="!rijesena()"
+      [class.c-button--primarna]="rijesena()"
+      [disabled]="spremanje()"
+      (click)="rijesena() ? pogledajUspomene.emit() : zabiljeziDolazak.emit()"
+    >
+      @if (spremanje()) {
+        Spremanje
+      } @else if (rijesena()) {
+        Pogledaj uspomene
+      } @else {
+        Zabilježi dolazak
+      }
     </button>
   </div>
 </article>

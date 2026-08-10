@@ -52,4 +52,23 @@
     font-size: var(--fs-rg);
     font-weight: 500;
   }
+
+  &--rijeseno {
+    border-color: var(--clr-primarna-600);
+    background: var(--clr-primarna-600);
+    color: white;
+  }
+
+  &--rijeseno .lokacija-informacije__kartica-ikona-spremnik::after {
+    background: rgb(255 255 255 / 0.2);
+  }
+
+  &--rijeseno .lokacija-informacije__kartica-ikona {
+    filter: brightness(0) invert(1);
+  }
+
+  &--rijeseno .lokacija-informacije__kartica-opis,
+  &--rijeseno .lokacija-informacije__kartica-informacija {
+    color: white;
+  }
 }

@@ -10,6 +10,7 @@ import { KarticaInformacijeDetaljaLokacijeComponent } from '../kartica-informaci
 })
 export class LokacijaInformacijeComponent {
   lokacija = input.required<Lokacija>();
+  rijeseno = input(false);
 
   formatirajCijenuUlaznice(): string {
     const iznos = Number(this.lokacija().ulaznicaCijena);

@@ -10,6 +10,8 @@ import {
 } from '../modeli/komentarLokacije.model';
 import { LokacijaFormaModel } from '../../uredivanje/modeli/lokacija-forma.mode';
 import { FilterLokacija } from '../modeli/filter-lokacija.model';
+import { AppComponent } from '../../../app.component';
+import { RijesenaLokacija } from '../modeli/posjet-lokacija.model';
 
 @Injectable({
   providedIn: 'root',
@@ -125,6 +127,23 @@ export class LokacijeHttpService {
     return this.http.patch<KomentarLokacije>(
       `${API_URL}/povratne-informacije/${lokacijaId}/${povratnaInformacijaId}`,
       zahtjev,
+    );
+  }
+
+  /* Izazovi */
+  zabiljeziDolazak(lokacijaId: number, biljeska: string, slike: File[]) {
+    const formData = new FormData();
+    formData.append('biljeska', biljeska);
+    for (const slika of slike) {
+      formData.append('slike', slika);
+    }
+
+    return this.http.post(`${API_URL}/lokacije/${lokacijaId}/rijesi`, formData);
+  }
+
+  dohvatiMojDolazak(lokacijaId: number) {
+    return this.http.get<RijesenaLokacija | null>(
+      `${API_URL}/lokacije/${lokacijaId}/moj-dolazak`,
     );
   }
 }

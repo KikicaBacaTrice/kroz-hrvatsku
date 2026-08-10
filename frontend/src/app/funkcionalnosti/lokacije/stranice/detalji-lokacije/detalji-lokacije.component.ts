@@ -12,6 +12,8 @@ import { SlikaLokacije } from '../../modeli/lokacija.model';
 import { LokacijaGalerijaModalComponent } from '../../ui/lokacija-galerija-modal/lokacija-galerija-modal.component';
 import { KomentariSekcijaComponent } from '../../ui/komentari-sekcija/komentari-sekcija.component';
 import { KomentariLokacijeStanjeService } from '../../stanje/komentari-lokacije-stanje.service';
+import { ZabiljeniDolazakModalComponent } from '../../ui/zabiljeni-dolazak-modal/zabiljeni-dolazak-modal.component';
+import { UspomenaDolazakModalComponent } from '../../ui/uspomena-dolazak-modal/uspomena-dolazak-modal.component';
 
 @Component({
   selector: 'app-detalji-lokacije',
@@ -24,13 +26,15 @@ import { KomentariLokacijeStanjeService } from '../../stanje/komentari-lokacije-
     LokacijaInformacijeComponent,
     LokacijaGalerijaModalComponent,
     KomentariSekcijaComponent,
+    ZabiljeniDolazakModalComponent,
+    UspomenaDolazakModalComponent,
   ],
   templateUrl: './detalji-lokacije.component.html',
   styleUrl: './detalji-lokacije.component.scss',
 })
 export class DetaljiLokacijeComponent implements OnInit, OnDestroy {
   private readonly route = inject(ActivatedRoute);
-  private readonly lokacijaStanje = inject(LokacijaStanjeService);
+  readonly lokacijaStanje = inject(LokacijaStanjeService);
   private readonly komentariStanje = inject(KomentariLokacijeStanjeService);
 
   readonly apiUrl = API_URL;
@@ -44,6 +48,7 @@ export class DetaljiLokacijeComponent implements OnInit, OnDestroy {
       const lokacijaId = Number(parametri.get('id'));
 
       this.lokacijaStanje.ucitajLokaciju(lokacijaId);
+      this.lokacijaStanje.ucitajMojDolazak(lokacijaId);
       this.komentariStanje.ucitajKomentare(lokacijaId);
     });
   }
@@ -71,6 +76,4 @@ export class DetaljiLokacijeComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     document.body.classList.remove('body--bez-scrolla');
   }
-
-  naZabiljeziDolazak() {}
 }

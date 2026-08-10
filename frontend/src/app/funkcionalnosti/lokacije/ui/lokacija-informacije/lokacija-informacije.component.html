@@ -17,8 +17,9 @@
     />
     <app-kartica-informacije-detalja-lokacije
       ikona="/slike/ikone/status-ikona.png"
-      opis="Stauts"
-      vrijednost="Nije riješen"
+      opis="Status"
+      [vrijednost]="rijeseno() ? 'Riješeno' : 'Nije riješen'"
+      [rijeseno]="rijeseno()"
     />
   </div>
 </section>

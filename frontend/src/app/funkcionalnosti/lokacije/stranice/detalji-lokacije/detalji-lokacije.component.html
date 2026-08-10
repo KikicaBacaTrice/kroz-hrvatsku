@@ -7,7 +7,10 @@
       />
 
       <section class="lokacija-informacije">
-        <app-lokacija-informacije [lokacija]="lokacija" />
+        <app-lokacija-informacije
+          [lokacija]="lokacija"
+          [rijeseno]="!!lokacijaStanje.mojDolazak()"
+        />
       </section>
 
       <section class="lokacija-sadrzaj">
@@ -29,7 +32,10 @@
             <app-kartica-izazova-lokacije
               class="lokacija-sadrzaj__kartica-izazov"
               [lokacija]="lokacija"
-              (zabiljeziDolazak)="naZabiljeziDolazak()"
+              [rijesena]="!!lokacijaStanje.mojDolazak()"
+              [spremanje]="lokacijaStanje.spremanjeDolaska()"
+              (zabiljeziDolazak)="lokacijaStanje.otvoriModelDolaska()"
+              (pogledajUspomene)="lokacijaStanje.otvoriModelUspomena()"
             />
           </aside>
         </div>
@@ -42,6 +48,30 @@
         [pocetniIndex]="odabranaSlikaIndex"
         [apiUrl]="apiUrl"
         (zatvori)="zatvoriGaleriju()"
+      />
+    }
+
+    @if (lokacijaStanje.modalDolaskaOtvoren()) {
+      <app-zabiljeni-dolazak-modal
+        [spremanje]="lokacijaStanje.spremanjeDolaska()"
+        (zatvori)="lokacijaStanje.zatvoriModalDolaska()"
+        (spremi)="
+          lokacijaStanje.zabiljeziDolazak(
+            lokacija.lokacijaId,
+            $event.biljeska,
+            $event.slike
+          )
+        "
+      />
+    }
+
+    @if (
+      lokacijaStanje.modalUspomenaOtvoren() && lokacijaStanje.mojDolazak();
+      as dolazak
+    ) {
+      <app-uspomena-dolazak-modal
+        [dolazak]="dolazak"
+        (zatvori)="lokacijaStanje.zatvoriModalUspomena()"
       />
     }
   } @else {

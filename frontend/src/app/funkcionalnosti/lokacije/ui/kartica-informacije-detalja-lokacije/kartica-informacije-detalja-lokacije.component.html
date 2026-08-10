@@ -1,4 +1,7 @@
-<div class="lokacija-informacije__kartica">
+<div
+  class="lokacija-informacije__kartica"
+  [class.lokacija-informacije__kartica--rijeseno]="rijeseno()"
+>
   <div class="lokacija-informacije__kartica-ikona-spremnik">
     <img
       [src]="ikona()"

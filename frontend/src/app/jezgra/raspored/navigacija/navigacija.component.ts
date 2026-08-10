@@ -33,12 +33,6 @@ export class NavigacijaComponent implements OnInit {
   izbornikOtvoren = signal(false);
   mobilniIzbornikOtvoren = signal(false);
 
-  constructor() {
-    effect(() => {
-      console.log('Profil stanje:', this.profilStanje.profil());
-    });
-  }
-
   ngOnInit(): void {
     if (this.authStanje.prijavljen()) {
       this.profilStanje.ucitajMojProfil();

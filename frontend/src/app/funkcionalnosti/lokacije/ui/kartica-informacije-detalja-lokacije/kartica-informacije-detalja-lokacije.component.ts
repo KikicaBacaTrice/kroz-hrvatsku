@@ -10,4 +10,5 @@ export class KarticaInformacijeDetaljaLokacijeComponent {
   ikona = input.required<string>();
   opis = input.required<string>();
   vrijednost = input.required<string>();
+  rijeseno = input(false);
 }

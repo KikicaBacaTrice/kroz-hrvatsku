@@ -1,0 +1,81 @@
+<div class="zabiljezi-dolazak-modal">
+  <button
+    type="button"
+    class="zabiljezi-dolazak-modal__pozadina"
+    (click)="zatvori.emit()"
+  ></button>
+
+  <section class="zabiljezi-dolazak-modal__panel">
+    <header class="zabiljezi-dolazak-modal__zaglavlje">
+      <h2>Zabilježi dolazak</h2>
+
+      <button
+        type="button"
+        class="zabiljezi-dolazak-modal__zatovri"
+        (click)="zatvori.emit()"
+      >
+        <app-zatovri-ikona />
+      </button>
+    </header>
+
+    <form
+      class="c-forma | zabiljezi-dolazak-modal__forma"
+      #forma="ngForm"
+      (ngSubmit)="posalji(forma)"
+    >
+      <label class="c-forma__group">
+        <span class="c-forma-label"> Bilješka posjeta </span>
+        <textarea
+          class="c-forma__kontrola | zabiljezi-dolazak-modal__textarea"
+          name="biljeska"
+          rows="5"
+          maxlength="1000"
+          placeholder="Napiši doživljaj lokacije"
+          [(ngModel)]="model.biljeska"
+        ></textarea>
+      </label>
+
+      <label class="c-forma__group">
+        <span class="c-forma-label"> Slike posjeta </span>
+        <input
+          type="file"
+          class="c-forma__kontrola"
+          name="slike"
+          multiple
+          (change)="odaberiSlike($event)"
+        />
+      </label>
+
+      @if (model.slike.length > 0) {
+        <div class="zabiljezi-dolazak-modal__slike">
+          @for (slika of model.slike; track slika.name; let i = $index) {
+            <div class="zabiljezi-dolazak-modal__slika-redak">
+              <span>{{ slika.name }}</span>
+
+              <button
+                type="button"
+                class="zabiljezi-dolazak-modal__ukloni-sliku"
+                (click)="ukloniSliku(i)"
+              >
+                Ukloni
+              </button>
+            </div>
+          }
+        </div>
+      }
+
+      <div class="zabiljezi-dolazak-modal__akcije">
+        <button
+          type="button"
+          class="c-button c-button--primarna-inverz"
+          (click)="zatvori.emit()"
+        >
+          Odustani
+        </button>
+        <button type="submit" class="c-button c-button--primarna">
+          {{ spremanje() ? "Spremanje" : "Zabilježi dolazak" }}
+        </button>
+      </div>
+    </form>
+  </section>
+</div>
