@@ -1,7 +1,7 @@
 import { Component, input } from '@angular/core';
-import { OcjenaZvijezdiceComponent } from '../komentari-sekcija/ocjena-zvijezdice/ocjena-zvijezdice.component';
-import { Lokacija, SlikaLokacije } from '../../modeli/lokacija.model';
-import { API_URL } from '../../../../jezgra/konfiguracija/api.config';
+import { OcjenaZvijezdiceComponent } from '../../komentari-sekcija/ocjena-zvijezdice/ocjena-zvijezdice.component';
+import { Lokacija, SlikaLokacije } from '../../../modeli/lokacija.model';
+import { API_URL } from '../../../../../jezgra/konfiguracija/api.config';
 import { RouterLink } from '@angular/router';
 
 @Component({

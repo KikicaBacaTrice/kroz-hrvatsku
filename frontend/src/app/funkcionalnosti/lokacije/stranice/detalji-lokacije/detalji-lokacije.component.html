@@ -9,7 +9,7 @@
       <section class="lokacija-informacije">
         <app-lokacija-informacije
           [lokacija]="lokacija"
-          [rijeseno]="!!lokacijaStanje.mojDolazak()"
+          [rijeseno]="!!dolasciStanje.mojDolazak()"
         />
       </section>
 
@@ -32,10 +32,10 @@
             <app-kartica-izazova-lokacije
               class="lokacija-sadrzaj__kartica-izazov"
               [lokacija]="lokacija"
-              [rijesena]="!!lokacijaStanje.mojDolazak()"
-              [spremanje]="lokacijaStanje.spremanjeDolaska()"
-              (zabiljeziDolazak)="lokacijaStanje.otvoriModelDolaska()"
-              (pogledajUspomene)="lokacijaStanje.otvoriModelUspomena()"
+              [rijesena]="!!dolasciStanje.mojDolazak()"
+              [spremanje]="dolasciStanje.spremanjeDolaska()"
+              (zabiljeziDolazak)="dolasciStanje.otvoriModelDolaska()"
+              (pogledajUspomene)="dolasciStanje.otvoriModelUspomena()"
             />
           </aside>
         </div>
@@ -51,12 +51,12 @@
       />
     }
 
-    @if (lokacijaStanje.modalDolaskaOtvoren()) {
+    @if (dolasciStanje.modalDolaskaOtvoren()) {
       <app-zabiljeni-dolazak-modal
-        [spremanje]="lokacijaStanje.spremanjeDolaska()"
-        (zatvori)="lokacijaStanje.zatvoriModalDolaska()"
+        [spremanje]="dolasciStanje.spremanjeDolaska()"
+        (zatvori)="dolasciStanje.zatvoriModalDolaska()"
         (spremi)="
-          lokacijaStanje.zabiljeziDolazak(
+          dolasciStanje.zabiljeziDolazak(
             lokacija.lokacijaId,
             $event.biljeska,
             $event.slike
@@ -66,12 +66,12 @@
     }
 
     @if (
-      lokacijaStanje.modalUspomenaOtvoren() && lokacijaStanje.mojDolazak();
+      dolasciStanje.modalUspomenaOtvoren() && dolasciStanje.mojDolazak();
       as dolazak
     ) {
       <app-uspomena-dolazak-modal
         [dolazak]="dolazak"
-        (zatvori)="lokacijaStanje.zatvoriModalUspomena()"
+        (zatvori)="dolasciStanje.zatvoriModalUspomena()"
       />
     }
   } @else {

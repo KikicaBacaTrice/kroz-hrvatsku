@@ -1,7 +1,7 @@
 import { Component, EventEmitter, input, OnInit, Output } from '@angular/core';
-import { SlikaLokacije } from '../../modeli/lokacija.model';
-import { PrethodniSljedeciIkonaComponent } from '../../../../dijeljeno/ui/ikone/prethodni-sljedeci-ikona/prethodni-sljedeci-ikona.component';
-import { ZatovriIkonaComponent } from '../../../../dijeljeno/ui/ikone/zatovri-ikona/zatovri-ikona.component';
+import { SlikaLokacije } from '../../../modeli/lokacija.model';
+import { PrethodniSljedeciIkonaComponent } from '../../../../../dijeljeno/ui/ikone/prethodni-sljedeci-ikona/prethodni-sljedeci-ikona.component';
+import { ZatovriIkonaComponent } from '../../../../../dijeljeno/ui/ikone/zatovri-ikona/zatovri-ikona.component';
 
 @Component({
   selector: 'app-lokacija-galerija-modal',

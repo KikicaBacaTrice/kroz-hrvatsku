@@ -1,6 +1,6 @@
 import { Component, EventEmitter, input, Output } from '@angular/core';
-import { Lokacija, SlikaLokacije } from '../../modeli/lokacija.model';
-import { API_URL } from '../../../../jezgra/konfiguracija/api.config';
+import { Lokacija, SlikaLokacije } from '../../../modeli/lokacija.model';
+import { API_URL } from '../../../../../jezgra/konfiguracija/api.config';
 
 @Component({
   selector: 'app-lokacija-galerija',

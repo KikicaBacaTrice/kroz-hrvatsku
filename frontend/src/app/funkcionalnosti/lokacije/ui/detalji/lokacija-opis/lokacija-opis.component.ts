@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { Lokacija } from '../../modeli/lokacija.model';
+import { Lokacija } from '../../../modeli/lokacija.model';
 
 @Component({
   selector: 'app-lokacija-opis',

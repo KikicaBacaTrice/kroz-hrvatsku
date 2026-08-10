@@ -1,7 +1,7 @@
 import { Component, EventEmitter, input, Output } from '@angular/core';
-import { RijesenaLokacija } from '../../modeli/posjet-lokacija.model';
-import { API_URL } from '../../../../jezgra/konfiguracija/api.config';
-import { ZatovriIkonaComponent } from '../../../../dijeljeno/ui/ikone/zatovri-ikona/zatovri-ikona.component';
+import { RijesenaLokacija } from '../../../modeli/posjet-lokacija.model';
+import { API_URL } from '../../../../../jezgra/konfiguracija/api.config';
+import { ZatovriIkonaComponent } from '../../../../../dijeljeno/ui/ikone/zatovri-ikona/zatovri-ikona.component';
 import { DatePipe } from '@angular/common';
 
 @Component({

@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
-import { Lokacija } from '../../modeli/lokacija.model';
-import { KarticaInformacijeDetaljaLokacijeComponent } from '../kartica-informacije-detalja-lokacije/kartica-informacije-detalja-lokacije.component';
+import { Lokacija } from '../../../modeli/lokacija.model';
+import { KarticaInformacijeDetaljaLokacijeComponent } from '../../kartice/kartica-informacije-detalja-lokacije/kartica-informacije-detalja-lokacije.component';
 
 @Component({
   selector: 'app-lokacija-informacije',

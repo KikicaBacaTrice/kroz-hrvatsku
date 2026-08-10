@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { KarticaLokacijeComponent } from '../../ui/kartica-lokacije/kartica-lokacije.component';
+import { KarticaLokacijeComponent } from '../../ui/kartice/kartica-lokacije/kartica-lokacije.component';
 import { LokacijaStanjeService } from '../../stanje/lokacija-stanje.service';
 import { FilterLokacija } from '../../modeli/filter-lokacija.model';
 import { FormsModule } from '@angular/forms';

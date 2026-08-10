@@ -1,8 +1,8 @@
 import { Component, computed, inject, input } from '@angular/core';
-import { Lokacija } from '../../modeli/lokacija.model';
+import { Lokacija } from '../../../modeli/lokacija.model';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { GOOGLE_MAPS_API_KEY } from '../../../../jezgra/konfiguracija/google.config';
-import { DirekcijaIkonaComponent } from '../../../../dijeljeno/ui/ikone/direkcija-ikona/direkcija-ikona.component';
+import { GOOGLE_MAPS_API_KEY } from '../../../../../jezgra/konfiguracija/google.config';
+import { DirekcijaIkonaComponent } from '../../../../../dijeljeno/ui/ikone/direkcija-ikona/direkcija-ikona.component';
 
 @Component({
   selector: 'app-karta-lokacije',

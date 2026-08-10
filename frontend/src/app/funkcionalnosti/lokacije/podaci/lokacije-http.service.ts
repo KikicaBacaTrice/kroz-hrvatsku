@@ -3,15 +3,8 @@ import { inject, Injectable } from '@angular/core';
 import { Lokacija, SlikaLokacije } from '../modeli/lokacija.model';
 import { API_URL } from '../../../jezgra/konfiguracija/api.config';
 import { map } from 'rxjs';
-import {
-  AzurirajKomentarLokacijeZahtjev,
-  DodajKomentarLokacijeZahtjev,
-  KomentarLokacije,
-} from '../modeli/komentarLokacije.model';
 import { LokacijaFormaModel } from '../../uredivanje/modeli/lokacija-forma.mode';
 import { FilterLokacija } from '../modeli/filter-lokacija.model';
-import { AppComponent } from '../../../app.component';
-import { RijesenaLokacija } from '../modeli/posjet-lokacija.model';
 
 @Injectable({
   providedIn: 'root',
@@ -93,57 +86,6 @@ export class LokacijeHttpService {
   obrisiSlikuLokacije(lokacijaId: number, slikaId: number) {
     return this.http.delete<SlikaLokacije>(
       `${API_URL}/lokacije/${lokacijaId}/slike/${slikaId}`,
-    );
-  }
-
-  /* Komentar */
-  dohvatiKomentareLokacije(lokacijaId: number) {
-    return this.http.get<KomentarLokacije[]>(
-      `${API_URL}/povratne-informacije/${lokacijaId}`,
-    );
-  }
-
-  dodajKomentarLokacije(
-    lokacijaId: number,
-    zahtjev: DodajKomentarLokacijeZahtjev,
-  ) {
-    return this.http.post<KomentarLokacije>(
-      `${API_URL}/povratne-informacije/${lokacijaId}`,
-      zahtjev,
-    );
-  }
-
-  obrisiKomentarLokacije(lokacijaId: number, povratnaInformacijaId: number) {
-    return this.http.delete<KomentarLokacije>(
-      `${API_URL}/povratne-informacije/${lokacijaId}/${povratnaInformacijaId}`,
-    );
-  }
-
-  urediKomentarLokacije(
-    lokacijaId: number,
-    povratnaInformacijaId: number,
-    zahtjev: AzurirajKomentarLokacijeZahtjev,
-  ) {
-    return this.http.patch<KomentarLokacije>(
-      `${API_URL}/povratne-informacije/${lokacijaId}/${povratnaInformacijaId}`,
-      zahtjev,
-    );
-  }
-
-  /* Izazovi */
-  zabiljeziDolazak(lokacijaId: number, biljeska: string, slike: File[]) {
-    const formData = new FormData();
-    formData.append('biljeska', biljeska);
-    for (const slika of slike) {
-      formData.append('slike', slika);
-    }
-
-    return this.http.post(`${API_URL}/lokacije/${lokacijaId}/rijesi`, formData);
-  }
-
-  dohvatiMojDolazak(lokacijaId: number) {
-    return this.http.get<RijesenaLokacija | null>(
-      `${API_URL}/lokacije/${lokacijaId}/moj-dolazak`,
     );
   }
 }
