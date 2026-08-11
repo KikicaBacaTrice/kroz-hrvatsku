@@ -1,3 +1,5 @@
+import { Lokacija } from './lokacija.model';
+
 export type SlikaPosjeta = {
   slikaId: number;
   putanjaSlike: string;
@@ -14,4 +16,5 @@ export type RijesenaLokacija = {
   korisnikId: number;
   lokacijaId: number;
   slikePosjeta: SlikaPosjeta[];
+  lokacija: Lokacija;
 };

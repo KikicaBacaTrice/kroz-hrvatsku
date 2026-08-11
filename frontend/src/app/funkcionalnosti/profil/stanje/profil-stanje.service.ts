@@ -8,11 +8,23 @@ import { MojProfil } from '../modeli/profil.model';
 export class ProfilStanjeService {
   private readonly profilHttp = inject(ProfilHttpService);
   readonly profil = signal<MojProfil | null>(null);
+  readonly ucitavanje = signal(false);
+  readonly greska = signal<string | null>(null);
 
   ucitajMojProfil(): void {
+    this.ucitavanje.set(true);
+    this.greska.set(null);
+
     this.profilHttp.dohvatiMojProfil().subscribe({
-      next: (profil) => this.profil.set(profil),
-      error: () => this.profil.set(null),
+      next: (profil) => {
+        this.profil.set(profil);
+        this.ucitavanje.set(false);
+      },
+      error: () => {
+        this.profil.set(null);
+        this.ucitavanje.set(false);
+        this.greska.set('Učitavanje profila nije uspjelo');
+      },
     });
   }
 

@@ -86,26 +86,14 @@ export class LokacijeService {
   async dohvatiRijeseneLokacije(korisnikId: number) {
     return this.prisma.rijesenaLokacija.findMany({
       where: { korisnikId },
-      select: {
-        lokacijaId: true,
-
-        datumVrijemePosjeta: true,
-        brojOsvojeneValute: true,
-        brojOsvojenihXp: true,
+      include: {
         lokacija: {
-          select: {
-            naziv: true,
-            slikeLokacije: {
-              where: { glavna: true },
-              select: {
-                slikaId: true,
-                putanjaSlike: true,
-                opisSlike: true,
-              },
-              take: 1,
-            },
+          include: {
+            kategorija: true,
+            slikeLokacije: true,
           },
         },
+        slikePosjeta: true,
       },
       orderBy: {
         datumVrijemePosjeta: 'desc',

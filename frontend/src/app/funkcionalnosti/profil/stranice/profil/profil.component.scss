@@ -1,0 +1,182 @@
+.profil {
+  --stog-gap: 2rem;
+
+  width: min(100% - 2rem, 80rem);
+  margin-inline: auto;
+  padding-block: 2rem;
+}
+
+.profil-zaglavlje {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 2rem;
+  padding: 1.25rem;
+  border: 1px solid var(--clr-obrub);
+  border-radius: var(--radius-md);
+  background: var(--clr-povrsina);
+  box-shadow: var(--shadow-lg);
+
+  &__korisnik {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+    min-width: 0;
+  }
+
+  &__slika-spremnik {
+    position: relative;
+    flex: 0 0 auto;
+  }
+
+  &__slika {
+    display: block;
+    width: 6.75rem;
+    height: 6.75rem;
+    object-fit: cover;
+    border: 3px solid var(--clr-primarna-700);
+    border-radius: var(--radius-zaobljeno);
+  }
+
+  &__slika--slovo {
+    display: grid;
+    place-items: center;
+    background: var(--clr-sekundarna-300);
+    color: var(--clr-primarna-800);
+    font-family: inherit;
+    font-size: 3rem;
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  &__razina {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-zaobljeno);
+    background: var(--clr-sekundarna-400);
+    color: var(--clr-primarna-900);
+    font-size: var(--fs-xs);
+    font-weight: 800;
+    text-transform: uppercase;
+    white-space: nowrap;
+    box-shadow: var(--shadow-sm);
+  }
+
+  &__sadrzaj {
+    display: grid;
+    gap: 0.5rem;
+    padding-top: 0.2rem;
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__akcije {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  &__ime {
+    margin: 0;
+    color: var(--clr-text);
+    font-size: var(--fs-xl);
+    line-height: 1;
+  }
+
+  &__korisnicko-ime {
+    margin: 0;
+    color: var(--clr-text-prigusen);
+    font-size: var(--fs-sm);
+  }
+
+  &__opis {
+    width: 100%;
+    margin: 0.5rem 0 0;
+    color: var(--clr-text);
+    font-style: italic;
+    line-height: 1.55;
+  }
+
+  &__uredi {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    flex: 0 0 auto;
+    min-height: 2.6rem;
+    padding: 0.55rem 1rem;
+    border: 1px solid var(--clr-primarna-700);
+    border-radius: var(--radius-md);
+    background: var(--clr-povrsina);
+    color: var(--clr-primarna-800);
+    font-weight: 700;
+    text-decoration: none;
+
+    &:hover {
+      background: var(--clr-primarna-600);
+      color: white;
+    }
+  }
+}
+
+.profil-rijesene-lokacije {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 2rem;
+  padding: 1.25rem;
+  border: 1px solid var(--clr-obrub);
+  border-radius: var(--radius-md);
+  background: var(--clr-povrsina);
+  box-shadow: var(--shadow-lg);
+
+  &__zaglavlje {
+    h2 {
+      margin: 0;
+    }
+  }
+
+  &__resetka {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+    gap: 1.25rem;
+  }
+
+  &__prazno {
+    margin: 0;
+    padding: 1rem;
+    border: 1px solid var(--clr-obrub);
+    border-radius: var(--radius-md);
+    background: var(--clr-povrsina);
+    color: var(--clr-text-prigusen);
+  }
+}
+
+@media (max-width: 700px) {
+  .profil-zaglavlje {
+    flex-direction: column;
+
+    &__korisnik {
+      width: 100%;
+    }
+
+    &__uredi {
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .profil-zaglavlje {
+    &__korisnik {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    &__sadrzaj {
+      justify-items: center;
+    }
+  }
+}
