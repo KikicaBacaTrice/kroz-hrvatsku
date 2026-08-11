@@ -12,6 +12,7 @@ export class DolasciLokacijeStanjeService {
   private readonly profilStanje = inject(ProfilStanjeService);
   private readonly lokacijaStanje = inject(LokacijaStanjeService);
 
+  readonly rijeseneLokacije = signal<RijesenaLokacija[]>([]);
   readonly mojDolazak = signal<RijesenaLokacija | null>(null);
   readonly modalDolaskaOtvoren = signal(false);
   readonly modalUspomenaOtvoren = signal(false);
@@ -26,6 +27,18 @@ export class DolasciLokacijeStanjeService {
     });
   }
 
+  ucitajRijeseneLokacije(): void {
+    this.dolasciHttp.dohvatiRijeseneLokacije().subscribe({
+      next: (rijeseneLokacije) => this.rijeseneLokacije.set(rijeseneLokacije),
+      error: () => this.rijeseneLokacije.set([]),
+    });
+  }
+
+  jeLokacijaRijesena(lokacijaId: number): boolean {
+    return this.rijeseneLokacije().some(
+      (rijesenaLokacija) => rijesenaLokacija.lokacijaId === lokacijaId,
+    );
+  }
   otvoriModelDolaska(): void {
     this.modalDolaskaOtvoren.set(true);
     document.body.classList.add('body--bez-scrolla');

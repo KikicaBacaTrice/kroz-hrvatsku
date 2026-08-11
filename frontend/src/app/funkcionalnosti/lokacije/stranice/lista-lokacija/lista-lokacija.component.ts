@@ -4,25 +4,30 @@ import { LokacijaStanjeService } from '../../stanje/lokacija-stanje.service';
 import { FilterLokacija } from '../../modeli/filter-lokacija.model';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { KategorijeHttpService } from '../../podaci/kategorije-http.service';
-import { single } from 'rxjs';
-import { KategorijaLokacije } from '../../modeli/lokacija.model';
 import { KategorijeStanjeService } from '../../stanje/kategorije-stanje.service';
+import { DolasciLokacijeStanjeService } from '../../stanje/dolasci-lokacije-stanje.service';
+import { FilterLokacijaFormaComponent } from '../../ui/filteri/filter-lokacija-forma/filter-lokacija-forma.component';
 
 @Component({
   selector: 'app-lista-lokacija',
-  imports: [KarticaLokacijeComponent, FormsModule],
+  imports: [
+    KarticaLokacijeComponent,
+    FormsModule,
+    FilterLokacijaFormaComponent,
+  ],
   templateUrl: './lista-lokacija.component.html',
   styleUrl: './lista-lokacija.component.scss',
 })
 export class ListaLokacijaComponent {
   private readonly lokacijaStanje = inject(LokacijaStanjeService);
   private readonly kategorijeStanje = inject(KategorijeStanjeService);
+  private readonly dolasciStanje = inject(DolasciLokacijeStanjeService);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
 
-  readonly lokacije = this.lokacijaStanje.lokacije;
   readonly kategorije = this.kategorijeStanje.kategorije;
+  readonly dolasci = this.dolasciStanje;
+  readonly lokacije = this.lokacijaStanje.lokacije;
   readonly ucitavanje = this.lokacijaStanje.ucitavanje;
   readonly greska = this.lokacijaStanje.greska;
 
@@ -35,6 +40,7 @@ export class ListaLokacijaComponent {
 
   ngOnInit(): void {
     this.kategorijeStanje.ucitajKategorije();
+    this.dolasciStanje.ucitajRijeseneLokacije();
 
     this.route.queryParams.subscribe((params) => {
       this.filter = {
@@ -48,12 +54,12 @@ export class ListaLokacijaComponent {
     });
   }
 
-  primijeniFilter(): void {
-    const filter = this.ocistiFilter(this.filter);
+  primijeniFilter(filter: FilterLokacija): void {
+    const ocisceniFilter = this.ocistiFilter(filter);
 
     this.router.navigate([], {
       relativeTo: this.route,
-      queryParams: filter,
+      queryParams: ocisceniFilter,
     });
   }
 

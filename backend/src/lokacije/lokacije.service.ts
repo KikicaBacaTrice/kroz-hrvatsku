@@ -87,7 +87,8 @@ export class LokacijeService {
     return this.prisma.rijesenaLokacija.findMany({
       where: { korisnikId },
       select: {
-        rijesenaLokacijaId: true,
+        lokacijaId: true,
+
         datumVrijemePosjeta: true,
         brojOsvojeneValute: true,
         brojOsvojenihXp: true,

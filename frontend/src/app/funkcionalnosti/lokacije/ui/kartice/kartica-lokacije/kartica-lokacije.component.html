@@ -1,4 +1,8 @@
-<a [routerLink]="['/lokacije', lokacija().lokacijaId]" class="kartica-lokacije">
+<a
+  [routerLink]="['/lokacije', lokacija().lokacijaId]"
+  class="kartica-lokacije"
+  [class.kartica-lokacije--rijesena]="rijesena()"
+>
   @if (glavnaSlika(); as slika) {
     <img
       [src]="apiUrl + slika.putanjaSlike"
@@ -16,12 +20,18 @@
   <div class="kartica-lokacije__overlay"></div>
 
   <div class="kartica-lokacije__metapodaci">
-    <span class="kartica-lokacije__nagrada-znacka"
-      >+{{ lokacija().nagradaXp }} XP</span
-    >
-    <span class="kartica-lokacije__nagrada-znacka"
-      >+ {{ lokacija().nagradaValuta }} novčića</span
-    >
+    @if (rijesena()) {
+      <span class="o-klaster | kartica-lokacije__status-znacka"
+        ><app-medalja-ikona boja="#fff" /> Riješeno</span
+      >
+    } @else {
+      <span class="kartica-lokacije__nagrada-znacka"
+        >+{{ lokacija().nagradaXp }} XP</span
+      >
+      <span class="kartica-lokacije__nagrada-znacka"
+        >+ {{ lokacija().nagradaValuta }} novčića</span
+      >
+    }
   </div>
 
   <div class="kartica-lokacije__sadrzaj">
@@ -29,7 +39,7 @@
 
     <div class="kartica-lokacije__ostali-podaci">
       <span>{{ lokacija().kategorija.naziv }}</span>
-      <span>&#9679;</span>
+      <!-- <span>&#9679;</span> -->
       <span
         ><app-ocjena-zvijezdice
           [ocjena]="lokacija().prosjecnaOcjena ?? 0"

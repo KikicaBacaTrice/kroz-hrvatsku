@@ -1,0 +1,60 @@
+<form class="c-forma | lokacije-filter" (submit)="posalji()">
+  <label class="c-forma__group | lokacije-filter__polje">
+    <span class="c-forma__label">Pretraži naziv</span>
+    <input
+      class="c-forma__kontrola | lokacije-filter__kontrola"
+      type="text"
+      name="pretraziNaziv"
+      placeholder="npr. Trakošćan"
+      [(ngModel)]="model.pretraziNaziv"
+    />
+  </label>
+  <label class="c-forma__group | lokacije-filter__polje">
+    <span class="c-forma__label">Županija</span>
+    <input
+      class="c-forma__kontrola | lokacije-filter__kontrola"
+      type="text"
+      name="zupanija"
+      placeholder="npr. Varaždinska"
+      [(ngModel)]="model.zupanija"
+    />
+  </label>
+  <label class="c-forma__group | lokacije-filter__polje">
+    <span class="c-forma__label">Grad</span>
+    <input
+      class="c-forma__kontrola | lokacije-filter__kontrola"
+      type="text"
+      name="grad"
+      placeholder="npr. Varaždin"
+      [(ngModel)]="model.grad"
+    />
+  </label>
+  <label class="c-forma__group | lokacije-filter__polje">
+    <span class="c-forma__label">Kategorija</span>
+    <select
+      class="c-forma__kontrola | lokacije-filter__kontrola"
+      name="kategorija"
+      [(ngModel)]="model.kategorija"
+    >
+      <option value="">Sve kategorije</option>
+
+      @for (kategorija of kategorije(); track kategorija.kategorijaId) {
+        <option [value]="kategorija.naziv">
+          {{ kategorija.naziv }}
+        </option>
+      }
+    </select>
+  </label>
+
+  <div class="o-klaster | lokacije-filter__akcije">
+    <button type="submit" class="c-button c-button--primarna">Primijeni</button>
+
+    <button
+      type="button"
+      class="c-button c-button--primarna-inverz"
+      (click)="resetirajFormu()"
+    >
+      Resetiraj
+    </button>
+  </div>
+</form>

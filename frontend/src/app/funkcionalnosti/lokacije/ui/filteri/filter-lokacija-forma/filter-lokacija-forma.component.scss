@@ -1,0 +1,60 @@
+.lokacije-filter {
+  display: grid;
+  grid-template-columns: 1.4fr repeat(3, 1fr) auto;
+  align-items: end;
+  gap: 1rem;
+  padding: 1rem;
+
+  border: 1px solid var(--clr-obrub);
+  border-radius: var(--radius-lg);
+  background: var(--clr-povrsina);
+  box-shadow: var(--shadow-sm);
+
+  &__kontrola {
+    min-height: 2.75rem;
+    width: 100%;
+
+    &:focus {
+      border-color: var(--clr-primarna-400);
+      outline: 3px solid
+        color-mix(in srgb, var(--clr-primarna-400) 25%, transparent);
+    }
+  }
+
+  &__akcije {
+    --klaster-gap: 0.5rem;
+    align-self: end;
+  }
+}
+
+select.lokacije-filter__kontrola {
+  appearance: none;
+  cursor: pointer;
+  padding-right: 2.75rem;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--clr-text) 50%),
+    linear-gradient(135deg, var(--clr-text) 50%, transparent 50%);
+  background-position:
+    calc(100% - 1.25rem) 50%,
+    calc(100% - 0.9rem) 50%;
+  background-size:
+    0.35rem 0.35rem,
+    0.35rem 0.35rem;
+  background-repeat: no-repeat;
+}
+
+@media (max-width: 1000px) {
+  .lokacije-filter {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    &__akcije {
+      grid-column: 1 / -1;
+    }
+  }
+}
+
+@media (max-width: 650px) {
+  .lokacije-filter {
+    grid-template-columns: 1fr;
+  }
+}

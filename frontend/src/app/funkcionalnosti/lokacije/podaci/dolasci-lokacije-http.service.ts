@@ -27,4 +27,8 @@ export class DolasciLokacijeHttpService {
       `${API_URL}/lokacije/${lokacijaId}/moj-dolazak`,
     );
   }
+
+  dohvatiRijeseneLokacije() {
+    return this.http.get<RijesenaLokacija[]>(`${API_URL}/lokacije/ja/rijesene`);
+  }
 }

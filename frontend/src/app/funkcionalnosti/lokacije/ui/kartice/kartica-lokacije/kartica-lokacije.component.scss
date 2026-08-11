@@ -54,6 +54,13 @@
     font-weight: 600;
   }
 
+  &__status-znacka {
+    --klaster-gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius-zaobljeno);
+    background: hsl(from var(--clr-primarna-600) h s l / 0.75);
+  }
+
   &__sadrzaj {
     display: grid;
     gap: 0.5rem;
@@ -71,5 +78,18 @@
     align-items: center;
     justify-content: flex-start;
     gap: 0.5rem;
+  }
+
+  &--rijesena &__slika {
+    filter: grayscale(0.65) saturate(0.65) brightness(0.85);
+  }
+
+  &--rijesena &__overlay {
+    background: linear-gradient(
+      to bottom,
+      rgb(5 40 32 / 0.4) 0%,
+      rgb(5 40 32 / 0.6) 45%,
+      rgb(5 40 32 / 0.9) 100%
+    );
   }
 }
