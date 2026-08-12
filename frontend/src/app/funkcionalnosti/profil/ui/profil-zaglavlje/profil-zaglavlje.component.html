@@ -1,0 +1,38 @@
+<section class="profil-zaglavlje">
+  <div class="profil-zaglavlje__slika-spremnik">
+    @if (profil().profilnaSlikaUrl) {
+      <img
+        [src]="profil().profilnaSlikaUrl"
+        [alt]="profil().korisnik.korisnickoIme"
+        class="profil-zaglavlje__slika"
+      />
+    } @else {
+      <span class="profil-zaglavlje__slika profil-zaglavlje__slika--slovo">
+        {{ profil().korisnik.korisnickoIme.charAt(0).toUpperCase() }}
+      </span>
+    }
+
+    <span class="profil-zaglavlje__razina"> Razina {{ profil().razina }} </span>
+  </div>
+
+  <div class="profil-zaglavlje__sadrzaj">
+    <div class="o-stog" style="--stog-gap: 0rem">
+      <div class="o-klaster | profil-zaglavlje__akcije">
+        <h1>
+          {{ profil().korisnik.ime || "" }}
+          {{ profil().korisnik.prezime || "" }}
+        </h1>
+
+        <button type="button" class="c-button c-button--primarna-inverz">
+          Uredi profil
+        </button>
+      </div>
+
+      <p>&#64; {{ profil().korisnik.korisnickoIme }}</p>
+    </div>
+
+    <p class="profil-zaglavlje__opis">
+      {{ profil().opisProfila || "Korisnik još nije dodao opis profila." }}
+    </p>
+  </div>
+</section>

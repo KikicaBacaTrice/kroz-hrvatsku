@@ -61,6 +61,72 @@ export class ProfilService {
     return profil;
   }
 
+  async dohvatiMojuStatistiku(korisnikId: number) {
+    const profil = await this.prisma.profil.findUnique({
+      where: { korisnikId },
+      select: {
+        xpBodovi: true,
+        virtualniNovac: true,
+        razina: true,
+      },
+    });
+
+    if (!profil) {
+      throw new NotFoundException('Profil nije pronađen');
+    }
+
+    const brojIzazova = await this.prisma.rijesenaLokacija.count({
+      where: { korisnikId },
+    });
+
+    const brojPostignuca = await this.prisma.korisnikPostignuce.count({
+      where: { korisnikId },
+    });
+
+    const brojFotografija = await this.prisma.slikaPosjeta.count({
+      where: {
+        rijesenaLokacija: {
+          korisnikId,
+        },
+      },
+    });
+
+    return {
+      razina: profil.razina,
+      xp: profil.xpBodovi,
+      brojIzazova,
+      brojPostignuca,
+      brojFotografija,
+      brojNovcica: profil.virtualniNovac,
+    };
+  }
+
+  async dohvatiMojeSlikePosjeta(korisnikId: number) {
+    return this.prisma.slikaPosjeta.findMany({
+      where: {
+        rijesenaLokacija: {
+          korisnikId,
+        },
+      },
+      include: {
+        rijesenaLokacija: {
+          select: {
+            datumVrijemePosjeta: true,
+            lokacija: {
+              select: {
+                lokacijaId: true,
+                naziv: true,
+              },
+            },
+          },
+        },
+      },
+      orderBy: {
+        datumDodavanja: 'desc',
+      },
+    });
+  }
+
   async azurirajProfil(id: number, dto: AzuriranjProfilDto) {
     const profil = await this.prisma.profil.findUnique({
       where: { korisnikId: id },

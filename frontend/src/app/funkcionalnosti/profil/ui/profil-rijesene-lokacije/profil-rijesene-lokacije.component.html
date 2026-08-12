@@ -1,0 +1,23 @@
+<section class="profil-rijesene-lokacije">
+  <header class="profil-rijesene-lokacije__zaglavlje">
+    <h2>Riješene lokacije</h2>
+  </header>
+
+  @if (rijeseneLokacije().length === 0) {
+    <p class="profil-rijesene-lokacije__prazno">
+      Još niste riješili niti jedan izazov
+    </p>
+  } @else {
+    <div class="profil-rijesene-lokacije__resetka">
+      @for (
+        rijesenaLokacija of rijeseneLokacije();
+        track rijesenaLokacija.lokacijaId
+      ) {
+        <app-kartica-lokacije
+          [lokacija]="rijesenaLokacija.lokacija"
+          [rijesena]="true"
+        />
+      }
+    </div>
+  }
+</section>

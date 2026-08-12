@@ -1,0 +1,37 @@
+<section class="profil-statistika">
+  <div class="profil-statistika__napredak">
+    <div class="profil-statistika__napredak-zaglavlje">
+      <span>Napredak</span>
+
+      <strong
+        >{{ xp() }} / <small>{{ 100 }}</small></strong
+      >
+    </div>
+
+    <div class="profil-statistika__traka">
+      <div
+        class="profil-statistika__traka-popunjena"
+        [style.width.%]="postotakXp()"
+      ></div>
+    </div>
+  </div>
+
+  <div class="profil-statistika__stavke">
+    <div class="profil-statistika__stavka">
+      <strong>{{ brojIzazova() }}</strong>
+      <span>Izazova</span>
+    </div>
+    <div class="profil-statistika__stavka">
+      <strong>{{ brojPostignuca() }}</strong>
+      <span>Postignuća</span>
+    </div>
+    <div class="profil-statistika__stavka">
+      <strong>{{ brojFotografija() }}</strong>
+      <span>Fotografija</span>
+    </div>
+    <div class="profil-statistika__stavka">
+      <strong>{{ brojNovcica() }} <app-novac-ikona velicina="18" /></strong>
+      <span>Novčiča</span>
+    </div>
+  </div>
+</section>

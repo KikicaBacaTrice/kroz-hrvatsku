@@ -1,0 +1,30 @@
+.profil-rijesene-lokacije {
+  display: grid;
+  gap: 1.25rem;
+  padding: 1.25rem;
+  border: 1px solid var(--clr-obrub);
+  border-radius: var(--radius-md);
+  background: var(--clr-povrsina);
+  box-shadow: var(--shadow-lg);
+
+  &__zaglavlje {
+    h2 {
+      margin: 0;
+    }
+  }
+
+  &__resetka {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+    gap: 1.25rem;
+  }
+
+  &__prazno {
+    margin: 0;
+    padding: 1rem;
+    border: 1px solid var(--clr-obrub);
+    border-radius: var(--radius-md);
+    background: var(--clr-povrsina);
+    color: var(--clr-text-prigusen);
+  }
+}

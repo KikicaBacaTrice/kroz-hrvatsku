@@ -1,77 +1,36 @@
-<div class="profil">
+<div class="o-stog | profil">
   @if (ucitavanje()) {
     <p>Učitavanje profila</p>
   } @else if (greska()) {
     <p>{{ greska() }}</p>
   } @else {
     @if (profil(); as mojProfil) {
-      <section class="profil-zaglavlje">
-        <div class="profil-zaglavlje__slika-spremnik">
-          @if (mojProfil.profilnaSlikaUrl) {
-            <img
-              [src]="mojProfil.profilnaSlikaUrl"
-              [alt]="mojProfil.korisnik.korisnickoIme"
-              class="profil-zaglavlje__slika"
-            />
-          } @else {
-            <span
-              class="profil-zaglavlje__slika profil-zaglavlje__slika--slovo"
-            >
-              {{ mojProfil.korisnik.korisnickoIme.charAt(0).toUpperCase() }}
-            </span>
-          }
+      <app-profil-zaglavlje [profil]="mojProfil" />
 
-          <span class="profil-zaglavlje__razina">
-            Razina {{ mojProfil.razina }}
-          </span>
-        </div>
+      @if (statistika(); as mojaStatistika) {
+        <app-profil-statistika
+          [xp]="mojaStatistika.xp"
+          [brojIzazova]="mojaStatistika.brojIzazova"
+          [brojPostignuca]="mojaStatistika.brojPostignuca"
+          [brojFotografija]="mojaStatistika.brojFotografija"
+          [brojNovcica]="mojaStatistika.brojNovcica"
+        />
+      }
 
-        <div class="profil-zaglavlje__sadrzaj">
-          <div class="o-stog" style="--stog-gap: 0rem">
-            <div class="o-klaster | profil-zaglavlje__akcije">
-              <h1>
-                {{ mojProfil.korisnik.ime || "" }}
-                {{ mojProfil.korisnik.prezime || "" }}
-              </h1>
-              <button type="button" class="c-button c-button--primarna-inverz">
-                Uredi profil
-              </button>
-            </div>
+      <app-profil-rijesene-lokacije [rijeseneLokacije]="rijeseneLokacije()" />
 
-            <p>&#64; {{ mojProfil.korisnik.korisnickoIme }}</p>
-          </div>
+      <app-profil-galerija-posjeta
+        [slike]="slikePosjeta()"
+        (slikaKliknuta)="otvoriGalerijuPosjeta($event)"
+      />
 
-          <p class="profil-zaglavlje__opis">
-            {{
-              mojProfil.opisProfila ||
-                "'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laudantium fugiat ducimus sed accusantium eveniet blanditiis cumque dolorum iure expedita eaque!.'"
-            }}
-          </p>
-        </div>
-      </section>
-
-      <section class="profil-rijesene-lokacije">
-        <header class="profil-rijesene-lokacije_zaglavlje">
-          <h2>Riješene lokacije</h2>
-        </header>
-
-        @if (rijeseneLokacije().length === 0) {
-          <p class="profil-rijesene-lokacije__prazno">
-            Još nist riješili niti jedan izazov
-          </p>
-        } @else {
-          <div class="profil-rijesene-lokacije__resetka">
-            @for (
-              rijesenaLokacija of rijeseneLokacije();
-              track rijesenaLokacija.lokacijaId
-            ) {
-              <app-kartica-lokacije [lokacija]="rijesenaLokacija.lokacija" />
-            }
-          </div>
-        }
-      </section>
-    } @else {
-      <p>nijemo guce</p>
+      @if (galerijaOtvorena) {
+        <app-modal-galerija-posjeta
+          [slike]="slikePosjeta()"
+          [pocetniIndex]="odabranaSlikaIndex"
+          (zatvori)="zatvoriGalerijuPosjeta()"
+        />
+      }
     }
   }
 </div>

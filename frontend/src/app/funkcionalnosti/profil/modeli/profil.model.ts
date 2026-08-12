@@ -15,3 +15,17 @@ export type MojProfil = {
     email: string;
   };
 };
+
+export type ProfilSlikaPosjeta = {
+  slikaId: number;
+  putanjaSlike: string;
+  opisSlike?: string | null;
+  datumDodavanja: string;
+  rijesenaLokacija: {
+    datumVrijemePosjeta: string;
+    lokacija: {
+      lokacijaId: number;
+      naziv: string;
+    };
+  };
+};

@@ -31,6 +31,18 @@ export class ProfilController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Get('ja/statistika')
+  dohvatiMojuStatistiku(@Req() req: any) {
+    return this.profilService.dohvatiMojuStatistiku(req.user.userId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('ja/slike-posjeta')
+  dohvatiMojeSlikePosjeta(@Req() req: any) {
+    return this.profilService.dohvatiMojeSlikePosjeta(req.user.userId);
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Patch('ja')
   azurirajProfil(@Req() req: any, @Body() dto: AzuriranjProfilDto) {
     return this.profilService.azurirajProfil(req.user.userId, dto);
