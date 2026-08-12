@@ -1,38 +1,68 @@
 <section class="profil-zaglavlje">
-  <div class="profil-zaglavlje__slika-spremnik">
-    @if (profil().profilnaSlikaUrl) {
-      <img
-        [src]="profil().profilnaSlikaUrl"
-        [alt]="profil().korisnik.korisnickoIme"
-        class="profil-zaglavlje__slika"
-      />
-    } @else {
-      <span class="profil-zaglavlje__slika profil-zaglavlje__slika--slovo">
-        {{ profil().korisnik.korisnickoIme.charAt(0).toUpperCase() }}
-      </span>
-    }
+  <div
+    class="profil-zaglavlje__pozadina"
+    [style.background-image]="
+      'url(' +
+      (profil().aktivnaPozadinaUrl ||
+        '/slike/dekoracije/pozadine/default.png') +
+      ')'
+    "
+  ></div>
 
-    <span class="profil-zaglavlje__razina"> Razina {{ profil().razina }} </span>
-  </div>
+  <div class="profil-zaglavlje__overlay"></div>
 
   <div class="profil-zaglavlje__sadrzaj">
-    <div class="o-stog" style="--stog-gap: 0rem">
-      <div class="o-klaster | profil-zaglavlje__akcije">
-        <h1>
-          {{ profil().korisnik.ime || "" }}
-          {{ profil().korisnik.prezime || "" }}
-        </h1>
+    <div class="profil-zaglavlje__slika-spremnik">
+      @if (profil().profilnaSlikaUrl) {
+        <img
+          [src]="profil().profilnaSlikaUrl"
+          [alt]="profil().korisnik.korisnickoIme"
+          class="profil-zaglavlje__slika"
+        />
+      } @else {
+        <span class="profil-zaglavlje__slika profil-zaglavlje__slika--slovo">
+          {{ profil().korisnik.korisnickoIme.charAt(0).toUpperCase() }}
+        </span>
+      }
 
-        <button type="button" class="c-button c-button--primarna-inverz">
-          Uredi profil
-        </button>
+      <span class="profil-zaglavlje__razina">
+        Razina {{ profil().razina }}
+      </span>
+
+      <div class="profil-zaglavlje__dekoracija-avatar">
+        <img
+          [src]="
+            profil().aktivnaDekoracijaAvatarUrl ||
+            '/slike/dekoracije/avatar/default.png'
+          "
+          alt=""
+        />
       </div>
-
-      <p>&#64; {{ profil().korisnik.korisnickoIme }}</p>
     </div>
 
-    <p class="profil-zaglavlje__opis">
-      {{ profil().opisProfila || "Korisnik još nije dodao opis profila." }}
-    </p>
+    <div class="profil-zaglavlje__tekst">
+      <div class="profil-zaglavlje__gornji-red">
+        <div>
+          <h1>
+            {{ profil().korisnik.ime || "" }}
+            {{ profil().korisnik.prezime || "" }}
+          </h1>
+
+          <p class="profil-zaglavlje__korisnicko-ime">
+            &#64;{{ profil().korisnik.korisnickoIme }}
+          </p>
+        </div>
+      </div>
+
+      <p class="profil-zaglavlje__opis">
+        {{ profil().opisProfila || "Korisnik još nije dodao opis profila." }}
+      </p>
+    </div>
   </div>
+  <button
+    type="button"
+    class="c-button c-button--primarna-inverz | profil-zaglavlje__akcija"
+  >
+    Uredi profil
+  </button>
 </section>

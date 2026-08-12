@@ -6,6 +6,8 @@ export type MojProfil = {
   razina: number;
   xpBodovi: number;
   virtualniNovac: number;
+  aktivnaPozadinaUrl: string | null;
+  aktivnaDekoracijaAvatarUrl: string | null;
   korisnik: {
     korisnikId: number;
     ulogaId: number;

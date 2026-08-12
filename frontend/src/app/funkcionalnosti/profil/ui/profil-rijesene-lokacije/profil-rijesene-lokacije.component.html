@@ -13,10 +13,7 @@
         rijesenaLokacija of rijeseneLokacije();
         track rijesenaLokacija.lokacijaId
       ) {
-        <app-kartica-lokacije
-          [lokacija]="rijesenaLokacija.lokacija"
-          [rijesena]="true"
-        />
+        <app-kartica-lokacije [lokacija]="rijesenaLokacija.lokacija" />
       }
     </div>
   }
