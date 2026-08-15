@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Dekoracija } from '../modeli/dekoracija.model';
+import { Dekoracija, KorisnikDekoracija } from '../modeli/dekoracija.model';
 import { API_URL } from '../../../jezgra/konfiguracija/api.config';
 
 @Injectable({
@@ -11,5 +11,16 @@ export class TrgovinaHttpService {
 
   dohvatiDekoracije() {
     return this.http.get<Dekoracija[]>(`${API_URL}/dekoracije`);
+  }
+
+  dohvatiMojeDekoracije() {
+    return this.http.get<KorisnikDekoracija[]>(`${API_URL}/dekoracije/ja/moje`);
+  }
+
+  kupiDekoraciju(dekoracijaId: number) {
+    return this.http.post<KorisnikDekoracija>(
+      `${API_URL}/dekoracije/ja/kupi/${dekoracijaId}`,
+      {},
+    );
   }
 }

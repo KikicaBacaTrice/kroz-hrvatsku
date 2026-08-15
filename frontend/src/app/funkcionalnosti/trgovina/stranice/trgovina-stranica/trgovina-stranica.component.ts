@@ -15,7 +15,17 @@ export class TrgovinaStranicaComponent implements OnInit {
   readonly ucitavanje = this.trgovinaStanje.ucitavanje;
   readonly greska = this.trgovinaStanje.greska;
 
+  readonly kupnjaUcitavanje = this.trgovinaStanje.kupnjaUcitavanje;
+  readonly kupnjaGreska = this.trgovinaStanje.kupnjaGreska;
+  readonly imaDekoraciju = (dekoracijaId: number) =>
+    this.trgovinaStanje.imaDekoraciju(dekoracijaId);
+
   ngOnInit(): void {
     this.trgovinaStanje.ucitajDekoracije();
+    this.trgovinaStanje.ucitajMojeDekoracije();
+  }
+
+  kupiDekoraciju(dekoracijaId: number): void {
+    this.trgovinaStanje.kupiDekoraciju(dekoracijaId);
   }
 }

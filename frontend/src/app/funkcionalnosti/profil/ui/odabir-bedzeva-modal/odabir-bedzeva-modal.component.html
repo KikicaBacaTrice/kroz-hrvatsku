@@ -22,7 +22,7 @@
             class="odabir-bedza-modal__bedz"
             (click)="bedzOdabran.emit(bedz.bedzId)"
           >
-            <img [src]="bedz.putanjaIkone" [alt]="bedz.naziv" />
+            <img [src]="apiUrl + bedz.putanjaIkone" [alt]="bedz.naziv" />
             <span>{{ bedz.naziv }}</span>
           </button>
         }

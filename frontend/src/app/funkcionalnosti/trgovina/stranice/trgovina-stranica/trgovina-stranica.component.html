@@ -14,7 +14,11 @@
 
         <div class="trgovina__resetka">
           @for (dekoracija of grupa.dekoracije; track dekoracija.dekoracijaId) {
-            <app-kartica-dekoracije [dekoracija]="dekoracija" />
+            <app-kartica-dekoracije
+              [dekoracija]="dekoracija"
+              [kupljena]="imaDekoraciju(dekoracija.dekoracijaId)"
+              (kupi)="kupiDekoraciju($event)"
+            />
           }
         </div>
       </section>

@@ -40,7 +40,7 @@ export class ProfilService {
         },
         dekoracija: {
           tipDekoracije: {
-            naziv: 'Bedž',
+            tipDekoracijeId: 2,
           },
         },
       },

@@ -131,12 +131,14 @@ export class ProfilStanjeService {
     this.profilHttp.dohvatiMojeBedzeve().subscribe({
       next: (korisnikDekoracije) => {
         const bedzevi = korisnikDekoracije
-          .filter((zapis) => zapis.dekoracija?.tipDekoracije?.naziv === 'Bedž')
+          .filter(
+            (zapis) => zapis.dekoracija?.tipDekoracije?.tipDekoracijeId === 2,
+          )
           .map((zapis) => ({
             bedzId: zapis.dekoracija.dekoracijaId,
             naziv: zapis.dekoracija.naziv,
             opis: zapis.dekoracija.opis,
-            putanjaIkone: zapis.dekoraicja.slikaDekoracije,
+            putanjaIkone: zapis.dekoracija.slikaDekoracija,
           }));
 
         this.mojiBedzevi.set(bedzevi);
@@ -152,6 +154,7 @@ export class ProfilStanjeService {
 
   postaviBedzNaProfil(pozicijaBedz: number, bedzId: number) {
     this.spremanjeBedza.set(true);
+    this.bedzeviGreska.set(null);
 
     this.profilHttp.postaviBedzNaProfil(pozicijaBedz, bedzId).subscribe({
       next: () => {

@@ -32,12 +32,16 @@
     font-weight: 700;
   }
 
-  h3,
-  p {
-    &__podnozje {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
+  &__podnozje {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__kupnja-novac {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.25rem;
   }
 }

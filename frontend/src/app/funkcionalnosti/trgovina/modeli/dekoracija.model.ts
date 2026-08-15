@@ -19,3 +19,13 @@ export type Dekoracija = {
   tipDekoracije: TipDekoracije;
   nacinOtkljucavanja: NacinOtkljucavanja;
 };
+
+export type KorisnikDekoracija = {
+  korisnikDekoracijaId: number;
+  datumDobivanja: string;
+  aktivna: boolean;
+  pozicijaPrikaza: number | null;
+  dekoracijaId: number;
+  korisnikId: number;
+  dekoracija: Dekoracija;
+};

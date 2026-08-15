@@ -106,6 +106,7 @@ export class ProfilComponent implements OnInit {
   otvoriModalBedzeva(pozicija: 1 | 2 | 3): void {
     this.odabranaPozicijaBedza = pozicija;
     this.modalBedzevaOtvoren = true;
+    this.profilStanje.ucitajMojeBedzeve();
     document.body.classList.add('body--bez-scrolla');
   }
 

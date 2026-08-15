@@ -17,15 +17,31 @@
     </p>
 
     <div class="kartica-dekoracije__podnozje">
-      @if (dekoracija().cijenaValuta === null) {
-        <span>Otključavanje sa izazovoma</span>
-      } @else {
-        <strong> {{ dekoracija().cijenaValuta }} novčića </strong>
-      }
+      <div class="kartica-dekoracije__kupnja-novac">
+        <app-novac-ikona velicina="18" />
 
-      <button type="button" class="c-button c-button--primarna">
-        Pogledaj
-      </button>
+        <span>
+          {{ dekoracija().cijenaValuta }}
+        </span>
+      </div>
+
+      @if (dekoracija().cijenaValuta === null) {
+        <button type="button" class="c-button c-button--sekundarna" disabled>
+          Otključava se izazovom
+        </button>
+      } @else if (kupljena()) {
+        <button type="button" class="c-button c-button--sekundarna" disabled>
+          Kupljeno
+        </button>
+      } @else {
+        <button
+          type="button"
+          class="c-button c-button--primarna"
+          (click)="kupi.emit(dekoracija().dekoracijaId)"
+        >
+          Kupi
+        </button>
+      }
     </div>
   </div>
 </article>
