@@ -3,8 +3,9 @@
     class="profil-zaglavlje__pozadina"
     [style.background-image]="
       'url(' +
-      (profil().aktivnaPozadinaUrl ||
-        '/slike/dekoracije/pozadine/default.png') +
+      (profil().aktivnaPozadinaUrl
+        ? apiUrl + profil().aktivnaPozadinaUrl
+        : '/slike/dekoracije/pozadine/default.png') +
       ')'
     "
   ></div>
@@ -48,8 +49,9 @@
       <div class="profil-zaglavlje__dekoracija-avatar">
         <img
           [src]="
-            profil().aktivnaDekoracijaAvatarUrl ||
-            '/slike/dekoracije/avatar/default.png'
+            profil().aktivnaDekoracijaAvatarUrl
+              ? apiUrl + profil().aktivnaDekoracijaAvatarUrl
+              : '/slike/dekoracije/avatar/default.png'
           "
           alt=""
         />

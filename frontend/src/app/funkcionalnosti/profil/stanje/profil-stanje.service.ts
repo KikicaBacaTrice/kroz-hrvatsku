@@ -9,6 +9,10 @@ import {
 import { single } from 'rxjs';
 import { ProfilStatistika } from '../modeli/profil-statistika.model';
 
+const TIP_DEKORACIJE_AVATAR = 1;
+const TIP_DEKORACIJE_BEDZ = 2;
+const TIP_DEKORACIJE_POZADINA = 3;
+
 @Injectable({
   providedIn: 'root',
 })
@@ -31,6 +35,9 @@ export class ProfilStanjeService {
   readonly bedzeviUcitavanje = signal(false);
   readonly bedzeviGreska = signal<string | null>(null);
   readonly spremanjeBedza = signal(false);
+
+  readonly mojePozadineProfila = signal<ProfilBedz[]>([]);
+  readonly mojeDekoracijeAvatara = signal<ProfilBedz[]>([]);
 
   ucitajMojProfil(): void {
     this.ucitavanje.set(true);
@@ -124,30 +131,39 @@ export class ProfilStanjeService {
     });
   }
 
-  ucitajMojeBedzeve(): void {
-    this.bedzeviUcitavanje.set(true);
-    this.bedzeviGreska.set(null);
-
+  ucitajMojeDekoracijeProfila(): void {
     this.profilHttp.dohvatiMojeBedzeve().subscribe({
       next: (korisnikDekoracije) => {
-        const bedzevi = korisnikDekoracije
-          .filter(
-            (zapis) => zapis.dekoracija?.tipDekoracije?.tipDekoracijeId === 2,
-          )
-          .map((zapis) => ({
-            bedzId: zapis.dekoracija.dekoracijaId,
-            naziv: zapis.dekoracija.naziv,
-            opis: zapis.dekoracija.opis,
-            putanjaIkone: zapis.dekoracija.slikaDekoracija,
-          }));
+        const mapiraj = (zapis: any) => ({
+          bedzId: zapis.dekoracija.dekoracijaId,
+          naziv: zapis.dekoracija.naziv,
+          opis: zapis.dekoracija.opis,
+          putanjaIkone: zapis.dekoracija.slikaDekoracija,
+        });
 
-        this.mojiBedzevi.set(bedzevi);
-        this.bedzeviUcitavanje.set(false);
-      },
-      error: () => {
-        this.mojiBedzevi.set([]);
-        this.bedzeviGreska.set('Bedževi se trenutno ne mogu učitati');
-        this.bedzeviUcitavanje.set(false);
+        this.mojiBedzevi.set(
+          korisnikDekoracije
+            .filter(
+              (zapis) => zapis.dekoracija?.tipDekoracije?.tipDekoracijeId === 2,
+            )
+            .map(mapiraj),
+        );
+
+        this.mojePozadineProfila.set(
+          korisnikDekoracije
+            .filter(
+              (zapis) => zapis.dekoracija?.tipDekoracije?.tipDekoracijeId === 3,
+            )
+            .map(mapiraj),
+        );
+
+        this.mojeDekoracijeAvatara.set(
+          korisnikDekoracije
+            .filter(
+              (zapis) => zapis.dekoracija?.tipDekoracije?.tipDekoracijeId === 1,
+            )
+            .map(mapiraj),
+        );
       },
     });
   }
@@ -159,12 +175,46 @@ export class ProfilStanjeService {
     this.profilHttp.postaviBedzNaProfil(pozicijaBedz, bedzId).subscribe({
       next: () => {
         this.ucitajMojProfil();
-        this.ucitajMojeBedzeve();
+        this.ucitajMojeDekoracijeProfila();
         this.spremanjeBedza.set(false);
       },
       error: () => {
         this.bedzeviGreska.set('Došlo je do pogreške pri spremanju bedža');
         this.spremanjeBedza.set(false);
+      },
+    });
+  }
+
+  aktivirajDekoraciju(dekoracijaId: number, pozicijaPrikaza = 1): void {
+    this.profilHttp
+      .aktivirajDekoraciju(dekoracijaId, pozicijaPrikaza)
+      .subscribe({
+        next: () => {
+          this.ucitajMojProfil();
+          this.ucitajMojeDekoracijeProfila();
+        },
+        error: () => {
+          this.greska.set('Dekoraciju nije moguće postaviti');
+        },
+      });
+  }
+
+  postaviDefaultPozadinu(): void {
+    this.postaviDefaultDekoraciju(TIP_DEKORACIJE_POZADINA);
+  }
+
+  postaviDefaultDekoracijuAvatara(): void {
+    this.postaviDefaultDekoraciju(TIP_DEKORACIJE_AVATAR);
+  }
+
+  postaviDefaultDekoraciju(tipDekoracijeId: number): void {
+    this.profilHttp.deaktivirajTipDekoracije(tipDekoracijeId).subscribe({
+      next: () => {
+        this.ucitajMojProfil();
+        this.ucitajMojeDekoracijeProfila();
+      },
+      error: () => {
+        this.greska.set('Dekoraciju nije moguće vratiti na zadanu vrijednost');
       },
     });
   }

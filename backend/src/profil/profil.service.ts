@@ -53,6 +53,27 @@ export class ProfilService {
     const bedzPozicija2 = aktivniBedzevi.find((b) => b.pozicijaPrikaza === 2);
     const bedzPozicija3 = aktivniBedzevi.find((b) => b.pozicijaPrikaza === 3);
 
+    const aktivneDekoracije = await this.prisma.korisnikDekoracija.findMany({
+      where: {
+        korisnikId: id,
+        aktivna: true,
+      },
+      include: {
+        dekoracija: {
+          include: {
+            tipDekoracije: true,
+          },
+        },
+      },
+    });
+
+    const aktivnaDekoracijaAvatara = aktivneDekoracije.find(
+      (zapis) => zapis.dekoracija.tipDekoracije.tipDekoracijeId === 1,
+    );
+    const aktivnaPozadina = aktivneDekoracije.find(
+      (zapis) => zapis.dekoracija.tipDekoracije.tipDekoracijeId === 3,
+    );
+
     return {
       ...profil,
       bedzPozicija1: bedzPozicija1
@@ -64,6 +85,9 @@ export class ProfilService {
       bedzPozicija3: bedzPozicija3
         ? this.mapirajBedz(bedzPozicija3.dekoracija)
         : null,
+      aktivnaPozadinaUrl: aktivnaPozadina?.dekoracija.slikaDekoracija ?? null,
+      aktivnaDekoracijaAvatarUrl:
+        aktivnaDekoracijaAvatara?.dekoracija.slikaDekoracija ?? null,
     };
   }
 

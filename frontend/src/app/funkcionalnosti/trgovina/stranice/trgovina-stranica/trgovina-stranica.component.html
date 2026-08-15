@@ -10,7 +10,17 @@
   } @else {
     @for (grupa of dekoracijePoTipu(); track grupa.tip) {
       <section class="trgovina_grupa">
-        <h2>{{ grupa.tip }}</h2>
+        <h2>
+          {{
+            grupa.tip === "avatar"
+              ? "Dekoracije za avatar"
+              : grupa.tip === "bedz"
+                ? "Bedževi"
+                : grupa.tip === "pozadina"
+                  ? "Pozadine za profil"
+                  : "ostalo"
+          }}
+        </h2>
 
         <div class="trgovina__resetka">
           @for (dekoracija of grupa.dekoracije; track dekoracija.dekoracijaId) {

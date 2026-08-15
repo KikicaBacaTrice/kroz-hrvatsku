@@ -57,8 +57,14 @@
       @if (modalUredivanjeProfilaOtvoren) {
         <app-uredi-profil-modal
           [profil]="mojProfil"
+          [pozadine]="mojePozadineProfila()"
+          [dekoracijeAvatara]="mojeDekoracijeAvatara()"
           (zatvori)="zatvoriMordalUredivanjeProfila()"
           (spremi)="spremiProfil($event)"
+          (pozadinaOdabrana)="postaviPozadinuProfila($event)"
+          (dekoracijaAvataraOdabrana)="postaviDekoracijuAvatara($event)"
+          (defaultPozadinaOdabrana)="postaviDefaultPozadinuProfila()"
+          (defaultDekoracijaAvataraOdabrana)="postaviDefaultDekoracijuAvatara()"
         />
       }
     }

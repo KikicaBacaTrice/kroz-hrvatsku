@@ -53,4 +53,17 @@ export class ProfilHttpService {
       pozicijaPrikaza,
     });
   }
+
+  aktivirajDekoraciju(dekoracijaId: number, pozicijaPrikaza: number) {
+    return this.http.patch(`${API_URL}/dekoracije/ja/aktiviraj`, {
+      dekoracijaId,
+      pozicijaPrikaza,
+    });
+  }
+
+  deaktivirajTipDekoracije(tipDekoracijeId: number) {
+    return this.http.patch(`${API_URL}/dekoracije/ja/deaktiviraj-tip`, {
+      tipDekoracijeId,
+    });
+  }
 }

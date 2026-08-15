@@ -34,8 +34,8 @@
     z-index: -1;
     background: linear-gradient(
       to right,
-      rgb(0 0 0 / 0.6) 0%,
-      rgb(0 0 0 / 0.4) 60%,
+      rgb(0 0 0 / 0.7) 0%,
+      rgb(0 0 0 / 0.55) 60%,
       rgb(0 0 0 / 0.2) 100%
     );
   }
@@ -49,7 +49,7 @@
 
   &__slika-spremnik {
     --avatar-velicina: 7rem;
-    --dekoracija-avatar-velicina: 12rem;
+    --dekoracija-avatar-velicina: 10rem;
 
     position: relative;
     width: var(--avatar-velicina);
@@ -150,7 +150,7 @@
   &__dekoracija-avatar {
     position: absolute;
     left: 50%;
-    bottom: -50%;
+    bottom: -30%;
     z-index: 3;
     width: var(--dekoracija-avatar-velicina);
     height: var(--dekoracija-avatar-velicina);

@@ -33,6 +33,9 @@ export class ProfilComponent implements OnInit {
   readonly ucitavanje = this.profilStanje.ucitavanje;
   readonly greska = this.profilStanje.greska;
 
+  readonly mojePozadineProfila = this.profilStanje.mojePozadineProfila;
+  readonly mojeDekoracijeAvatara = this.profilStanje.mojeDekoracijeAvatara;
+
   readonly statistika = this.profilStanje.statistika;
   readonly statistikaUcitavanje = this.profilStanje.statistikaUcitavanje;
   readonly statistikaGreska = this.profilStanje.statistikaGreska;
@@ -54,7 +57,8 @@ export class ProfilComponent implements OnInit {
     this.profilStanje.ucitajMojProfil();
     this.profilStanje.ucitajMojuStatistiku();
     this.profilStanje.ucitajMojeSlikePosjeta();
-    this.profilStanje.ucitajMojeBedzeve();
+    this.profilStanje.ucitajMojeDekoracijeProfila();
+    this.profilStanje.ucitajMojeDekoracijeProfila();
     this.dolasciStanje.ucitajRijeseneLokacije();
   }
 
@@ -84,6 +88,22 @@ export class ProfilComponent implements OnInit {
     this.zatvoriMordalUredivanjeProfila();
   }
 
+  postaviPozadinuProfila(dekoracijaId: number): void {
+    this.profilStanje.aktivirajDekoraciju(dekoracijaId, 1);
+  }
+
+  postaviDekoracijuAvatara(dekoracijaId: number): void {
+    this.profilStanje.aktivirajDekoraciju(dekoracijaId, 1);
+  }
+
+  postaviDefaultPozadinuProfila(): void {
+    this.profilStanje.postaviDefaultPozadinu();
+  }
+
+  postaviDefaultDekoracijuAvatara(): void {
+    this.profilStanje.postaviDefaultDekoracijuAvatara();
+  }
+
   promijeniProfilnuSliku(event: Event): void {
     const input = event.target as HTMLInputElement;
     const datoteka = input.files?.[0];
@@ -106,7 +126,7 @@ export class ProfilComponent implements OnInit {
   otvoriModalBedzeva(pozicija: 1 | 2 | 3): void {
     this.odabranaPozicijaBedza = pozicija;
     this.modalBedzevaOtvoren = true;
-    this.profilStanje.ucitajMojeBedzeve();
+    this.profilStanje.ucitajMojeDekoracijeProfila();
     document.body.classList.add('body--bez-scrolla');
   }
 

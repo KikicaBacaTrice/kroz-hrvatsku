@@ -64,5 +64,79 @@
         </button>
       </div>
     </form>
+
+    <section
+      class="uredi-profil-modal__dekoracije uredi-profil-modal__dekoracije--pozadine"
+    >
+      <h3>Pozadina profila</h3>
+
+      @if (pozadine().length === 0) {
+        <p>Nemate kupljenu nijednu pozadinu profila.</p>
+      } @else {
+        <div class="uredi-profil-modal__dekoracije-resetka">
+          <button
+            type="button"
+            class="uredi-profil-modal__dekoracija uredi-profil-modal__dekoracija--default"
+            (click)="defaultPozadinaOdabrana.emit()"
+          >
+            <div class="uredi-profil-modal__dekoracija-slika-spremnik">
+              <img
+                src="/slike/dekoracije/pozadine/default.png"
+                alt="Zadana pozadina profila"
+              />
+            </div>
+          </button>
+          @for (pozadina of pozadine(); track pozadina.bedzId) {
+            <button
+              type="button"
+              class="uredi-profil-modal__dekoracija"
+              (click)="pozadinaOdabrana.emit(pozadina.bedzId)"
+            >
+              <div class="uredi-profil-modal__dekoracija-slika-spremnik">
+                <img
+                  [src]="apiUrl + pozadina.putanjaIkone"
+                  [alt]="pozadina.naziv"
+                />
+              </div>
+            </button>
+          }
+        </div>
+      }
+    </section>
+
+    <section class="uredi-profil-modal__dekoracije">
+      <h3>Dekoracija avatara</h3>
+
+      @if (dekoracijeAvatara().length === 0) {
+        <p>Nemate kupljenu nijednu dekoraciju avatara.</p>
+      } @else {
+        <div class="uredi-profil-modal__dekoracije-resetka">
+          <button
+            type="button"
+            class="uredi-profil-modal__dekoracija uredi-profil-modal__dekoracija--default"
+            (click)="defaultDekoracijaAvataraOdabrana.emit()"
+          >
+            <div class="uredi-profil-modal__dekoracija-slika-spremnik">
+              <img
+                src="/slike/dekoracije/avatar/default.png"
+                alt="Zadana dekoracija avatara"
+              />
+            </div>
+          </button>
+          @for (dekoracija of dekoracijeAvatara(); track dekoracija.bedzId) {
+            <button
+              type="button"
+              class="uredi-profil-modal__dekoracija"
+              (click)="dekoracijaAvataraOdabrana.emit(dekoracija.bedzId)"
+            >
+              <img
+                [src]="apiUrl + dekoracija.putanjaIkone"
+                [alt]="dekoracija.naziv"
+              />
+            </button>
+          }
+        </div>
+      }
+    </section>
   </section>
 </div>

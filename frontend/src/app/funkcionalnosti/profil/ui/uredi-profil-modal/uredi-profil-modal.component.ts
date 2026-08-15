@@ -1,7 +1,12 @@
 import { Component, EventEmitter, input, OnInit, Output } from '@angular/core';
-import { MojProfil, UrediProfilaZahtjev } from '../../modeli/profil.model';
+import {
+  MojProfil,
+  ProfilBedz,
+  UrediProfilaZahtjev,
+} from '../../modeli/profil.model';
 import { ZatovriIkonaComponent } from '../../../../dijeljeno/ui/ikone/zatovri-ikona/zatovri-ikona.component';
 import { FormsModule } from '@angular/forms';
+import { API_URL } from '../../../../jezgra/konfiguracija/api.config';
 
 @Component({
   selector: 'app-uredi-profil-modal',
@@ -11,9 +16,17 @@ import { FormsModule } from '@angular/forms';
 })
 export class UrediProfilModalComponent implements OnInit {
   profil = input.required<MojProfil>();
+  pozadine = input.required<ProfilBedz[]>();
+  dekoracijeAvatara = input.required<ProfilBedz[]>();
 
   @Output() zatvori = new EventEmitter<void>();
   @Output() spremi = new EventEmitter<UrediProfilaZahtjev>();
+  @Output() pozadinaOdabrana = new EventEmitter<number>();
+  @Output() dekoracijaAvataraOdabrana = new EventEmitter<number>();
+  @Output() defaultPozadinaOdabrana = new EventEmitter<void>();
+  @Output() defaultDekoracijaAvataraOdabrana = new EventEmitter<void>();
+
+  readonly apiUrl = API_URL;
 
   model: UrediProfilaZahtjev = {
     ime: null,
