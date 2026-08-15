@@ -11,6 +11,7 @@
   min-height: 18rem;
   margin-inline: auto;
   padding: 2.5rem;
+  padding-bottom: 0.25rem;
   border: 1px solid var(--clr-obrub);
   border-radius: var(--radius-lg);
   background: var(--clr-povrsina);
@@ -41,23 +42,41 @@
 
   &__sadrzaj {
     display: flex;
+    align-items: center;
     gap: 2.5rem;
     color: white;
   }
 
   &__slika-spremnik {
     --avatar-velicina: 7rem;
+    --dekoracija-avatar-velicina: 12rem;
+
     position: relative;
-    width: fit-content;
+    width: var(--avatar-velicina);
+    height: var(--avatar-velicina);
+    flex: 0 0 auto;
   }
 
-  &__slika {
+  &__slika-gumb {
+    position: relative;
+    z-index: 2;
     display: block;
     width: var(--avatar-velicina);
     height: var(--avatar-velicina);
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-zaobljeno);
+    background: transparent;
+    cursor: pointer;
+  }
+
+  &__slika {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     border-radius: var(--radius-zaobljeno);
-    box-shadow: var(--shadow-md);
   }
 
   &__slika--slovo {
@@ -114,11 +133,11 @@
   &__razina {
     position: absolute;
     left: 50%;
-    bottom: 0.5rem;
+    bottom: -1rem;
+    z-index: 4;
     transform: translateX(-50%);
-    z-index: 2;
 
-    padding: 0.25rem 0.5rem;
+    padding: 0.3rem 0.75rem;
     border-radius: var(--radius-zaobljeno);
     background: var(--clr-sekundarna-300);
     color: var(--clr-primarna-800);
@@ -130,21 +149,20 @@
 
   &__dekoracija-avatar {
     position: absolute;
-    bottom: 0;
     left: 50%;
-    width: calc(var(--avatar-velicina) + 6rem);
-    height: auto;
+    bottom: -50%;
+    z-index: 3;
+    width: var(--dekoracija-avatar-velicina);
+    height: var(--dekoracija-avatar-velicina);
+    transform: translateX(-50%);
     pointer-events: none;
     user-select: none;
 
-    transform: translateX(-50%);
-    z-index: 1;
-
-    > img {
+    img {
+      display: block;
       width: 100%;
       height: 100%;
-      pointer-events: none;
-      user-select: none;
+      object-fit: contain;
     }
   }
 
@@ -213,9 +231,6 @@
   }
 
   &__bezdevi-spremnik {
-    position: absolute;
-    right: 2.5rem;
-    bottom: 1rem;
     width: max-content;
     display: flex;
     align-items: center;
@@ -258,6 +273,16 @@
   }
 }
 
+@media (max-width: 1100px) {
+  .profil-zaglavlje__bedz {
+    --bedz-velicina: 6rem;
+  }
+}
+@media (max-width: 950px) {
+  .profil-zaglavlje__opis {
+    display: none;
+  }
+}
 @media (max-width: 700px) {
   .profil-zaglavlje {
     width: min(100% - 1rem, 72rem);

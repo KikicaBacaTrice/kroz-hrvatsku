@@ -70,50 +70,51 @@
         </div>
       </div>
 
-      <p class="profil-zaglavlje__opis">
-        {{ profil().opisProfila || "Korisnik još nije dodao opis profila." }}
-      </p>
+      <div class="o-klaster o-klaster-between |">
+        <p class="profil-zaglavlje__opis">
+          {{ profil().opisProfila || "Korisnik još nije dodao opis profila." }}
+        </p>
+        <div class="profil-zaglavlje__bezdevi-spremnik">
+          <button
+            type="button"
+            class="profil-zaglavlje__bedz"
+            (click)="odaberiBedzPoziciju(1)"
+          >
+            @if (profil().bedzPozicija1; as bedz) {
+              <img [src]="bedz.putanjaIkone" [alt]="bedz.naziv" />
+            } @else {
+              <img src="/slike/dekoracije/bedz/default.png" alt="" />
+            }
+          </button>
+
+          <button
+            type="button"
+            class="profil-zaglavlje__bedz"
+            (click)="odaberiBedzPoziciju(2)"
+          >
+            @if (profil().bedzPozicija2; as bedz) {
+              <img [src]="bedz.putanjaIkone" [alt]="bedz.naziv" />
+            } @else {
+              <img src="/slike/dekoracije/bedz/default.png" alt="" />
+            }
+          </button>
+
+          <button
+            type="button"
+            class="profil-zaglavlje__bedz"
+            (click)="odaberiBedzPoziciju(3)"
+          >
+            @if (profil().bedzPozicija3; as bedz) {
+              <img [src]="bedz.putanjaIkone" [alt]="bedz.naziv" />
+            } @else {
+              <img src="/slike/dekoracije/bedz/default.png" alt="" />
+            }
+          </button>
+        </div>
+      </div>
     </div>
   </div>
   <button type="button" class="profil-zaglavlje__akcija">
     <app-uredivanje-ikona [velicina]="24" (click)="urediProfilKliknut.emit()" />
   </button>
-
-  <div class="profil-zaglavlje__bezdevi-spremnik">
-    <button
-      type="button"
-      class="profil-zaglavlje__bedz"
-      (click)="odaberiBedzPoziciju(1)"
-    >
-      @if (profil().bedzPozicija1; as bedz) {
-        <img [src]="bedz.putanjaIkone" [alt]="bedz.naziv" />
-      } @else {
-        <img src="/slike/dekoracije/bedz/default.png" alt="" />
-      }
-    </button>
-
-    <button
-      type="button"
-      class="profil-zaglavlje__bedz"
-      (click)="odaberiBedzPoziciju(2)"
-    >
-      @if (profil().bedzPozicija2; as bedz) {
-        <img [src]="bedz.putanjaIkone" [alt]="bedz.naziv" />
-      } @else {
-        <img src="/slike/dekoracije/bedz/default.png" alt="" />
-      }
-    </button>
-
-    <button
-      type="button"
-      class="profil-zaglavlje__bedz"
-      (click)="odaberiBedzPoziciju(3)"
-    >
-      @if (profil().bedzPozicija3; as bedz) {
-        <img [src]="bedz.putanjaIkone" [alt]="bedz.naziv" />
-      } @else {
-        <img src="/slike/dekoracije/bedz/default.png" alt="" />
-      }
-    </button>
-  </div>
 </section>
