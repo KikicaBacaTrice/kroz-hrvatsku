@@ -8,6 +8,8 @@ import { ProfilZaglavljeComponent } from '../../ui/profil-zaglavlje/profil-zagla
 import { ProfilRijeseneLokacijeComponent } from '../../ui/profil-rijesene-lokacije/profil-rijesene-lokacije.component';
 import { OdabirBedzevaModalComponent } from '../../ui/odabir-bedzeva-modal/odabir-bedzeva-modal.component';
 import { single } from 'rxjs';
+import { UrediProfilaZahtjev } from '../../modeli/profil.model';
+import { UrediProfilModalComponent } from '../../ui/uredi-profil-modal/uredi-profil-modal.component';
 
 @Component({
   selector: 'app-profil',
@@ -18,6 +20,7 @@ import { single } from 'rxjs';
     ProfilZaglavljeComponent,
     ProfilRijeseneLokacijeComponent,
     OdabirBedzevaModalComponent,
+    UrediProfilModalComponent,
   ],
   templateUrl: './profil.component.html',
   styleUrl: './profil.component.scss',
@@ -37,6 +40,8 @@ export class ProfilComponent implements OnInit {
   readonly slikePosjeta = this.profilStanje.slikePosjeta;
 
   readonly rijeseneLokacije = this.dolasciStanje.rijeseneLokacije;
+
+  modalUredivanjeProfilaOtvoren = false;
 
   galerijaOtvorena = false;
   odabranaSlikaIndex = 0;
@@ -62,6 +67,40 @@ export class ProfilComponent implements OnInit {
   zatvoriGalerijuPosjeta(): void {
     this.galerijaOtvorena = false;
     document.body.classList.remove('body--bez-scrolla');
+  }
+
+  otvoriMordalUredivanjeProfila(): void {
+    this.modalUredivanjeProfilaOtvoren = true;
+    document.body.classList.add('body--bez-scrolla');
+  }
+
+  zatvoriMordalUredivanjeProfila(): void {
+    this.modalUredivanjeProfilaOtvoren = false;
+    document.body.classList.remove('body--bez-scrolla');
+  }
+
+  spremiProfil(zahtjev: UrediProfilaZahtjev): void {
+    this.profilStanje.urediProfil(zahtjev);
+    this.zatvoriMordalUredivanjeProfila();
+  }
+
+  promijeniProfilnuSliku(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const datoteka = input.files?.[0];
+
+    if (!datoteka) return;
+
+    this.profilStanje.promijeniProfilnuSliku(datoteka);
+
+    input.value = '';
+  }
+
+  obrisiProfilnuSliku(): void {
+    const potvrda = confirm('Želite li obrisati profilnu sliku?');
+
+    if (!potvrda) return;
+
+    this.profilStanje.obrisiProfilnuSliku();
   }
 
   otvoriModalBedzeva(pozicija: 1 | 2 | 3): void {

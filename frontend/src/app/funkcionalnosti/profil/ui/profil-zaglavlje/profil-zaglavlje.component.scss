@@ -71,6 +71,46 @@
     line-height: 1;
   }
 
+  &__slika-obrisi {
+    position: absolute;
+    top: -0.1rem;
+    right: -0.1rem;
+    z-index: 5;
+
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: var(--radius-zaobljeno);
+    background: var(--clr-opasnost);
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+
+    &::after {
+      content: "Obriši sliku";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: max-content;
+      font-size: var(--fs-sm);
+      color: white;
+      background: var(--clr-primarna-800);
+      padding: 0.25rem;
+      border-radius: var(--radius-zaobljeno);
+      opacity: 0;
+      transition: opacity 150ms ease-out;
+    }
+
+    &:hover::after {
+      opacity: 0.8;
+    }
+  }
+
+  &__slika-obrisi:hover {
+    filter: brightness(0.9);
+  }
+
   &__razina {
     position: absolute;
     left: 50%;
@@ -94,6 +134,8 @@
     left: 50%;
     width: calc(var(--avatar-velicina) + 6rem);
     height: auto;
+    pointer-events: none;
+    user-select: none;
 
     transform: translateX(-50%);
     z-index: 1;
@@ -101,6 +143,8 @@
     > img {
       width: 100%;
       height: 100%;
+      pointer-events: none;
+      user-select: none;
     }
   }
 
@@ -139,7 +183,33 @@
   &__akcija {
     position: absolute;
     right: 2rem;
-    top: 1rem;
+    top: 1.5rem;
+    opacity: 0.7;
+    transition: opacity 150ms ease-out;
+
+    &::after {
+      content: "Uredi profil";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #fff;
+      font-size: var(--fs-sm);
+      background: var(--clr-primarna-800);
+      padding: 0.25rem;
+      border-radius: var(--radius-sm);
+      width: max-content;
+      opacity: 0;
+      transition: opacity 150ms ease-out;
+    }
+
+    &:hover {
+      opacity: 1;
+
+      &::after {
+        opacity: 0.8;
+      }
+    }
   }
 
   &__bezdevi-spremnik {
@@ -150,7 +220,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1rem;
+    gap: 0.25rem;
   }
 
   &__bedz {

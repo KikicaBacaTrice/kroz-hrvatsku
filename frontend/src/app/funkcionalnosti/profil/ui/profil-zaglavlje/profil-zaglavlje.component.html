@@ -13,16 +13,32 @@
 
   <div class="profil-zaglavlje__sadrzaj">
     <div class="profil-zaglavlje__slika-spremnik">
+      <button
+        type="button"
+        class="profil-zaglavlje__slika-gumb"
+        (click)="promjenaSlikeKliknuta.emit()"
+      >
+        @if (profil().profilnaSlikaUrl) {
+          <img
+            [src]="apiUrl + profil().profilnaSlikaUrl"
+            [alt]="profil().korisnik.korisnickoIme"
+            class="profil-zaglavlje__slika"
+          />
+        } @else {
+          <span class="profil-zaglavlje__slika profil-zaglavlje__slika--slovo">
+            {{ profil().korisnik.korisnickoIme.charAt(0).toUpperCase() }}
+          </span>
+        }
+      </button>
+
       @if (profil().profilnaSlikaUrl) {
-        <img
-          [src]="profil().profilnaSlikaUrl"
-          [alt]="profil().korisnik.korisnickoIme"
-          class="profil-zaglavlje__slika"
-        />
-      } @else {
-        <span class="profil-zaglavlje__slika profil-zaglavlje__slika--slovo">
-          {{ profil().korisnik.korisnickoIme.charAt(0).toUpperCase() }}
-        </span>
+        <button
+          type="button"
+          class="profil-zaglavlje__slika-obrisi"
+          (click)="obrisiProfilnuSlikuKliknuta.emit(); $event.stopPropagation()"
+        >
+          <app-zatovri-ikona velicina="14" boja="#fff" />
+        </button>
       }
 
       <span class="profil-zaglavlje__razina">
@@ -59,11 +75,8 @@
       </p>
     </div>
   </div>
-  <button
-    type="button"
-    class="c-button c-button--primarna-inverz | profil-zaglavlje__akcija"
-  >
-    Uredi profil
+  <button type="button" class="profil-zaglavlje__akcija">
+    <app-uredivanje-ikona [velicina]="24" (click)="urediProfilKliknut.emit()" />
   </button>
 
   <div class="profil-zaglavlje__bezdevi-spremnik">

@@ -4,6 +4,7 @@ import {
   MojProfil,
   ProfilBedz,
   ProfilSlikaPosjeta,
+  UrediProfilaZahtjev,
 } from '../modeli/profil.model';
 import { single } from 'rxjs';
 import { ProfilStatistika } from '../modeli/profil-statistika.model';
@@ -61,6 +62,45 @@ export class ProfilStanjeService {
         this.statistika.set(null);
         this.statistikaUcitavanje.set(false);
         this.statistikaGreska.set('Učitavanje profila nije uspjelo');
+      },
+    });
+  }
+
+  urediProfil(zahtjev: UrediProfilaZahtjev): void {
+    this.ucitavanje.set(true);
+    this.greska.set(null);
+
+    this.profilHttp.urediMojProfil(zahtjev).subscribe({
+      next: () => {
+        this.ucitajMojProfil();
+        this.ucitavanje.set(false);
+      },
+      error: (greska) => {
+        console.log(greska.message);
+        this.greska.set('Došlo je do pogreški pri ažuriranju profila');
+        this.ucitavanje.set(false);
+      },
+    });
+  }
+
+  promijeniProfilnuSliku(slika: File): void {
+    this.profilHttp.promijeniProfilnuSliku(slika).subscribe({
+      next: (profil) => {
+        this.profil.set(profil);
+      },
+      error: () => {
+        this.greska.set('Profilnu sliku nije moguće promijeniti');
+      },
+    });
+  }
+
+  obrisiProfilnuSliku(): void {
+    this.profilHttp.obrisiProfilnuSliku().subscribe({
+      next: (profil) => {
+        this.profil.set(profil);
+      },
+      error: () => {
+        this.greska.set('Profilnu sliku nije moguće obrisati');
       },
     });
   }

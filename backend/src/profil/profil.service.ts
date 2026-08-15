@@ -169,11 +169,24 @@ export class ProfilService {
       throw new NotFoundException('Profil nije pronađen');
     }
 
-    return await this.prisma.profil.update({
-      where: { korisnikId: id },
-      data: {
-        opisProfila: dto.opisProfila,
-      },
+    return this.prisma.$transaction(async (tx) => {
+      await tx.korisnik.update({
+        where: { korisnikId: id },
+        data: {
+          ime: dto.ime,
+          prezime: dto.prezime,
+          korisnickoIme: dto.korisnickoIme,
+        },
+      });
+
+      await tx.profil.update({
+        where: { korisnikId: id },
+        data: {
+          opisProfila: dto.opisProfila,
+        },
+      });
+
+      return this.dohvatiMoj(id);
     });
   }
 
@@ -186,12 +199,14 @@ export class ProfilService {
       throw new NotFoundException('Profil nije pronađen');
     }
 
-    return this.prisma.profil.update({
+    await this.prisma.profil.update({
       where: { korisnikId: id },
       data: {
         profilnaSlikaUrl: url,
       },
     });
+
+    return this.dohvatiMoj(id);
   }
 
   async obrisiProfilnuSliku(id: number) {
@@ -203,12 +218,14 @@ export class ProfilService {
       throw new NotFoundException('Profil nije pronađen');
     }
 
-    return this.prisma.profil.update({
+    await this.prisma.profil.update({
       where: { korisnikId: id },
       data: {
         profilnaSlikaUrl: null,
       },
     });
+
+    return this.dohvatiMoj(id);
   }
 
   private mapirajBedz(dekoracija: any) {

@@ -33,6 +33,13 @@ export type MojProfil = {
   };
 };
 
+export type UrediProfilaZahtjev = {
+  ime: string | null;
+  prezime: string | null;
+  korisnickoIme: string;
+  opisProfila: string | null;
+};
+
 export type ProfilSlikaPosjeta = {
   slikaId: number;
   putanjaSlike: string;

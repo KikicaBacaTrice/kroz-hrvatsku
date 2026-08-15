@@ -6,14 +6,17 @@ import {
   Param,
   ParseIntPipe,
   Patch,
-  Post,
   Req,
   UseGuards,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { ProfilService } from './profil.service';
 import { AzuriranjProfilDto } from './dto/azuriraj-profil.dto';
-import { AzuriranjProfilnuSlikuDto } from './dto/azuriraj-profilnu-sliku.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { join } from 'path';
 
 @Controller('profil')
 export class ProfilController {
@@ -50,11 +53,27 @@ export class ProfilController {
 
   @UseGuards(JwtAuthGuard)
   @Patch('ja/slika')
+  @UseInterceptors(
+    FileInterceptor('slika', {
+      storage: diskStorage({
+        destination: join(process.cwd(), 'prijenos', 'profili'),
+        filename: (req, file, callback) => {
+          const ekstenzija = file.originalname.split('.').pop();
+          const naziv = `${Date.now()}-${Math.round(Math.random() * 1e9)}.${ekstenzija}`;
+
+          callback(null, naziv);
+        },
+      }),
+    }),
+  )
   azurirajProfilnuSliku(
     @Req() req: any,
-    @Body() dto: AzuriranjProfilnuSlikuDto,
+    @UploadedFile() slika: Express.Multer.File,
   ) {
-    return this.profilService.azurirajProfilnuSliku(req.user.userId, dto.url);
+    return this.profilService.azurirajProfilnuSliku(
+      req.user.userId,
+      `/prijenos/profili/${slika.filename}`,
+    );
   }
 
   @UseGuards(JwtAuthGuard)

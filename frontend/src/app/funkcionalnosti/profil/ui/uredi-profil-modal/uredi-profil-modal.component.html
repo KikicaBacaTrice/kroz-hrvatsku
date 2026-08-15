@@ -1,0 +1,68 @@
+<div class="uredi-profil-modal" (click)="zatvori.emit()">
+  <section class="uredi-profil-modal__panel" (click)="$event.stopPropagation()">
+    <header class="uredi-profil-modal__zaglavlje">
+      <h2>Uredi profil</h2>
+
+      <button type="button" (click)="zatvori.emit()">
+        <app-zatovri-ikona velicina="20" />
+      </button>
+    </header>
+
+    <form class="c-forma" #forma="ngForm" (ngSubmit)="posalji()">
+      <div class="c-forma__group">
+        <label for="ime" class="c-forma__label">Ime</label>
+        <input
+          type="text"
+          id="ime"
+          name="ime"
+          class="c-forma__kontrola"
+          [(ngModel)]="model.ime"
+        />
+      </div>
+      <div class="c-forma__group">
+        <label for="prezime" class="c-forma__label">Prezime</label>
+        <input
+          type="text"
+          id="prezime"
+          name="prezime"
+          class="c-forma__kontrola"
+          [(ngModel)]="model.prezime"
+        />
+      </div>
+      <div class="c-forma__group">
+        <label for="korisnickoIme" class="c-forma__label">Korisničko Ime</label>
+        <input
+          type="text"
+          id="korisnickoIme"
+          name="korisnickoIme"
+          class="c-forma__kontrola"
+          required
+          [(ngModel)]="model.korisnickoIme"
+        />
+      </div>
+      <div class="c-forma__group">
+        <label for="opisProfila" class="c-forma__label">Opis profila</label>
+        <textarea
+          id="opisProfila"
+          name="opisProfila"
+          class="c-forma__kontrola"
+          rows="4"
+          [(ngModel)]="model.opisProfila"
+        ></textarea>
+      </div>
+
+      <div class="uredi-profil-modal__akcije">
+        <button
+          type="button"
+          class="c-button c-button--primarna-inverz"
+          (click)="zatvori.emit()"
+        >
+          Odustani
+        </button>
+        <button type="submit" class="c-button c-button--primarna">
+          Spremi promjene
+        </button>
+      </div>
+    </form>
+  </section>
+</div>

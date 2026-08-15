@@ -1,6 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { MojProfil, ProfilSlikaPosjeta } from '../modeli/profil.model';
+import {
+  MojProfil,
+  ProfilSlikaPosjeta,
+  UrediProfilaZahtjev,
+} from '../modeli/profil.model';
 import { API_URL } from '../../../jezgra/konfiguracija/api.config';
 import { ProfilStatistika } from '../modeli/profil-statistika.model';
 
@@ -12,6 +16,21 @@ export class ProfilHttpService {
 
   dohvatiMojProfil() {
     return this.http.get<MojProfil>(`${API_URL}/profil/ja`);
+  }
+
+  urediMojProfil(zahtjev: UrediProfilaZahtjev) {
+    return this.http.patch<MojProfil>(`${API_URL}/profil/ja`, zahtjev);
+  }
+
+  promijeniProfilnuSliku(slika: File) {
+    const formData = new FormData();
+    formData.append('slika', slika);
+
+    return this.http.patch<MojProfil>(`${API_URL}/profil/ja/slika`, formData);
+  }
+
+  obrisiProfilnuSliku() {
+    return this.http.delete<MojProfil>(`${API_URL}/profil/ja/slika`);
   }
 
   dohvatiMojuStatistiku() {

@@ -7,7 +7,17 @@
     @if (profil(); as mojProfil) {
       <app-profil-zaglavlje
         [profil]="mojProfil"
+        (urediProfilKliknut)="otvoriMordalUredivanjeProfila()"
         (bedzPozicijaKliknuta)="otvoriModalBedzeva($event)"
+        (promjenaSlikeKliknuta)="fileInput.click()"
+        (obrisiProfilnuSlikuKliknuta)="obrisiProfilnuSliku()"
+      />
+
+      <input
+        #fileInput
+        type="file"
+        hidden
+        (change)="promijeniProfilnuSliku($event)"
       />
 
       @if (statistika(); as mojaStatistika) {
@@ -41,6 +51,14 @@
           [bedzevi]="mojiBedzevi()"
           (zatvori)="zatvoriModalBedzeva()"
           (bedzOdabran)="postaviBedz($event)"
+        />
+      }
+
+      @if (modalUredivanjeProfilaOtvoren) {
+        <app-uredi-profil-modal
+          [profil]="mojProfil"
+          (zatvori)="zatvoriMordalUredivanjeProfila()"
+          (spremi)="spremiProfil($event)"
         />
       }
     }

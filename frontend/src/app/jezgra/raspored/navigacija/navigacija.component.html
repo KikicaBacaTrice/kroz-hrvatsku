@@ -64,9 +64,9 @@
         >
           @if (profil.profilnaSlikaUrl) {
             <img
-              [src]="profil.profilnaSlikaUrl"
+              [src]="apiUrl + profil.profilnaSlikaUrl"
               alt="profil.korisnik.korisnickoIme"
-              class="navigacija__korisnik_slika"
+              class="navigacija__korisnik-slika"
             />
           } @else {
             <span class="navigacija__korisnik-slika-prvo-slovo">
