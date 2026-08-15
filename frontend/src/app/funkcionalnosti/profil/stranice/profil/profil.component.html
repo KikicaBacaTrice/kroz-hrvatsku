@@ -5,7 +5,10 @@
     <p>{{ greska() }}</p>
   } @else {
     @if (profil(); as mojProfil) {
-      <app-profil-zaglavlje [profil]="mojProfil" />
+      <app-profil-zaglavlje
+        [profil]="mojProfil"
+        (bedzPozicijaKliknuta)="otvoriModalBedzeva($event)"
+      />
 
       @if (statistika(); as mojaStatistika) {
         <app-profil-statistika
@@ -29,6 +32,15 @@
           [slike]="slikePosjeta()"
           [pocetniIndex]="odabranaSlikaIndex"
           (zatvori)="zatvoriGalerijuPosjeta()"
+        />
+      }
+
+      @if (modalBedzevaOtvoren) {
+        <app-odabir-bedzeva-modal
+          [pozicija]="odabranaPozicijaBedza!"
+          [bedzevi]="mojiBedzevi()"
+          (zatvori)="zatvoriModalBedzeva()"
+          (bedzOdabran)="postaviBedz($event)"
         />
       }
     }

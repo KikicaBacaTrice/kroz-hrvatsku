@@ -23,4 +23,15 @@ export class ProfilHttpService {
       `${API_URL}/profil/ja/slike-posjeta`,
     );
   }
+
+  dohvatiMojeBedzeve() {
+    return this.http.get<any[]>(`${API_URL}/dekoracije/ja/moje`);
+  }
+
+  postaviBedzNaProfil(pozicijaPrikaza: number, dekoracijaId: number) {
+    return this.http.patch(`${API_URL}/dekoracije/ja/aktiviraj`, {
+      dekoracijaId,
+      pozicijaPrikaza,
+    });
+  }
 }

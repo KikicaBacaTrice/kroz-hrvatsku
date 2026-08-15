@@ -1,6 +1,10 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { ProfilHttpService } from '../podaci/profil-http.service';
-import { MojProfil, ProfilSlikaPosjeta } from '../modeli/profil.model';
+import {
+  MojProfil,
+  ProfilBedz,
+  ProfilSlikaPosjeta,
+} from '../modeli/profil.model';
 import { single } from 'rxjs';
 import { ProfilStatistika } from '../modeli/profil-statistika.model';
 
@@ -21,6 +25,11 @@ export class ProfilStanjeService {
   readonly slikePosjeta = signal<ProfilSlikaPosjeta[]>([]);
   readonly slikePosjetaUcitavanje = signal(false);
   readonly slikePosjetaGreska = signal<string | null>(null);
+
+  readonly mojiBedzevi = signal<ProfilBedz[]>([]);
+  readonly bedzeviUcitavanje = signal(false);
+  readonly bedzeviGreska = signal<string | null>(null);
+  readonly spremanjeBedza = signal(false);
 
   ucitajMojProfil(): void {
     this.ucitavanje.set(true);
@@ -71,6 +80,48 @@ export class ProfilStanjeService {
           'Slike posjeta se trenutno ne mogu učitati',
         );
         this.slikePosjetaUcitavanje.set(false);
+      },
+    });
+  }
+
+  ucitajMojeBedzeve(): void {
+    this.bedzeviUcitavanje.set(true);
+    this.bedzeviGreska.set(null);
+
+    this.profilHttp.dohvatiMojeBedzeve().subscribe({
+      next: (korisnikDekoracije) => {
+        const bedzevi = korisnikDekoracije
+          .filter((zapis) => zapis.dekoracija?.tipDekoracije?.naziv === 'Bedž')
+          .map((zapis) => ({
+            bedzId: zapis.dekoracija.dekoracijaId,
+            naziv: zapis.dekoracija.naziv,
+            opis: zapis.dekoracija.opis,
+            putanjaIkone: zapis.dekoraicja.slikaDekoracije,
+          }));
+
+        this.mojiBedzevi.set(bedzevi);
+        this.bedzeviUcitavanje.set(false);
+      },
+      error: () => {
+        this.mojiBedzevi.set([]);
+        this.bedzeviGreska.set('Bedževi se trenutno ne mogu učitati');
+        this.bedzeviUcitavanje.set(false);
+      },
+    });
+  }
+
+  postaviBedzNaProfil(pozicijaBedz: number, bedzId: number) {
+    this.spremanjeBedza.set(true);
+
+    this.profilHttp.postaviBedzNaProfil(pozicijaBedz, bedzId).subscribe({
+      next: () => {
+        this.ucitajMojProfil();
+        this.ucitajMojeBedzeve();
+        this.spremanjeBedza.set(false);
+      },
+      error: () => {
+        this.bedzeviGreska.set('Došlo je do pogreške pri spremanju bedža');
+        this.spremanjeBedza.set(false);
       },
     });
   }

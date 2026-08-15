@@ -1,0 +1,31 @@
+<article class="kartica-dekoracije">
+  <div class="kartica-dekoracije__slika-spremnik">
+    <img
+      [src]="apiUrl + dekoracija().slikaDekoracija"
+      [alt]="dekoracija().naziv"
+      class="kartica-dekoracije__slika"
+    />
+  </div>
+
+  <div class="kartica-dekoracije__sadrzaj">
+    <p class="kartica-dekoracije__tip">
+      {{ dekoracija().tipDekoracije.naziv }}
+    </p>
+    <h3>{{ dekoracija().naziv }}</h3>
+    <p>
+      {{ dekoracija().opis }}
+    </p>
+
+    <div class="kartica-dekoracije__podnozje">
+      @if (dekoracija().cijenaValuta === null) {
+        <span>Otključavanje sa izazovoma</span>
+      } @else {
+        <strong> {{ dekoracija().cijenaValuta }} novčića </strong>
+      }
+
+      <button type="button" class="c-button c-button--primarna">
+        Pogledaj
+      </button>
+    </div>
+  </div>
+</article>

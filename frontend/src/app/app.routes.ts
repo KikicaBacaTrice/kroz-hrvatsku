@@ -37,6 +37,13 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'trgovina',
+        loadComponent: () =>
+          import('./funkcionalnosti/trgovina/stranice/trgovina-stranica/trgovina-stranica.component').then(
+            (m) => m.TrgovinaStranicaComponent,
+          ),
+      },
+      {
         path: 'uredivanje',
         loadChildren: () =>
           import('./funkcionalnosti/uredivanje/uredivanje.routes').then(

@@ -65,4 +65,42 @@
   >
     Uredi profil
   </button>
+
+  <div class="profil-zaglavlje__bezdevi-spremnik">
+    <button
+      type="button"
+      class="profil-zaglavlje__bedz"
+      (click)="odaberiBedzPoziciju(1)"
+    >
+      @if (profil().bedzPozicija1; as bedz) {
+        <img [src]="bedz.putanjaIkone" [alt]="bedz.naziv" />
+      } @else {
+        <img src="/slike/dekoracije/bedz/default.png" alt="" />
+      }
+    </button>
+
+    <button
+      type="button"
+      class="profil-zaglavlje__bedz"
+      (click)="odaberiBedzPoziciju(2)"
+    >
+      @if (profil().bedzPozicija2; as bedz) {
+        <img [src]="bedz.putanjaIkone" [alt]="bedz.naziv" />
+      } @else {
+        <img src="/slike/dekoracije/bedz/default.png" alt="" />
+      }
+    </button>
+
+    <button
+      type="button"
+      class="profil-zaglavlje__bedz"
+      (click)="odaberiBedzPoziciju(3)"
+    >
+      @if (profil().bedzPozicija3; as bedz) {
+        <img [src]="bedz.putanjaIkone" [alt]="bedz.naziv" />
+      } @else {
+        <img src="/slike/dekoracije/bedz/default.png" alt="" />
+      }
+    </button>
+  </div>
 </section>

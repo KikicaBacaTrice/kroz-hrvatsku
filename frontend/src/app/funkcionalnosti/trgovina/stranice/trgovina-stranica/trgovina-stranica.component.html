@@ -1,0 +1,23 @@
+<section class="trgovina">
+  <header class="trgovina__zaglavlje">
+    <h1>Dekoracije</h1>
+  </header>
+
+  @if (ucitavanje()) {
+    <p>Učitavanje dekoracija</p>
+  } @else if (greska()) {
+    <p>{{ greska() }}</p>
+  } @else {
+    @for (grupa of dekoracijePoTipu(); track grupa.tip) {
+      <section class="trgovina_grupa">
+        <h2>{{ grupa.tip }}</h2>
+
+        <div class="trgovina__resetka">
+          @for (dekoracija of grupa.dekoracije; track dekoracija.dekoracijaId) {
+            <app-kartica-dekoracije [dekoracija]="dekoracija" />
+          }
+        </div>
+      </section>
+    }
+  }
+</section>

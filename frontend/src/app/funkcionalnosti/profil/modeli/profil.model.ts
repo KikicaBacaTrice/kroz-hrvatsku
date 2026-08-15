@@ -1,3 +1,10 @@
+export type ProfilBedz = {
+  bedzId: number;
+  naziv: string;
+  opis: string | null;
+  putanjaIkone: string;
+};
+
 export type MojProfil = {
   profilId: number;
   korisnikId: number;
@@ -8,6 +15,14 @@ export type MojProfil = {
   virtualniNovac: number;
   aktivnaPozadinaUrl: string | null;
   aktivnaDekoracijaAvatarUrl: string | null;
+
+  bedzPozicija1Id: number | null;
+  bedzPozicija2Id: number | null;
+  bedzPozicija3Id: number | null;
+  bedzPozicija1: ProfilBedz | null;
+  bedzPozicija2: ProfilBedz | null;
+  bedzPozicija3: ProfilBedz | null;
+
   korisnik: {
     korisnikId: number;
     ulogaId: number;

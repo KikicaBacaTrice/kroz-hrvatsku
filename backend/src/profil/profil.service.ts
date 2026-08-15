@@ -31,7 +31,40 @@ export class ProfilService {
       throw new NotFoundException('Profil nije pronađen');
     }
 
-    return profil;
+    const aktivniBedzevi = await this.prisma.korisnikDekoracija.findMany({
+      where: {
+        korisnikId: id,
+        aktivna: true,
+        pozicijaPrikaza: {
+          in: [1, 2, 3],
+        },
+        dekoracija: {
+          tipDekoracije: {
+            naziv: 'Bedž',
+          },
+        },
+      },
+      include: {
+        dekoracija: true,
+      },
+    });
+
+    const bedzPozicija1 = aktivniBedzevi.find((b) => b.pozicijaPrikaza === 1);
+    const bedzPozicija2 = aktivniBedzevi.find((b) => b.pozicijaPrikaza === 2);
+    const bedzPozicija3 = aktivniBedzevi.find((b) => b.pozicijaPrikaza === 3);
+
+    return {
+      ...profil,
+      bedzPozicija1: bedzPozicija1
+        ? this.mapirajBedz(bedzPozicija1.dekoracija)
+        : null,
+      bedzPozicija2: bedzPozicija2
+        ? this.mapirajBedz(bedzPozicija2.dekoracija)
+        : null,
+      bedzPozicija3: bedzPozicija3
+        ? this.mapirajBedz(bedzPozicija3.dekoracija)
+        : null,
+    };
   }
 
   async dohvatiJavniProfil(id: number) {
@@ -176,5 +209,14 @@ export class ProfilService {
         profilnaSlikaUrl: null,
       },
     });
+  }
+
+  private mapirajBedz(dekoracija: any) {
+    return {
+      bedzId: dekoracija.dekoracijaId,
+      naziv: dekoracija.naziv,
+      opis: dekoracija.opis,
+      putanjaIkone: dekoracija.slikaDekoracija,
+    };
   }
 }

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { ProfilStanjeService } from '../../stanje/profil-stanje.service';
 import { DolasciLokacijeStanjeService } from '../../../lokacije/stanje/dolasci-lokacije-stanje.service';
 import { ProfilStatistikaComponent } from '../../ui/profil-statistika/profil-statistika.component';
@@ -6,6 +6,8 @@ import { ProfilGalerijaPosjetaComponent } from '../../ui/profil-galerija-posjeta
 import { ModalGalerijaPosjetaComponent } from '../../ui/modal-galerija-posjeta/modal-galerija-posjeta.component';
 import { ProfilZaglavljeComponent } from '../../ui/profil-zaglavlje/profil-zaglavlje.component';
 import { ProfilRijeseneLokacijeComponent } from '../../ui/profil-rijesene-lokacije/profil-rijesene-lokacije.component';
+import { OdabirBedzevaModalComponent } from '../../ui/odabir-bedzeva-modal/odabir-bedzeva-modal.component';
+import { single } from 'rxjs';
 
 @Component({
   selector: 'app-profil',
@@ -15,6 +17,7 @@ import { ProfilRijeseneLokacijeComponent } from '../../ui/profil-rijesene-lokaci
     ModalGalerijaPosjetaComponent,
     ProfilZaglavljeComponent,
     ProfilRijeseneLokacijeComponent,
+    OdabirBedzevaModalComponent,
   ],
   templateUrl: './profil.component.html',
   styleUrl: './profil.component.scss',
@@ -37,11 +40,16 @@ export class ProfilComponent implements OnInit {
 
   galerijaOtvorena = false;
   odabranaSlikaIndex = 0;
+  modalBedzevaOtvoren = false;
+  odabranaPozicijaBedza: 1 | 2 | 3 | null = null;
+
+  mojiBedzevi = this.profilStanje.mojiBedzevi;
 
   ngOnInit(): void {
     this.profilStanje.ucitajMojProfil();
     this.profilStanje.ucitajMojuStatistiku();
     this.profilStanje.ucitajMojeSlikePosjeta();
+    this.profilStanje.ucitajMojeBedzeve();
     this.dolasciStanje.ucitajRijeseneLokacije();
   }
 
@@ -54,5 +62,24 @@ export class ProfilComponent implements OnInit {
   zatvoriGalerijuPosjeta(): void {
     this.galerijaOtvorena = false;
     document.body.classList.remove('body--bez-scrolla');
+  }
+
+  otvoriModalBedzeva(pozicija: 1 | 2 | 3): void {
+    this.odabranaPozicijaBedza = pozicija;
+    this.modalBedzevaOtvoren = true;
+    document.body.classList.add('body--bez-scrolla');
+  }
+
+  zatvoriModalBedzeva(): void {
+    this.modalBedzevaOtvoren = false;
+    this.odabranaPozicijaBedza = null;
+    document.body.classList.remove('body--bez-scrolla');
+  }
+
+  postaviBedz(bedzId: number): void {
+    if (!this.odabranaPozicijaBedza) return;
+
+    this.profilStanje.postaviBedzNaProfil(this.odabranaPozicijaBedza, bedzId);
+    this.zatvoriModalBedzeva();
   }
 }

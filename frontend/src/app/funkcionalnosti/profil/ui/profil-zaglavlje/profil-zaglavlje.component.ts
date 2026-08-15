@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, EventEmitter, input, Output } from '@angular/core';
 import { MojProfil } from '../../modeli/profil.model';
 
 @Component({
@@ -9,4 +9,10 @@ import { MojProfil } from '../../modeli/profil.model';
 })
 export class ProfilZaglavljeComponent {
   profil = input.required<MojProfil>();
+
+  @Output() bedzPozicijaKliknuta = new EventEmitter();
+
+  odaberiBedzPoziciju(pozicija: 1 | 2 | 3): void {
+    this.bedzPozicijaKliknuta.emit(pozicija);
+  }
 }
