@@ -391,4 +391,80 @@ export class DekoracijeService {
       },
     });
   }
+
+  async dohvatiTrgovinuZaKorisnika(korisnikId: number) {
+    const dekoracije = await this.prisma.dekoracija.findMany({
+      include: {
+        tipDekoracije: true,
+        nacinOtkljucavanja: true,
+        postignuca: {
+          include: {
+            kategorija: true,
+          },
+        },
+      },
+      orderBy: {
+        naziv: 'desc',
+      },
+    });
+
+    const korisnikDekoracije = await this.prisma.korisnikDekoracija.findMany({
+      where: { korisnikId },
+      select: {
+        dekoracijaId: true,
+      },
+    });
+
+    const kupljeneDekoracijeIds = new Set(
+      korisnikDekoracije.map((zapis) => zapis.dekoracijaId),
+    );
+
+    const rijeseneLokacije = await this.prisma.rijesenaLokacija.findMany({
+      where: { korisnikId },
+      include: {
+        lokacija: {
+          select: {
+            kategorijaId: true,
+          },
+        },
+      },
+    });
+
+    return dekoracije.map((dekoracija) => {
+      const posjeduje = kupljeneDekoracijeIds.has(dekoracija.dekoracijaId);
+
+      const postignuce = dekoracija.postignuca[0];
+
+      if (!postignuce) {
+        return {
+          ...dekoracija,
+          posjeduje,
+          otkljucano: dekoracija.cijenaValuta !== null,
+          razlogZakljucavanja:
+            dekoracija.cijenaValuta === null
+              ? 'Dekoracija se otključava posebnim uvjetom'
+              : null,
+        };
+      }
+
+      const brojRijesenihZaKategoriju = rijeseneLokacije.filter(
+        (rijesena) =>
+          rijesena.lokacija.kategorijaId === postignuce.kategorijaId,
+      ).length;
+
+      const otkljucano =
+        brojRijesenihZaKategoriju >= postignuce.brojPotrebnihLokacija;
+
+      return {
+        ...dekoracija,
+        posjeduje,
+        otkljucano,
+        napredak: brojRijesenihZaKategoriju,
+        potrebno: postignuce.brojPotrebnihLokacija,
+        razlogZakljucavanja: otkljucano
+          ? null
+          : `Riješite ${postignuce.brojPotrebnihLokacija} lokacije kategorije ${postignuce.kategorija.naziv}`,
+      };
+    });
+  }
 }

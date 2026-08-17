@@ -46,6 +46,12 @@ export class DekoracijeController {
     return this.dekoracijeServis.dohvatiMojeDekoracije(req.user.userId);
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Get('ja/trgovina')
+  dohvatiTrgovinuZaKorisnika(@Req() req: any) {
+    return this.dekoracijeServis.dohvatiTrgovinuZaKorisnika(req.user.userId);
+  }
+
   @Get(':id')
   dohvatiJednu(@Param('id', ParseIntPipe) id: number) {
     return this.dekoracijeServis.dohvatiJednu(id);
