@@ -29,3 +29,11 @@ export type KorisnikDekoracija = {
   korisnikId: number;
   dekoracija: Dekoracija;
 };
+
+export type DekoracijaTrgovina = Dekoracija & {
+  posjeduje: boolean;
+  otkljucano: boolean;
+  razlogZakljucavanja: string | null;
+  napredak?: number;
+  potrebno?: number;
+};

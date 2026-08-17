@@ -1,6 +1,9 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { TrgovinaHttpService } from '../podaci/trgovina-http.service';
-import { Dekoracija, KorisnikDekoracija } from '../modeli/dekoracija.model';
+import {
+  DekoracijaTrgovina,
+  KorisnikDekoracija,
+} from '../modeli/dekoracija.model';
 import { ProfilStanjeService } from '../../profil/stanje/profil-stanje.service';
 
 @Injectable({
@@ -10,7 +13,7 @@ export class TrgovinaStanjeService {
   private readonly trgovinaHttp = inject(TrgovinaHttpService);
   private readonly profilStanje = inject(ProfilStanjeService);
 
-  readonly dekoracije = signal<Dekoracija[]>([]);
+  readonly dekoracije = signal<DekoracijaTrgovina[]>([]);
   readonly ucitavanje = signal(false);
   readonly greska = signal<string | null>(null);
 
@@ -19,7 +22,7 @@ export class TrgovinaStanjeService {
   readonly kupnjaGreska = signal<string | null>(null);
 
   readonly dekoracijePoTipu = computed(() => {
-    const grupe = new Map<string, Dekoracija[]>();
+    const grupe = new Map<string, DekoracijaTrgovina[]>();
 
     for (const dekoracija of this.dekoracije()) {
       const tip = dekoracija.tipDekoracije.naziv;
@@ -41,7 +44,7 @@ export class TrgovinaStanjeService {
     this.ucitavanje.set(true);
     this.greska.set(null);
 
-    this.trgovinaHttp.dohvatiDekoracije().subscribe({
+    this.trgovinaHttp.dohvatiDekoracijeZaTrgovinu().subscribe({
       next: (dekoracije) => {
         this.dekoracije.set(dekoracije);
         this.ucitavanje.set(false);

@@ -25,14 +25,18 @@
         </span>
       </div>
 
-      @if (dekoracija().cijenaValuta === null) {
+      @if (dekoracija().posjeduje) {
         <button type="button" class="c-button c-button--sekundarna" disabled>
-          Otključava se izazovom
+          Kupnjeno
         </button>
-      } @else if (kupljena()) {
+      } @else if (!dekoracija().otkljucano) {
         <button type="button" class="c-button c-button--sekundarna" disabled>
-          Kupljeno
+          Zaključano
         </button>
+
+        <!-- <p class="kartica-dekoracije__uvjet">
+          {{ dekoracija().razlogZakljucavanja }}
+        </p> -->
       } @else {
         <button
           type="button"
@@ -43,5 +47,17 @@
         </button>
       }
     </div>
+
+    @if (dekoracija().potrebno) {
+      <div class="kartica-dekoracije__rijeseno-izazova">
+        <p class="kartica-dekoracije__napredak">
+          {{ dekoracija().napredak }}/{{ dekoracija().potrebno }}
+        </p>
+        <span class="kartica-dekoracije__napredak-info">
+          Trenutno imate {{ dekoracija().napredak }} riješenih izazova od
+          potrenih {{ dekoracija().potrebno }} iz kategorije
+        </span>
+      </div>
+    }
   </div>
 </article>

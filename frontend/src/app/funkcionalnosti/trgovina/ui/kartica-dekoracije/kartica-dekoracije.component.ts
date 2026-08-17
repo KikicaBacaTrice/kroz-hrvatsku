@@ -1,5 +1,5 @@
 import { Component, EventEmitter, input, Output } from '@angular/core';
-import { Dekoracija } from '../../modeli/dekoracija.model';
+import { Dekoracija, DekoracijaTrgovina } from '../../modeli/dekoracija.model';
 import { API_URL } from '../../../../jezgra/konfiguracija/api.config';
 import { NovacIkonaComponent } from '../../../../dijeljeno/ui/ikone/novac-ikona/novac-ikona.component';
 
@@ -10,7 +10,7 @@ import { NovacIkonaComponent } from '../../../../dijeljeno/ui/ikone/novac-ikona/
   styleUrl: './kartica-dekoracije.component.scss',
 })
 export class KarticaDekoracijeComponent {
-  dekoracija = input.required<Dekoracija>();
+  dekoracija = input.required<DekoracijaTrgovina>();
   kupljena = input(false);
 
   @Output() kupi = new EventEmitter<number>();
