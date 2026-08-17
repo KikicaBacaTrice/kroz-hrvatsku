@@ -15,14 +15,17 @@
           >Lokacije</a
         >
       </li>
-      <li class="navigacija__stavka">
-        <a
-          routerLink="/trgovina"
-          routerLinkActive="active"
-          class="navigacija__link"
-          >Trgovina</a
-        >
-      </li>
+
+      @if (authStanje.prijavljen()) {
+        <li class="navigacija__stavka">
+          <a
+            routerLink="/trgovina"
+            routerLinkActive="active"
+            class="navigacija__link"
+            >Trgovina</a
+          >
+        </li>
+      }
 
       @if (profilStanje.profil(); as profil) {
         @if (profil.korisnik.ulogaId === 2) {

@@ -54,6 +54,7 @@
     @if (dolasciStanje.modalDolaskaOtvoren()) {
       <app-zabiljeni-dolazak-modal
         [spremanje]="dolasciStanje.spremanjeDolaska()"
+        [jePrijavljen]="this.authStanje.prijavljen()"
         (zatvori)="dolasciStanje.zatvoriModalDolaska()"
         (spremi)="
           dolasciStanje.zabiljeziDolazak(

@@ -74,7 +74,7 @@ export class KomentariSekcijaComponent {
   });
 
   ngOnInit(): void {
-    if (!this.profilStanje.profil()) {
+    if (this.authStanje.prijavljen() && !this.profilStanje.profil()) {
       this.profilStanje.ucitajMojProfil();
     }
   }

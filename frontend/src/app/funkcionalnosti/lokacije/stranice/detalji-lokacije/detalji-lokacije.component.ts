@@ -15,6 +15,7 @@ import { KomentariLokacijeStanjeService } from '../../stanje/komentari-lokacije-
 import { ZabiljeniDolazakModalComponent } from '../../ui/dolasci/zabiljeni-dolazak-modal/zabiljeni-dolazak-modal.component';
 import { UspomenaDolazakModalComponent } from '../../ui/dolasci/uspomena-dolazak-modal/uspomena-dolazak-modal.component';
 import { DolasciLokacijeStanjeService } from '../../stanje/dolasci-lokacije-stanje.service';
+import { AuthStanjeService } from '../../../autentikacija/stanje/auth-stanje.service';
 
 @Component({
   selector: 'app-detalji-lokacije',
@@ -35,6 +36,7 @@ import { DolasciLokacijeStanjeService } from '../../stanje/dolasci-lokacije-stan
 })
 export class DetaljiLokacijeComponent implements OnInit, OnDestroy {
   private readonly route = inject(ActivatedRoute);
+  readonly authStanje = inject(AuthStanjeService);
   readonly lokacijaStanje = inject(LokacijaStanjeService);
   readonly dolasciStanje = inject(DolasciLokacijeStanjeService);
   private readonly komentariStanje = inject(KomentariLokacijeStanjeService);
@@ -50,8 +52,10 @@ export class DetaljiLokacijeComponent implements OnInit, OnDestroy {
       const lokacijaId = Number(parametri.get('id'));
 
       this.lokacijaStanje.ucitajLokaciju(lokacijaId);
-      this.dolasciStanje.ucitajMojDolazak(lokacijaId);
       this.komentariStanje.ucitajKomentare(lokacijaId);
+      if (this.authStanje.prijavljen()) {
+        this.dolasciStanje.ucitajMojDolazak(lokacijaId);
+      }
     });
   }
 

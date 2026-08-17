@@ -47,7 +47,6 @@ export class UrediProfilModalComponent implements OnInit {
   }
 
   posalji(): void {
-    console.log(this.model);
     this.spremi.emit(this.model);
   }
 }

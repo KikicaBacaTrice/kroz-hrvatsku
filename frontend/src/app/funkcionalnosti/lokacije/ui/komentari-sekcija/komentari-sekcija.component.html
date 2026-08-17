@@ -31,7 +31,9 @@
     </div>
   </header>
 
-  <app-dodaj-komentar-forma (dodajKomentar)="dodajKomentar($event)" />
+  @if (this.authStanje.prijavljen()) {
+    <app-dodaj-komentar-forma (dodajKomentar)="dodajKomentar($event)" />
+  }
 
   @if (komentariStanje.ucitavanje()) {
     <p class="komentari__stanje">Učitavanje komentara...</p>

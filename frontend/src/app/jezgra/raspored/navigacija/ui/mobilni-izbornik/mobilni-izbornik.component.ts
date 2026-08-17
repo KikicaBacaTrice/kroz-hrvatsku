@@ -4,6 +4,7 @@ import { MojProfil } from '../../../../../funkcionalnosti/profil/modeli/profil.m
 import { XpNapredakComponent } from '../../../../../dijeljeno/ui/xp-napredak/xp-napredak.component';
 import { NovacIkonaComponent } from '../../../../../dijeljeno/ui/ikone/novac-ikona/novac-ikona.component';
 import { RouterLink } from '@angular/router';
+import { API_URL } from '../../../../konfiguracija/api.config';
 
 @Component({
   selector: 'app-mobilni-izbornik',
@@ -23,6 +24,8 @@ export class MobilniIzbornikComponent {
 
   @Output() zatvori = new EventEmitter<void>();
   @Output() odjava = new EventEmitter<void>();
+
+  readonly apiUrl = API_URL;
 
   zatovriIzbornik(): void {
     this.zatvori.emit();
