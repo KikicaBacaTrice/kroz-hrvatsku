@@ -17,14 +17,6 @@
       </li>
       <li class="navigacija__stavka">
         <a
-          routerLink="/profil"
-          routerLinkActive="active"
-          class="navigacija__link"
-          >Profil</a
-        >
-      </li>
-      <li class="navigacija__stavka">
-        <a
           routerLink="/trgovina"
           routerLinkActive="active"
           class="navigacija__link"
@@ -36,10 +28,10 @@
         @if (profil.korisnik.ulogaId === 2) {
           <li class="navigacija__stavka">
             <a
-              routerLink="/uredivanje"
+              routerLink="/uredivanje/lokacije"
               routerLinkActive="active"
               class="navigacija__link"
-              >Uređivanje</a
+              >Uređivanje lokacija</a
             >
           </li>
         }
