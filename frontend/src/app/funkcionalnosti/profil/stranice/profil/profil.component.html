@@ -1,1 +1,72 @@
-<p>profil works!</p>
+<div class="o-stog | profil">
+  @if (ucitavanje()) {
+    <p>Učitavanje profila</p>
+  } @else if (greska()) {
+    <p>{{ greska() }}</p>
+  } @else {
+    @if (profil(); as mojProfil) {
+      <app-profil-zaglavlje
+        [profil]="mojProfil"
+        (urediProfilKliknut)="otvoriMordalUredivanjeProfila()"
+        (bedzPozicijaKliknuta)="otvoriModalBedzeva($event)"
+        (promjenaSlikeKliknuta)="fileInput.click()"
+        (obrisiProfilnuSlikuKliknuta)="obrisiProfilnuSliku()"
+      />
+
+      <input
+        #fileInput
+        type="file"
+        hidden
+        (change)="promijeniProfilnuSliku($event)"
+      />
+
+      @if (statistika(); as mojaStatistika) {
+        <app-profil-statistika
+          [xp]="mojaStatistika.xp"
+          [brojIzazova]="mojaStatistika.brojIzazova"
+          [brojPostignuca]="mojaStatistika.brojPostignuca"
+          [brojFotografija]="mojaStatistika.brojFotografija"
+          [brojNovcica]="mojaStatistika.brojNovcica"
+        />
+      }
+
+      <app-profil-rijesene-lokacije [rijeseneLokacije]="rijeseneLokacije()" />
+
+      <app-profil-galerija-posjeta
+        [slike]="slikePosjeta()"
+        (slikaKliknuta)="otvoriGalerijuPosjeta($event)"
+      />
+
+      @if (galerijaOtvorena) {
+        <app-modal-galerija-posjeta
+          [slike]="slikePosjeta()"
+          [pocetniIndex]="odabranaSlikaIndex"
+          (zatvori)="zatvoriGalerijuPosjeta()"
+        />
+      }
+
+      @if (modalBedzevaOtvoren) {
+        <app-odabir-bedzeva-modal
+          [pozicija]="odabranaPozicijaBedza!"
+          [bedzevi]="mojiBedzevi()"
+          (zatvori)="zatvoriModalBedzeva()"
+          (bedzOdabran)="postaviBedz($event)"
+        />
+      }
+
+      @if (modalUredivanjeProfilaOtvoren) {
+        <app-uredi-profil-modal
+          [profil]="mojProfil"
+          [pozadine]="mojePozadineProfila()"
+          [dekoracijeAvatara]="mojeDekoracijeAvatara()"
+          (zatvori)="zatvoriMordalUredivanjeProfila()"
+          (spremi)="spremiProfil($event)"
+          (pozadinaOdabrana)="postaviPozadinuProfila($event)"
+          (dekoracijaAvataraOdabrana)="postaviDekoracijuAvatara($event)"
+          (defaultPozadinaOdabrana)="postaviDefaultPozadinuProfila()"
+          (defaultDekoracijaAvataraOdabrana)="postaviDefaultDekoracijuAvatara()"
+        />
+      }
+    }
+  }
+</div>

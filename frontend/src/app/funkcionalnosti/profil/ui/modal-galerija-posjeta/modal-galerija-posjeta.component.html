@@ -1,0 +1,52 @@
+<div class="profil-galerija-modal">
+  <button
+    type="button"
+    class="profil-galerija-modal__pozadina"
+    (click)="zatvori.emit()"
+  ></button>
+
+  <section class="profil-galerija-modal__panel">
+    <button
+      type="button"
+      class="profil-galerija-modal__zatvori"
+      (click)="zatvori.emit()"
+    >
+      <app-zatovri-ikona boja="#fff" />
+    </button>
+
+    @if (aktivnaSlika(); as slika) {
+      <img
+        class="profil-galerija-modal__slika"
+        [src]="apiUrl + slika.putanjaSlike"
+        [alt]="slika.opisSlike || slika.rijesenaLokacija.lokacija.naziv"
+      />
+
+      <div class="profil-galerija-modal__opis">
+        <strong>{{ slika.rijesenaLokacija.lokacija.naziv }}</strong>
+        <span>{{ aktivniIndex() + 1 }} / {{ slike().length }}</span>
+      </div>
+    }
+
+    @if (slike().length > 1) {
+      <button
+        type="button"
+        class="profil-galerija-modal__navigacija profil-galerija-modal__navigacija--prethodna"
+        (click)="prethodna()"
+      >
+        <app-prethodni-sljedeci-ikona
+          [rotacija]="180"
+          [velicina]="22"
+          boja="#fff"
+        />
+      </button>
+
+      <button
+        type="button"
+        class="profil-galerija-modal__navigacija profil-galerija-modal__navigacija--sljedeca"
+        (click)="sljedeca()"
+      >
+        <app-prethodni-sljedeci-ikona [velicina]="22" boja="#fff" />
+      </button>
+    }
+  </section>
+</div>

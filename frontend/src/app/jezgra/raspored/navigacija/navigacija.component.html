@@ -24,8 +24,11 @@
         >
       </li>
       <li class="navigacija__stavka">
-        <a routerLink="/" routerLinkActive="active" class="navigacija__link"
-          >Dostignuća</a
+        <a
+          routerLink="/trgovina"
+          routerLinkActive="active"
+          class="navigacija__link"
+          >Trgovina</a
         >
       </li>
 
@@ -61,9 +64,9 @@
         >
           @if (profil.profilnaSlikaUrl) {
             <img
-              [src]="profil.profilnaSlikaUrl"
+              [src]="apiUrl + profil.profilnaSlikaUrl"
               alt="profil.korisnik.korisnickoIme"
-              class="navigacija__korisnik_slika"
+              class="navigacija__korisnik-slika"
             />
           } @else {
             <span class="navigacija__korisnik-slika-prvo-slovo">

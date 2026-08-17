@@ -1,0 +1,142 @@
+<div class="uredi-profil-modal" (click)="zatvori.emit()">
+  <section class="uredi-profil-modal__panel" (click)="$event.stopPropagation()">
+    <header class="uredi-profil-modal__zaglavlje">
+      <h2>Uredi profil</h2>
+
+      <button type="button" (click)="zatvori.emit()">
+        <app-zatovri-ikona velicina="20" />
+      </button>
+    </header>
+
+    <form class="c-forma" #forma="ngForm" (ngSubmit)="posalji()">
+      <div class="c-forma__group">
+        <label for="ime" class="c-forma__label">Ime</label>
+        <input
+          type="text"
+          id="ime"
+          name="ime"
+          class="c-forma__kontrola"
+          [(ngModel)]="model.ime"
+        />
+      </div>
+      <div class="c-forma__group">
+        <label for="prezime" class="c-forma__label">Prezime</label>
+        <input
+          type="text"
+          id="prezime"
+          name="prezime"
+          class="c-forma__kontrola"
+          [(ngModel)]="model.prezime"
+        />
+      </div>
+      <div class="c-forma__group">
+        <label for="korisnickoIme" class="c-forma__label">Korisničko Ime</label>
+        <input
+          type="text"
+          id="korisnickoIme"
+          name="korisnickoIme"
+          class="c-forma__kontrola"
+          required
+          [(ngModel)]="model.korisnickoIme"
+        />
+      </div>
+      <div class="c-forma__group">
+        <label for="opisProfila" class="c-forma__label">Opis profila</label>
+        <textarea
+          id="opisProfila"
+          name="opisProfila"
+          class="c-forma__kontrola"
+          rows="4"
+          [(ngModel)]="model.opisProfila"
+        ></textarea>
+      </div>
+
+      <div class="uredi-profil-modal__akcije">
+        <button
+          type="button"
+          class="c-button c-button--primarna-inverz"
+          (click)="zatvori.emit()"
+        >
+          Odustani
+        </button>
+        <button type="submit" class="c-button c-button--primarna">
+          Spremi promjene
+        </button>
+      </div>
+    </form>
+
+    <section
+      class="uredi-profil-modal__dekoracije uredi-profil-modal__dekoracije--pozadine"
+    >
+      <h3>Pozadina profila</h3>
+
+      @if (pozadine().length === 0) {
+        <p>Nemate kupljenu nijednu pozadinu profila.</p>
+      } @else {
+        <div class="uredi-profil-modal__dekoracije-resetka">
+          <button
+            type="button"
+            class="uredi-profil-modal__dekoracija uredi-profil-modal__dekoracija--default"
+            (click)="defaultPozadinaOdabrana.emit()"
+          >
+            <div class="uredi-profil-modal__dekoracija-slika-spremnik">
+              <img
+                src="/slike/dekoracije/pozadine/default.png"
+                alt="Zadana pozadina profila"
+              />
+            </div>
+          </button>
+          @for (pozadina of pozadine(); track pozadina.bedzId) {
+            <button
+              type="button"
+              class="uredi-profil-modal__dekoracija"
+              (click)="pozadinaOdabrana.emit(pozadina.bedzId)"
+            >
+              <div class="uredi-profil-modal__dekoracija-slika-spremnik">
+                <img
+                  [src]="apiUrl + pozadina.putanjaIkone"
+                  [alt]="pozadina.naziv"
+                />
+              </div>
+            </button>
+          }
+        </div>
+      }
+    </section>
+
+    <section class="uredi-profil-modal__dekoracije">
+      <h3>Dekoracija avatara</h3>
+
+      @if (dekoracijeAvatara().length === 0) {
+        <p>Nemate kupljenu nijednu dekoraciju avatara.</p>
+      } @else {
+        <div class="uredi-profil-modal__dekoracije-resetka">
+          <button
+            type="button"
+            class="uredi-profil-modal__dekoracija uredi-profil-modal__dekoracija--default"
+            (click)="defaultDekoracijaAvataraOdabrana.emit()"
+          >
+            <div class="uredi-profil-modal__dekoracija-slika-spremnik">
+              <img
+                src="/slike/dekoracije/avatar/default.png"
+                alt="Zadana dekoracija avatara"
+              />
+            </div>
+          </button>
+          @for (dekoracija of dekoracijeAvatara(); track dekoracija.bedzId) {
+            <button
+              type="button"
+              class="uredi-profil-modal__dekoracija"
+              (click)="dekoracijaAvataraOdabrana.emit(dekoracija.bedzId)"
+            >
+              <img
+                [src]="apiUrl + dekoracija.putanjaIkone"
+                [alt]="dekoracija.naziv"
+              />
+            </button>
+          }
+        </div>
+      }
+    </section>
+  </section>
+</div>

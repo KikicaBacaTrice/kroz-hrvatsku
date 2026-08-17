@@ -1,0 +1,50 @@
+<a
+  [routerLink]="['/lokacije', lokacija().lokacijaId]"
+  class="kartica-lokacije"
+  [class.kartica-lokacije--rijesena]="rijesena()"
+>
+  @if (glavnaSlika(); as slika) {
+    <img
+      [src]="apiUrl + slika.putanjaSlike"
+      [alt]="slika.opisSlike || lokacija().naziv"
+      class="kartica-lokacije__slika"
+    />
+  } @else {
+    <img
+      src="/slike/ostalo/nema-slika.png"
+      [alt]="lokacija().naziv"
+      class="kartica-lokacije__slika"
+    />
+  }
+
+  <div class="kartica-lokacije__overlay"></div>
+
+  <div class="kartica-lokacije__metapodaci">
+    @if (rijesena()) {
+      <span class="o-klaster | kartica-lokacije__status-znacka"
+        ><app-medalja-ikona boja="#fff" /> Riješeno</span
+      >
+    } @else {
+      <span class="kartica-lokacije__nagrada-znacka"
+        >+{{ lokacija().nagradaXp }} XP</span
+      >
+      <span class="kartica-lokacije__nagrada-znacka"
+        >+ {{ lokacija().nagradaValuta }} novčića</span
+      >
+    }
+  </div>
+
+  <div class="kartica-lokacije__sadrzaj">
+    <h4 class="kartica-lokacije__naziv">{{ lokacija().naziv }}</h4>
+
+    <div class="kartica-lokacije__ostali-podaci">
+      <span>{{ lokacija().kategorija.naziv }}</span>
+      <!-- <span>&#9679;</span> -->
+      <span
+        ><app-ocjena-zvijezdice
+          [ocjena]="lokacija().prosjecnaOcjena ?? 0"
+          [velicina]="18"
+      /></span>
+    </div>
+  </div>
+</a>

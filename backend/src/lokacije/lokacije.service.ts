@@ -68,28 +68,32 @@ export class LokacijeService {
     });
   }
 
+  async dohvatiMojDolazakZaLokaciju(lokacijaId: number, korisnikId: number) {
+    return this.prisma.rijesenaLokacija.findUnique({
+      where: {
+        korisnikId_lokacijaId: {
+          korisnikId,
+          lokacijaId,
+        },
+      },
+      include: {
+        slikePosjeta: true,
+        lokacija: true,
+      },
+    });
+  }
+
   async dohvatiRijeseneLokacije(korisnikId: number) {
     return this.prisma.rijesenaLokacija.findMany({
       where: { korisnikId },
-      select: {
-        rijesenaLokacijaId: true,
-        datumVrijemePosjeta: true,
-        brojOsvojeneValute: true,
-        brojOsvojenihXp: true,
+      include: {
         lokacija: {
-          select: {
-            naziv: true,
-            slikeLokacije: {
-              where: { glavna: true },
-              select: {
-                slikaId: true,
-                putanjaSlike: true,
-                opisSlike: true,
-              },
-              take: 1,
-            },
+          include: {
+            kategorija: true,
+            slikeLokacije: true,
           },
         },
+        slikePosjeta: true,
       },
       orderBy: {
         datumVrijemePosjeta: 'desc',
@@ -158,7 +162,12 @@ export class LokacijeService {
     });
   }
 
-  async zabiljeziRijesenuLokaciju(lokacijaId: number, korisnikId: number) {
+  async zabiljeziRijesenuLokaciju(
+    lokacijaId: number,
+    korisnikId: number,
+    biljeska?: string,
+    slike: Express.Multer.File[] = [],
+  ) {
     const lokacija = await this.dohvatiLokacijuZaRjesavanje(lokacijaId);
 
     await this.provjeriDaNijeVecRijesena(lokacijaId, korisnikId);
@@ -166,12 +175,29 @@ export class LokacijeService {
     const { xpDodati, valutaDodati } =
       this.izracunajNagraduZaLokaciju(lokacija);
 
-    const rijesenaLokacija = await this.spremiRijesenuLokaciju(
-      lokacijaId,
-      korisnikId,
-      xpDodati,
-      valutaDodati,
-    );
+    const rijesenaLokacija = await this.prisma.rijesenaLokacija.create({
+      data: {
+        korisnikId,
+        lokacijaId,
+        biljeska,
+        brojOsvojenihXp: xpDodati,
+        brojOsvojeneValute: valutaDodati,
+        slikePosjeta: {
+          create: slike.map((slika) => ({
+            putanjaSlike: `/prijenos/posjeti/${slika.filename}`,
+          })),
+        },
+      },
+      include: {
+        slikePosjeta: true,
+        lokacija: {
+          include: {
+            kategorija: true,
+            slikeLokacije: true,
+          },
+        },
+      },
+    });
 
     await this.nagradeServis.dodijeliNagradu(
       korisnikId,

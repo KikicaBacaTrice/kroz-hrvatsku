@@ -1,0 +1,122 @@
+<section class="profil-zaglavlje">
+  <div
+    class="profil-zaglavlje__pozadina"
+    [style.background-image]="
+      'url(' +
+      (profil().aktivnaPozadinaUrl
+        ? apiUrl + profil().aktivnaPozadinaUrl
+        : '/slike/dekoracije/pozadine/default.png') +
+      ')'
+    "
+  ></div>
+
+  <div class="profil-zaglavlje__overlay"></div>
+
+  <div class="profil-zaglavlje__sadrzaj">
+    <div class="profil-zaglavlje__slika-spremnik">
+      <button
+        type="button"
+        class="profil-zaglavlje__slika-gumb"
+        (click)="promjenaSlikeKliknuta.emit()"
+      >
+        @if (profil().profilnaSlikaUrl) {
+          <img
+            [src]="apiUrl + profil().profilnaSlikaUrl"
+            [alt]="profil().korisnik.korisnickoIme"
+            class="profil-zaglavlje__slika"
+          />
+        } @else {
+          <span class="profil-zaglavlje__slika profil-zaglavlje__slika--slovo">
+            {{ profil().korisnik.korisnickoIme.charAt(0).toUpperCase() }}
+          </span>
+        }
+      </button>
+
+      @if (profil().profilnaSlikaUrl) {
+        <button
+          type="button"
+          class="profil-zaglavlje__slika-obrisi"
+          (click)="obrisiProfilnuSlikuKliknuta.emit(); $event.stopPropagation()"
+        >
+          <app-zatovri-ikona velicina="14" boja="#fff" />
+        </button>
+      }
+
+      <span class="profil-zaglavlje__razina">
+        Razina {{ profil().razina }}
+      </span>
+
+      <div class="profil-zaglavlje__dekoracija-avatar">
+        <img
+          [src]="
+            profil().aktivnaDekoracijaAvatarUrl
+              ? apiUrl + profil().aktivnaDekoracijaAvatarUrl
+              : '/slike/dekoracije/avatar/default.png'
+          "
+          alt=""
+        />
+      </div>
+    </div>
+
+    <div class="profil-zaglavlje__tekst">
+      <div class="profil-zaglavlje__gornji-red">
+        <div>
+          <h1>
+            {{ profil().korisnik.ime || "" }}
+            {{ profil().korisnik.prezime || "" }}
+          </h1>
+
+          <p class="profil-zaglavlje__korisnicko-ime">
+            &#64;{{ profil().korisnik.korisnickoIme }}
+          </p>
+        </div>
+      </div>
+
+      <div class="o-klaster o-klaster-between |">
+        <p class="profil-zaglavlje__opis">
+          {{ profil().opisProfila || "Korisnik još nije dodao opis profila." }}
+        </p>
+        <div class="profil-zaglavlje__bezdevi-spremnik">
+          <button
+            type="button"
+            class="profil-zaglavlje__bedz"
+            (click)="odaberiBedzPoziciju(1)"
+          >
+            @if (profil().bedzPozicija1; as bedz) {
+              <img [src]="apiUrl + bedz.putanjaIkone" [alt]="bedz.naziv" />
+            } @else {
+              <img src="/slike/dekoracije/bedz/default.png" alt="" />
+            }
+          </button>
+
+          <button
+            type="button"
+            class="profil-zaglavlje__bedz"
+            (click)="odaberiBedzPoziciju(2)"
+          >
+            @if (profil().bedzPozicija2; as bedz) {
+              <img [src]="apiUrl + bedz.putanjaIkone" [alt]="bedz.naziv" />
+            } @else {
+              <img src="/slike/dekoracije/bedz/default.png" alt="" />
+            }
+          </button>
+
+          <button
+            type="button"
+            class="profil-zaglavlje__bedz"
+            (click)="odaberiBedzPoziciju(3)"
+          >
+            @if (profil().bedzPozicija3; as bedz) {
+              <img [src]="apiUrl + bedz.putanjaIkone" [alt]="bedz.naziv" />
+            } @else {
+              <img src="/slike/dekoracije/bedz/default.png" alt="" />
+            }
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button type="button" class="profil-zaglavlje__akcija">
+    <app-uredivanje-ikona [velicina]="24" (click)="urediProfilKliknut.emit()" />
+  </button>
+</section>

@@ -372,4 +372,23 @@ export class DekoracijeService {
       },
     });
   }
+
+  async deaktivirajAktivnuDekoracijuZaTip(
+    korisnikId: number,
+    tipDekoracijeId: number,
+  ) {
+    return this.prisma.korisnikDekoracija.updateMany({
+      where: {
+        korisnikId,
+        aktivna: true,
+        dekoracija: {
+          tipDekoracijeId,
+        },
+      },
+      data: {
+        aktivna: false,
+        pozicijaPrikaza: null,
+      },
+    });
+  }
 }

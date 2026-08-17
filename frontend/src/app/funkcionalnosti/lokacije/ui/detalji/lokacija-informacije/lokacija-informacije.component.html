@@ -1,0 +1,25 @@
+<section class="lokacija-informacije">
+  <div class="lokacija-informacije__resetka">
+    <app-kartica-informacije-detalja-lokacije
+      ikona="/slike/ikone/lokacija-ikona.png"
+      opis="Adresa"
+      [vrijednost]="lokacija().adresa"
+    />
+    <app-kartica-informacije-detalja-lokacije
+      ikona="/slike/ikone/novac-ikona.png"
+      opis="Cijena ulaznice"
+      [vrijednost]="formatirajCijenuUlaznice()"
+    />
+    <app-kartica-informacije-detalja-lokacije
+      ikona="/slike/ikone/kategorija-ikona.png"
+      opis="Kategorija"
+      [vrijednost]="lokacija().kategorija.naziv"
+    />
+    <app-kartica-informacije-detalja-lokacije
+      ikona="/slike/ikone/status-ikona.png"
+      opis="Status"
+      [vrijednost]="rijeseno() ? 'Riješeno' : 'Nije riješen'"
+      [rijeseno]="rijeseno()"
+    />
+  </div>
+</section>

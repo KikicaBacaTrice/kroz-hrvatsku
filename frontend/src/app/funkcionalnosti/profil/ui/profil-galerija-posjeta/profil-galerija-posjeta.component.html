@@ -1,0 +1,30 @@
+<section class="profil-galerija">
+  <header class="profil-galerija__zaglavlje">
+    <h2>Fotografije posjeta</h2>
+  </header>
+
+  @if (slike().length === 0) {
+    <p class="profil-galerija__prazno">
+      Još niste dodali niti jednu fotografiju posjeta
+    </p>
+  } @else {
+    <div class="profil-galerija__resetka">
+      @for (slika of slike(); track slika.slikaId; let i = $index) {
+        <button
+          type="button"
+          class="profil-galerija__slika-gumb"
+          (click)="slikaKliknuta.emit(i)"
+        >
+          <img
+            [src]="apiUrl + slika.putanjaSlike"
+            [alt]="slika.opisSlike || slika.rijesenaLokacija.lokacija.naziv"
+          />
+
+          <span class="profil-galerija__lokacija">
+            {{ slika.rijesenaLokacija.lokacija.naziv }}
+          </span>
+        </button>
+      }
+    </div>
+  }
+</section>

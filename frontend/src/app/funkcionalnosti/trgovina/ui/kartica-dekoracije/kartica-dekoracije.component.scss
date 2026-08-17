@@ -1,0 +1,75 @@
+.kartica-dekoracije {
+  // overflow: hidden;
+  border: 1px solid var(--clr-obrub);
+  border-radius: var(--radius-lg);
+  background: var(--clr-povrsina);
+  box-shadow: var(--shadow-md);
+
+  &__slika-spremnik {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 4 / 3;
+    background: var(--clr-povrsina-prigusena);
+  }
+
+  &__slika {
+    max-width: 80%;
+    max-height: 80%;
+    object-fit: contain;
+  }
+
+  &__sadrzaj {
+    display: grid;
+    gap: 0.65rem;
+    padding: 1rem;
+  }
+
+  &__tip {
+    margin: 0;
+    color: var(--clr-text-prigusen);
+    font-size: var(--fs-sm);
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  &__podnozje {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__kupnja-novac {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.25rem;
+  }
+
+  &__rijeseno-izazova {
+    margin-top: -0.25rem;
+    font-size: var(--fs-xs);
+    display: flex;
+    justify-content: flex-end;
+    cursor: pointer;
+    position: relative;
+  }
+
+  &__napredak-info {
+    position: absolute;
+    top: calc(100% + 3px);
+    left: 100%;
+    transform: translateX(-50%);
+    width: 25ch;
+    padding: 0.75rem;
+    color: white;
+    background-color: var(--clr-primarna-800);
+    border-radius: var(--radius-sm);
+    text-align: center;
+    opacity: 0;
+    transition: opacity 150ms ease-out;
+  }
+
+  &__rijeseno-izazova:hover &__napredak-info {
+    opacity: 0.8;
+  }
+}

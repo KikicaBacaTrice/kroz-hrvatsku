@@ -1,0 +1,32 @@
+<div class="odabir-bedza-modal" (click)="zatvori.emit()">
+  <section class="odabir-bedza-modal__panel" (click)="$event.stopPropagation()">
+    <header class="odabir-bedza-modal__zaglavlje">
+      <h2>Pozicija {{ pozicija() }}</h2>
+
+      <button
+        type="button"
+        class="odabir-bedza-modal__zatvori"
+        (click)="zatvori.emit()"
+      >
+        <app-zatovri-ikona velicina="20" />
+      </button>
+    </header>
+
+    @if (bedzevi().length === 0) {
+      <p class="odabir-bedza-modal__prazno">Još nemate nijedan osvojeni bedž</p>
+    } @else {
+      <div class="odabir-bedza-modal__resetka">
+        @for (bedz of bedzevi(); track bedz.bedzId) {
+          <button
+            type="button"
+            class="odabir-bedza-modal__bedz"
+            (click)="bedzOdabran.emit(bedz.bedzId)"
+          >
+            <img [src]="apiUrl + bedz.putanjaIkone" [alt]="bedz.naziv" />
+            <span>{{ bedz.naziv }}</span>
+          </button>
+        }
+      </div>
+    }
+  </section>
+</div>

@@ -1,3 +1,10 @@
+export type ProfilBedz = {
+  bedzId: number;
+  naziv: string;
+  opis: string | null;
+  putanjaIkone: string;
+};
+
 export type MojProfil = {
   profilId: number;
   korisnikId: number;
@@ -6,6 +13,16 @@ export type MojProfil = {
   razina: number;
   xpBodovi: number;
   virtualniNovac: number;
+  aktivnaPozadinaUrl: string | null;
+  aktivnaDekoracijaAvatarUrl: string | null;
+
+  bedzPozicija1Id: number | null;
+  bedzPozicija2Id: number | null;
+  bedzPozicija3Id: number | null;
+  bedzPozicija1: ProfilBedz | null;
+  bedzPozicija2: ProfilBedz | null;
+  bedzPozicija3: ProfilBedz | null;
+
   korisnik: {
     korisnikId: number;
     ulogaId: number;
@@ -13,5 +30,26 @@ export type MojProfil = {
     prezime: string | null;
     korisnickoIme: string;
     email: string;
+  };
+};
+
+export type UrediProfilaZahtjev = {
+  ime: string | null;
+  prezime: string | null;
+  korisnickoIme: string;
+  opisProfila: string | null;
+};
+
+export type ProfilSlikaPosjeta = {
+  slikaId: number;
+  putanjaSlike: string;
+  opisSlike?: string | null;
+  datumDodavanja: string;
+  rijesenaLokacija: {
+    datumVrijemePosjeta: string;
+    lokacija: {
+      lokacijaId: number;
+      naziv: string;
+    };
   };
 };

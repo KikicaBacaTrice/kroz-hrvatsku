@@ -1,0 +1,76 @@
+.odabir-bedza-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+  background: rgb(0 0 0 / 0.7);
+
+  &__panel {
+    width: min(100%, 42rem);
+    max-height: 85vh;
+    overflow: auto;
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+    background: var(--clr-povrsina);
+    box-shadow: var(--shadow-lg);
+  }
+
+  &__zaglavlje {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+
+    h2 {
+      margin: 0;
+    }
+  }
+
+  &__zatvori {
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 0;
+    cursor: pointer;
+  }
+
+  &__resetka {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
+    gap: 1rem;
+  }
+
+  &__bedz {
+    display: grid;
+    justify-items: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    border: 1px solid var(--clr-obrub);
+    border-radius: var(--radius-md);
+    background: var(--clr-povrsina);
+    color: var(--clr-text);
+    cursor: pointer;
+
+    &:hover {
+      border-color: var(--clr-primarna-600);
+      background: var(--clr-primarna-200);
+    }
+
+    img {
+      width: 4rem;
+      height: 4rem;
+      object-fit: contain;
+    }
+
+    span {
+      font-weight: 700;
+      text-align: center;
+    }
+  }
+
+  &__prazno {
+    margin: 0;
+    color: var(--clr-text-prigusen);
+  }
+}

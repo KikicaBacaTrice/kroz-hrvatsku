@@ -31,7 +31,64 @@ export class ProfilService {
       throw new NotFoundException('Profil nije pronađen');
     }
 
-    return profil;
+    const aktivniBedzevi = await this.prisma.korisnikDekoracija.findMany({
+      where: {
+        korisnikId: id,
+        aktivna: true,
+        pozicijaPrikaza: {
+          in: [1, 2, 3],
+        },
+        dekoracija: {
+          tipDekoracije: {
+            tipDekoracijeId: 2,
+          },
+        },
+      },
+      include: {
+        dekoracija: true,
+      },
+    });
+
+    const bedzPozicija1 = aktivniBedzevi.find((b) => b.pozicijaPrikaza === 1);
+    const bedzPozicija2 = aktivniBedzevi.find((b) => b.pozicijaPrikaza === 2);
+    const bedzPozicija3 = aktivniBedzevi.find((b) => b.pozicijaPrikaza === 3);
+
+    const aktivneDekoracije = await this.prisma.korisnikDekoracija.findMany({
+      where: {
+        korisnikId: id,
+        aktivna: true,
+      },
+      include: {
+        dekoracija: {
+          include: {
+            tipDekoracije: true,
+          },
+        },
+      },
+    });
+
+    const aktivnaDekoracijaAvatara = aktivneDekoracije.find(
+      (zapis) => zapis.dekoracija.tipDekoracije.tipDekoracijeId === 1,
+    );
+    const aktivnaPozadina = aktivneDekoracije.find(
+      (zapis) => zapis.dekoracija.tipDekoracije.tipDekoracijeId === 3,
+    );
+
+    return {
+      ...profil,
+      bedzPozicija1: bedzPozicija1
+        ? this.mapirajBedz(bedzPozicija1.dekoracija)
+        : null,
+      bedzPozicija2: bedzPozicija2
+        ? this.mapirajBedz(bedzPozicija2.dekoracija)
+        : null,
+      bedzPozicija3: bedzPozicija3
+        ? this.mapirajBedz(bedzPozicija3.dekoracija)
+        : null,
+      aktivnaPozadinaUrl: aktivnaPozadina?.dekoracija.slikaDekoracija ?? null,
+      aktivnaDekoracijaAvatarUrl:
+        aktivnaDekoracijaAvatara?.dekoracija.slikaDekoracija ?? null,
+    };
   }
 
   async dohvatiJavniProfil(id: number) {
@@ -61,6 +118,72 @@ export class ProfilService {
     return profil;
   }
 
+  async dohvatiMojuStatistiku(korisnikId: number) {
+    const profil = await this.prisma.profil.findUnique({
+      where: { korisnikId },
+      select: {
+        xpBodovi: true,
+        virtualniNovac: true,
+        razina: true,
+      },
+    });
+
+    if (!profil) {
+      throw new NotFoundException('Profil nije pronađen');
+    }
+
+    const brojIzazova = await this.prisma.rijesenaLokacija.count({
+      where: { korisnikId },
+    });
+
+    const brojPostignuca = await this.prisma.korisnikPostignuce.count({
+      where: { korisnikId },
+    });
+
+    const brojFotografija = await this.prisma.slikaPosjeta.count({
+      where: {
+        rijesenaLokacija: {
+          korisnikId,
+        },
+      },
+    });
+
+    return {
+      razina: profil.razina,
+      xp: profil.xpBodovi,
+      brojIzazova,
+      brojPostignuca,
+      brojFotografija,
+      brojNovcica: profil.virtualniNovac,
+    };
+  }
+
+  async dohvatiMojeSlikePosjeta(korisnikId: number) {
+    return this.prisma.slikaPosjeta.findMany({
+      where: {
+        rijesenaLokacija: {
+          korisnikId,
+        },
+      },
+      include: {
+        rijesenaLokacija: {
+          select: {
+            datumVrijemePosjeta: true,
+            lokacija: {
+              select: {
+                lokacijaId: true,
+                naziv: true,
+              },
+            },
+          },
+        },
+      },
+      orderBy: {
+        datumDodavanja: 'desc',
+      },
+    });
+  }
+
   async azurirajProfil(id: number, dto: AzuriranjProfilDto) {
     const profil = await this.prisma.profil.findUnique({
       where: { korisnikId: id },
@@ -70,11 +193,24 @@ export class ProfilService {
       throw new NotFoundException('Profil nije pronađen');
     }
 
-    return await this.prisma.profil.update({
-      where: { korisnikId: id },
-      data: {
-        opisProfila: dto.opisProfila,
-      },
+    return this.prisma.$transaction(async (tx) => {
+      await tx.korisnik.update({
+        where: { korisnikId: id },
+        data: {
+          ime: dto.ime,
+          prezime: dto.prezime,
+          korisnickoIme: dto.korisnickoIme,
+        },
+      });
+
+      await tx.profil.update({
+        where: { korisnikId: id },
+        data: {
+          opisProfila: dto.opisProfila,
+        },
+      });
+
+      return this.dohvatiMoj(id);
     });
   }
 
@@ -87,12 +223,14 @@ export class ProfilService {
       throw new NotFoundException('Profil nije pronađen');
     }
 
-    return this.prisma.profil.update({
+    await this.prisma.profil.update({
       where: { korisnikId: id },
       data: {
         profilnaSlikaUrl: url,
       },
     });
+
+    return this.dohvatiMoj(id);
   }
 
   async obrisiProfilnuSliku(id: number) {
@@ -104,11 +242,22 @@ export class ProfilService {
       throw new NotFoundException('Profil nije pronađen');
     }
 
-    return this.prisma.profil.update({
+    await this.prisma.profil.update({
       where: { korisnikId: id },
       data: {
         profilnaSlikaUrl: null,
       },
     });
+
+    return this.dohvatiMoj(id);
+  }
+
+  private mapirajBedz(dekoracija: any) {
+    return {
+      bedzId: dekoracija.dekoracijaId,
+      naziv: dekoracija.naziv,
+      opis: dekoracija.opis,
+      putanjaIkone: dekoracija.slikaDekoracija,
+    };
   }
 }

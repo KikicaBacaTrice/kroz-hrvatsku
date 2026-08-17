@@ -1,0 +1,78 @@
+.profil-galerija-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+  background: rgb(0 0 0 / 0.72);
+
+  &__sadrzaj {
+    position: relative;
+    width: min(90vw, 72rem);
+    max-height: 90vh;
+    display: grid;
+    gap: 1rem;
+  }
+
+  &__zatvori {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 2;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 0;
+    cursor: pointer;
+  }
+
+  &__slika-spremnik {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    background: var(--clr-primarna-900);
+  }
+
+  &__slika {
+    width: 100%;
+    height: min(72vh, 42rem);
+    display: block;
+    object-fit: contain;
+    background: var(--clr-primarna-900);
+  }
+
+  &__navigacija {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    width: 3rem;
+    height: 3rem;
+    border-radius: var(--radius-zaobljeno);
+    background: rgb(0 0 0 / 0.35);
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+
+    &--prethodna {
+      left: 1rem;
+    }
+
+    &--sljedeca {
+      right: 1rem;
+    }
+  }
+
+  &__meta {
+    color: white;
+    text-align: center;
+  }
+
+  &__brojac {
+    font-weight: 700;
+  }
+
+  &__opis {
+    color: rgb(255 255 255 / 0.8);
+  }
+}

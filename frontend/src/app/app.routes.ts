@@ -37,6 +37,14 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'trgovina',
+        canActivate: [authGuard],
+        loadComponent: () =>
+          import('./funkcionalnosti/trgovina/stranice/trgovina-stranica/trgovina-stranica.component').then(
+            (m) => m.TrgovinaStranicaComponent,
+          ),
+      },
+      {
         path: 'uredivanje',
         loadChildren: () =>
           import('./funkcionalnosti/uredivanje/uredivanje.routes').then(

@@ -1,0 +1,71 @@
+<div class="uspomene-modal">
+  <button
+    type="button"
+    class="uspomene-modal__pozadina"
+    (click)="zatvori.emit()"
+  ></button>
+
+  <section class="uspomene-modal__panel">
+    <header class="uspomene-modal__zaglavlje">
+      <h2>Vaš dolazak</h2>
+
+      <button
+        type="button"
+        class="uspomene-modal__atovri"
+        (click)="zatvori.emit()"
+      >
+        <app-zatovri-ikona />
+      </button>
+    </header>
+
+    <div class="uspomene-modal__meta">
+      <div class="uspomene-modal__meta-kartica">
+        <span>Datum dolaska</span>
+        <strong>
+          {{
+            dolazak().datumVrijemePosjeta | date: "dd.MM.yyyy. HH:mm"
+          }}</strong
+        >
+      </div>
+      <div class="uspomene-modal__meta-kartica">
+        <span>Osvojeni XP</span>
+        <strong>+ {{ dolazak().brojOsvojenihXp }} XP</strong>
+      </div>
+      <div class="uspomene-modal__meta-kartica">
+        <span>Datum dolaska</span>
+        <strong> + {{ dolazak().brojOsvojeneValute }} novčića</strong>
+      </div>
+
+      <div class="uspomene-modal__sekcija">
+        <h3>Bilješka</h3>
+        @if (dolazak().biljeska) {
+          <p class="uspomene-modal__biljeska">
+            {{ dolazak().biljeska }}
+          </p>
+        } @else {
+          <p class="uspomene-modal__biljeska">Niste ostavili bilješku</p>
+        }
+      </div>
+
+      <div class="uspomene-modal__sekcija">
+        <h3>Slike posjeta</h3>
+
+        @if (dolazak().slikePosjeta.length > 0) {
+          <div class="uspomene-modal__slike">
+            @for (slika of dolazak().slikePosjeta; track slika.slikaId) {
+              <button type="button" class="uspomene-modal__slika-gumb">
+                <img
+                  [src]="apiUrl + slika.putanjaSlike"
+                  [alt]="slika.opisSlike || 'Slika posjeta'"
+                  class="uspomene-modal__slika"
+                />
+              </button>
+            }
+          </div>
+        } @else {
+          <p class="uspomene-modal__biljeska">Nema dodanih slika</p>
+        }
+      </div>
+    </div>
+  </section>
+</div>

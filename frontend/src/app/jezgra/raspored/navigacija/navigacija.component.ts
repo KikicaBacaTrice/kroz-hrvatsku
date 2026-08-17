@@ -10,6 +10,7 @@ import { HamburgerIkonaComponent } from '../../../dijeljeno/ui/ikone/hamburger-i
 import { ZatovriIkonaComponent } from '../../../dijeljeno/ui/ikone/zatovri-ikona/zatovri-ikona.component';
 import { DOCUMENT } from '@angular/common';
 import { MobilniIzbornikComponent } from './ui/mobilni-izbornik/mobilni-izbornik.component';
+import { API_URL } from '../../konfiguracija/api.config';
 
 @Component({
   selector: 'app-navigacija',
@@ -30,14 +31,10 @@ export class NavigacijaComponent implements OnInit {
   readonly profilStanje = inject(ProfilStanjeService);
   private readonly document = inject(DOCUMENT);
 
+  readonly apiUrl = API_URL;
+
   izbornikOtvoren = signal(false);
   mobilniIzbornikOtvoren = signal(false);
-
-  constructor() {
-    effect(() => {
-      console.log('Profil stanje:', this.profilStanje.profil());
-    });
-  }
 
   ngOnInit(): void {
     if (this.authStanje.prijavljen()) {

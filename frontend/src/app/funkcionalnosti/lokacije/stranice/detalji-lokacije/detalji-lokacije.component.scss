@@ -52,17 +52,18 @@
       width: min(100% - 2rem, 56rem);
       margin-top: 1.5rem;
     }
+  }
 
-    &__spremnik {
-      grid-template-columns: 1fr;
-    }
-    &__bocni-stupac {
-      order: -1;
-    }
+  .lokacija-sadrzaj__spremnik {
+    grid-template-columns: 1fr;
+  }
 
-    &__kartica-izazov {
-      position: static;
-    }
+  .lokacija-sadrzaj__bocni-stupac {
+    order: -1;
+  }
+
+  .lokacija-sadrzaj__kartica-izazov {
+    position: static;
   }
 }
 

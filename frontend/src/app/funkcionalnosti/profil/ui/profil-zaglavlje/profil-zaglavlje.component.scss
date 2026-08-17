@@ -1,0 +1,310 @@
+@use "../../../../../stilovi/postavke/" as postavke;
+
+.profil-zaglavlje {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  width: 100%;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 18rem;
+  margin-inline: auto;
+  padding: 2.5rem;
+  padding-bottom: 0.25rem;
+  border: 1px solid var(--clr-obrub);
+  border-radius: var(--radius-lg);
+  background: var(--clr-povrsina);
+  box-shadow: var(--shadow-lg);
+
+  &__pozadina,
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+  }
+
+  &__pozadina {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+
+  &__overlay {
+    z-index: -1;
+    background: linear-gradient(
+      to right,
+      rgb(0 0 0 / 0.7) 0%,
+      rgb(0 0 0 / 0.55) 60%,
+      rgb(0 0 0 / 0.2) 100%
+    );
+  }
+
+  &__sadrzaj {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    color: white;
+  }
+
+  &__slika-spremnik {
+    --avatar-velicina: 7rem;
+    --dekoracija-avatar-velicina: 10rem;
+
+    position: relative;
+    width: var(--avatar-velicina);
+    height: var(--avatar-velicina);
+    flex: 0 0 auto;
+  }
+
+  &__slika-gumb {
+    position: relative;
+    z-index: 2;
+    display: block;
+    width: var(--avatar-velicina);
+    height: var(--avatar-velicina);
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-zaobljeno);
+    background: transparent;
+    cursor: pointer;
+  }
+
+  &__slika {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--radius-zaobljeno);
+  }
+
+  &__slika--slovo {
+    display: grid;
+    place-items: center;
+    background: var(--clr-sekundarna-300);
+    color: var(--clr-primarna-800);
+    font-family: postavke.$ff-naslovi;
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  &__slika-obrisi {
+    position: absolute;
+    top: -0.1rem;
+    right: -0.1rem;
+    z-index: 5;
+
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: var(--radius-zaobljeno);
+    background: var(--clr-opasnost);
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+
+    &::after {
+      content: "Obriši sliku";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: max-content;
+      font-size: var(--fs-sm);
+      color: white;
+      background: var(--clr-primarna-800);
+      padding: 0.25rem;
+      border-radius: var(--radius-zaobljeno);
+      opacity: 0;
+      transition: opacity 150ms ease-out;
+    }
+
+    &:hover::after {
+      opacity: 0.8;
+    }
+  }
+
+  &__slika-obrisi:hover {
+    filter: brightness(0.9);
+  }
+
+  &__razina {
+    position: absolute;
+    left: 50%;
+    bottom: -1rem;
+    z-index: 4;
+    transform: translateX(-50%);
+
+    padding: 0.3rem 0.75rem;
+    border-radius: var(--radius-zaobljeno);
+    background: var(--clr-sekundarna-300);
+    color: var(--clr-primarna-800);
+    font-size: var(--fs-xs);
+    font-weight: 800;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  &__dekoracija-avatar {
+    position: absolute;
+    left: 50%;
+    bottom: -30%;
+    z-index: 3;
+    width: var(--dekoracija-avatar-velicina);
+    height: var(--dekoracija-avatar-velicina);
+    transform: translateX(-50%);
+    pointer-events: none;
+    user-select: none;
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  &__tekst {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__gornji-red {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  h1 {
+    margin: 0;
+    color: white;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    line-height: 1;
+  }
+
+  &__korisnicko-ime {
+    margin: 0.35rem 0 0;
+    color: rgb(255 255 255 / 0.82);
+  }
+
+  &__opis {
+    max-width: 42rem;
+    margin: 1rem 0 0;
+    color: rgb(255 255 255 / 0.9);
+    font-style: italic;
+    line-height: 1.55;
+  }
+
+  &__akcija {
+    position: absolute;
+    right: 2rem;
+    top: 1.5rem;
+    opacity: 0.7;
+    transition: opacity 150ms ease-out;
+
+    &::after {
+      content: "Uredi profil";
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      color: #fff;
+      font-size: var(--fs-sm);
+      background: var(--clr-primarna-800);
+      padding: 0.25rem;
+      border-radius: var(--radius-sm);
+      width: max-content;
+      opacity: 0;
+      transition: opacity 150ms ease-out;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    &:hover {
+      opacity: 1;
+
+      &::after {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  &__bezdevi-spremnik {
+    width: max-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+  }
+
+  &__bedz {
+    --bedz-velicina: 7.5rem;
+    width: var(--bedz-velicina);
+    height: var(--bedz-velicina);
+    cursor: pointer;
+    position: relative;
+
+    > img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    &::after {
+      content: "Odaberite bedž";
+      position: absolute;
+      bottom: -0.25rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: max-content;
+      padding: 0.25rem;
+      border-radius: var(--radius-sm);
+      background: var(--clr-primarna-800);
+      color: white;
+      font-size: var(--fs-sm);
+      opacity: 0;
+      transition: opacity 150ms ease-out;
+    }
+
+    &:hover::after {
+      opacity: 0.8;
+    }
+  }
+}
+
+@media (max-width: 1100px) {
+  .profil-zaglavlje__bedz {
+    --bedz-velicina: 6rem;
+  }
+}
+@media (max-width: 950px) {
+  .profil-zaglavlje__opis {
+    display: none;
+  }
+}
+@media (max-width: 700px) {
+  .profil-zaglavlje {
+    width: min(100% - 1rem, 72rem);
+    min-height: auto;
+    padding: 1rem;
+
+    &__sadrzaj {
+      flex-direction: column;
+      align-items: flex-start;
+      min-height: 16rem;
+      justify-content: flex-end;
+    }
+
+    &__gornji-red {
+      width: 100%;
+      flex-direction: column;
+    }
+
+    .c-button {
+      width: 100%;
+    }
+  }
+}

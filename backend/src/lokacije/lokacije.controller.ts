@@ -12,6 +12,7 @@ import {
   UseGuards,
   UseInterceptors,
   UploadedFile,
+  UploadedFiles,
 } from '@nestjs/common';
 import { LokacijeService } from './lokacije.service';
 import { AzurirajLokacijuDto } from './dto/azuriraj-lokacije.dto';
@@ -22,7 +23,7 @@ import { AzurirajSlikuLokacijeDto } from './dto/azuriraj-sliku-lokacije.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { UlogeGuard } from 'src/auth/uloge.guard';
 import { Uloge } from 'src/auth/uloge.decorator';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname, join } from 'path';
 
@@ -43,6 +44,18 @@ export class LokacijeController {
   @Get(':id/slike')
   dohvatiSlikeZaLokaciju(@Param('id', ParseIntPipe) id: number) {
     return this.lokacijeServis.dohvatiSlikeZaLokaciju(id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(':id/moj-dolazak')
+  dohvatiMojDolazakZaLokaciju(
+    @Param('id', ParseIntPipe) lokacijaId: number,
+    @Req() req: any,
+  ) {
+    return this.lokacijeServis.dohvatiMojDolazakZaLokaciju(
+      lokacijaId,
+      req.user.userId,
+    );
   }
 
   @UseGuards(JwtAuthGuard)
@@ -110,13 +123,28 @@ export class LokacijeController {
 
   @UseGuards(JwtAuthGuard)
   @Post(':lokacijaId/rijesi')
+  @UseInterceptors(
+    FilesInterceptor('slike', 5, {
+      storage: diskStorage({
+        destination: join(process.cwd(), 'prijenos', 'posjeti'),
+        filename: (req, file, callback) => {
+          const naziv = `${Date.now()}-${Math.round(Math.random() * 1e9)}${extname(file.originalname)}`;
+          callback(null, naziv);
+        },
+      }),
+    }),
+  )
   zabiljesiRijesenuLokaciju(
     @Param('lokacijaId', ParseIntPipe) lokacijaId: number,
     @Req() req: any,
+    @Body('biljeska') biljeska?: string,
+    @UploadedFiles() slike?: Express.Multer.File[],
   ) {
     return this.lokacijeServis.zabiljeziRijesenuLokaciju(
       lokacijaId,
       req.user.userId,
+      biljeska,
+      slike ?? [],
     );
   }
 

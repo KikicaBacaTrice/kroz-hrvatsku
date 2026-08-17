@@ -19,6 +19,7 @@ import { DodajTipDekoracijeDto } from './dto/dodaj-tip-dekoracije.dto';
 import { AzurirajTipDekoracijeDto } from './dto/azuriraj-tip-dekoracije.dto';
 import { UlogeGuard } from 'src/auth/uloge.guard';
 import { Uloge } from 'src/auth/uloge.decorator';
+import { DeaktivirajTipDekoracijeDto } from './dto/deaktiviraj-tip-dekoracije';
 
 @Controller('dekoracije')
 export class DekoracijeController {
@@ -81,6 +82,18 @@ export class DekoracijeController {
       req.user.userId,
       dto.dekoracijaId,
       dto.pozicijaPrikaza,
+    );
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch('ja/deaktiviraj-tip')
+  deaktivirajTipDekoracije(
+    @Req() req: any,
+    @Body() dto: DeaktivirajTipDekoracijeDto,
+  ) {
+    return this.dekoracijeServis.deaktivirajAktivnuDekoracijuZaTip(
+      req.user.userId,
+      dto.tipDekoracijeId,
     );
   }
 
