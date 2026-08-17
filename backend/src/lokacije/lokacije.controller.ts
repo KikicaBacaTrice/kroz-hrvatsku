@@ -94,7 +94,7 @@ export class LokacijeController {
   }
 
   @UseGuards(JwtAuthGuard, UlogeGuard)
-  @Uloge(1)
+  @Uloge(2)
   @Post(':id/slike/upload')
   @UseInterceptors(
     FileInterceptor('slika', {
@@ -149,7 +149,7 @@ export class LokacijeController {
   }
 
   @UseGuards(JwtAuthGuard, UlogeGuard)
-  @Uloge(1)
+  @Uloge(2)
   @Patch(':id')
   azurirajLokaciju(
     @Param('id', ParseIntPipe) id: number,
@@ -159,14 +159,14 @@ export class LokacijeController {
   }
 
   @UseGuards(JwtAuthGuard, UlogeGuard)
-  @Uloge(1)
+  @Uloge(2)
   @Patch(':id/popularnost')
   izmijeniPopularnostLokacija(@Param('id', ParseIntPipe) id: number) {
     return this.lokacijeServis.izmijeniPopularnostLokacija(id);
   }
 
   @UseGuards(JwtAuthGuard, UlogeGuard)
-  @Uloge(1)
+  @Uloge(2)
   @Patch(':id/slike/:slikaId')
   azurirajPodatkeSlike(
     @Param('id', ParseIntPipe) lokacijaId: number,
@@ -181,14 +181,14 @@ export class LokacijeController {
   }
 
   @UseGuards(JwtAuthGuard, UlogeGuard)
-  @Uloge(1)
+  @Uloge(2)
   @Delete(':id')
   obrisiLokaciju(@Param('id', ParseIntPipe) id: number) {
     return this.lokacijeServis.obrisi(id);
   }
 
   @UseGuards(JwtAuthGuard, UlogeGuard)
-  @Uloge(1)
+  @Uloge(2)
   @Delete(':id/slike/:slikaId')
   obrisiSlikuZaLokaciju(
     @Param('id', ParseIntPipe) lokacijaId: number,
