@@ -15,6 +15,7 @@ export type ZabiljeziDolazakPodaci = {
 })
 export class ZabiljeniDolazakModalComponent {
   spremanje = input(false);
+  jePrijavljen = input(false);
 
   @Output() zatvori = new EventEmitter<void>();
   @Output() spremi = new EventEmitter<ZabiljeziDolazakPodaci>();

@@ -32,6 +32,7 @@
           maxlength="1000"
           placeholder="Napiši doživljaj lokacije"
           [(ngModel)]="model.biljeska"
+          [disabled]="!jePrijavljen()"
         ></textarea>
       </label>
 
@@ -43,6 +44,7 @@
           name="slike"
           multiple
           (change)="odaberiSlike($event)"
+          [disabled]="!jePrijavljen()"
         />
       </label>
 
@@ -64,18 +66,22 @@
         </div>
       }
 
-      <div class="zabiljezi-dolazak-modal__akcije">
-        <button
-          type="button"
-          class="c-button c-button--primarna-inverz"
-          (click)="zatvori.emit()"
-        >
-          Odustani
-        </button>
-        <button type="submit" class="c-button c-button--primarna">
-          {{ spremanje() ? "Spremanje" : "Zabilježi dolazak" }}
-        </button>
-      </div>
+      @if (!jePrijavljen()) {
+        <p>Prijevite se kako biste zabilježili dolazak</p>
+      } @else {
+        <div class="zabiljezi-dolazak-modal__akcije">
+          <button
+            type="button"
+            class="c-button c-button--primarna-inverz"
+            (click)="zatvori.emit()"
+          >
+            Odustani
+          </button>
+          <button type="submit" class="c-button c-button--primarna">
+            {{ spremanje() ? "Spremanje" : "Zabilježi dolazak" }}
+          </button>
+        </div>
+      }
     </form>
   </section>
 </div>

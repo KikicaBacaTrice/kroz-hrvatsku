@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { KategorijeStanjeService } from '../../stanje/kategorije-stanje.service';
 import { DolasciLokacijeStanjeService } from '../../stanje/dolasci-lokacije-stanje.service';
 import { FilterLokacijaFormaComponent } from '../../ui/filteri/filter-lokacija-forma/filter-lokacija-forma.component';
+import { AuthStanjeService } from '../../../autentikacija/stanje/auth-stanje.service';
 
 @Component({
   selector: 'app-lista-lokacija',
@@ -19,6 +20,7 @@ import { FilterLokacijaFormaComponent } from '../../ui/filteri/filter-lokacija-f
   styleUrl: './lista-lokacija.component.scss',
 })
 export class ListaLokacijaComponent {
+  private readonly authStanje = inject(AuthStanjeService);
   private readonly lokacijaStanje = inject(LokacijaStanjeService);
   private readonly kategorijeStanje = inject(KategorijeStanjeService);
   private readonly dolasciStanje = inject(DolasciLokacijeStanjeService);
@@ -40,7 +42,10 @@ export class ListaLokacijaComponent {
 
   ngOnInit(): void {
     this.kategorijeStanje.ucitajKategorije();
-    this.dolasciStanje.ucitajRijeseneLokacije();
+
+    if (this.authStanje.prijavljen()) {
+      this.dolasciStanje.ucitajRijeseneLokacije();
+    }
 
     this.route.queryParams.subscribe((params) => {
       this.filter = {

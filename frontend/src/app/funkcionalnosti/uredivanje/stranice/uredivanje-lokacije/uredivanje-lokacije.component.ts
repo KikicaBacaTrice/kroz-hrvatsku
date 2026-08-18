@@ -3,11 +3,10 @@ import { LokacijeHttpService } from '../../../lokacije/podaci/lokacije-http.serv
 import { API_URL } from '../../../../jezgra/konfiguracija/api.config';
 import { Lokacija } from '../../../lokacije/modeli/lokacija.model';
 import { RouterLink } from '@angular/router';
-import { StrelicaIkonaComponent } from '../../../../dijeljeno/ui/ikone/strelica-ikona/strelica-ikona.component';
 
 @Component({
   selector: 'app-uredivanje-lokacije',
-  imports: [RouterLink, StrelicaIkonaComponent],
+  imports: [RouterLink],
   templateUrl: './uredivanje-lokacije.component.html',
   styleUrl: './uredivanje-lokacije.component.scss',
 })

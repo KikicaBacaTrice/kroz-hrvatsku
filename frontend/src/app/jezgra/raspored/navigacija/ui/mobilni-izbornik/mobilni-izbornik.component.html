@@ -17,12 +17,12 @@
       <div class="o-stog | mobilni-izbornik__profil">
         @if (profil.profilnaSlikaUrl) {
           <img
-            [src]="profil.profilnaSlikaUrl"
+            [src]="apiUrl + profil.profilnaSlikaUrl"
             alt="profil.korisnik.korisnickoIme"
-            class="navigacija__mobilni-izbornik-slika"
+            class="mobilni-izbornik__slika"
           />
         } @else {
-          <span class="navigacija__mobilni-izbornik-slika-prvo-slovo">
+          <span class="mobilni-izbornik__slika-prvo-slovo">
             {{ profil.korisnik.korisnickoIme.charAt(0).toUpperCase() }}
           </span>
         }
@@ -41,17 +41,26 @@
 
     <ul class="o-stog o-lista-pocetno | mobilni-izbornik__lista">
       <li>
-        <a routerLink="/" (click)="zatovriIzbornik()">Početna</a>
-      </li>
-      <li>
         <a routerLink="/lokacije" (click)="zatovriIzbornik()">Lokacije</a>
       </li>
-      <li>
-        <a routerLink="/profil" (click)="zatovriIzbornik()">Profil</a>
-      </li>
-      <li>
-        <a routerLink="/" (click)="zatovriIzbornik()">Dostignuća</a>
-      </li>
+
+      @if (prijavljen()) {
+        <li>
+          <a routerLink="/trgovina" (click)="zatovriIzbornik()">Trgovina</a>
+        </li>
+
+        <li>
+          <a routerLink="/profil" (click)="zatovriIzbornik()">Profil</a>
+        </li>
+      }
+
+      @if (profil()?.korisnik?.ulogaId === 2) {
+        <li>
+          <a routerLink="/uredivanje/lokacije" (click)="zatovriIzbornik()">
+            Uređivanje lokacija
+          </a>
+        </li>
+      }
     </ul>
 
     @if (prijavljen()) {
