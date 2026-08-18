@@ -5,6 +5,7 @@ import { LokacijeHttpService } from '../../../lokacije/podaci/lokacije-http.serv
 import { Lokacija } from '../../../lokacije/modeli/lokacija.model';
 import { KarticaLokacijeComponent } from '../../../lokacije/ui/kartice/kartica-lokacije/kartica-lokacije.component';
 import { StrelicaIkonaComponent } from '../../../../dijeljeno/ui/ikone/strelica-ikona/strelica-ikona.component';
+import { AuthStanjeService } from '../../../autentikacija/stanje/auth-stanje.service';
 
 @Component({
   selector: 'app-pocetna',
@@ -19,6 +20,7 @@ import { StrelicaIkonaComponent } from '../../../../dijeljeno/ui/ikone/strelica-
 })
 export class PocetnaComponent {
   private readonly lokacijeHttp = inject(LokacijeHttpService);
+  readonly authStanje = inject(AuthStanjeService);
 
   odabranaZupanija = signal<string | null>(null);
   lokacijeZupanije = signal<Lokacija[]>([]);

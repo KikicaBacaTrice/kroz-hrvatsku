@@ -19,10 +19,12 @@
     inset: 0;
     width: 100%;
     height: 100%;
+    // top: 9rem;
     transform: translateY(9rem);
+    will-change: transform;
     z-index: -2;
 
-    &__dolje {
+    &--dolje {
       z-index: -1;
     }
 
@@ -67,6 +69,28 @@
 
   &__akcije-prijava-btn {
     background: transparent;
+  }
+}
+
+@supports (animation-timeline: scroll()) {
+  .hero-sekcija__magla {
+    animation: magla-parallax linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 100svh;
+  }
+
+  .hero-sekcija__magla--lijevo {
+    --magla-pomak: -14rem;
+  }
+
+  .hero-sekcija__magla--desno {
+    --magla-pomak: -16rem;
+  }
+
+  @keyframes magla-parallax {
+    to {
+      transform: translateY(var(--magla-pomak));
+    }
   }
 }
 

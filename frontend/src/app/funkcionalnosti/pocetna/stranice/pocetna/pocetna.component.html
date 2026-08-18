@@ -37,13 +37,24 @@
       <a routerLink="/lokacije">
         <button class="c-button c-button--primarna">Istaži lokacije</button>
       </a>
-      <a routerLink="/autentikacija/prijava">
-        <button
-          class="c-button c-button--primarna-inverz | hero-sekcija__akcije-prijava-btn"
-        >
-          Prijavi se
-        </button>
-      </a>
+
+      @if (authStanje.prijavljen()) {
+        <a routerLink="/trgovina">
+          <button
+            class="c-button c-button--primarna-inverz | hero-sekcija__akcije-prijava-btn"
+          >
+            Trgovina
+          </button>
+        </a>
+      } @else {
+        <a routerLink="/autentikacija/prijava">
+          <button
+            class="c-button c-button--primarna-inverz | hero-sekcija__akcije-prijava-btn"
+          >
+            Prijavi se
+          </button>
+        </a>
+      }
     </div>
   </div>
 </section>
@@ -108,7 +119,7 @@
     <div class="posjet-nagrade__slika-spremnik">
       <img
         src="/slike/ostalo/pocetna-stranica/zabiljezi-dolazak-selfe.png"
-        alt=""
+        alt="Slika korisnik kako uzima selfi izsred dvorca trakošćan"
       />
     </div>
 
@@ -122,7 +133,10 @@
     class="o-klaster o-klaster--between | posjet-nagrade__sekcija posjet-nagrade-sekcija__podijeli-iskustvo"
   >
     <div class="posjet-nagrade__slika-spremnik">
-      <img src="/slike/ostalo/pocetna-stranica/podijeli-iskustvo.png" alt="" />
+      <img
+        src="/slike/ostalo/pocetna-stranica/podijeli-iskustvo.png"
+        alt="Slika komentara korisnika"
+      />
     </div>
 
     <div class="o-stog | posjet-nagrade__sadrzaj">
@@ -153,7 +167,10 @@
     </div>
 
     <div class="posjet-nagrade__slika-spremnik">
-      <img src="/slike/ostalo/pocetna-stranica/osvoji-nagrade.png" alt="" />
+      <img
+        src="/slike/ostalo/pocetna-stranica/osvoji-nagrade.png"
+        alt="Slika dekoracija koje korisnik može osvojiti"
+      />
     </div>
   </div>
 </section>
