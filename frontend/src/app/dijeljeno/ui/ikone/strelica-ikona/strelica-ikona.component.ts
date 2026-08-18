@@ -7,6 +7,7 @@ import { Component, input } from '@angular/core';
     <svg
       [attr.width]="velicina()"
       [attr.height]="velicina()"
+      [style.transform]="'rotate(' + rotacija() + 'deg)'"
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -33,4 +34,5 @@ import { Component, input } from '@angular/core';
 export class StrelicaIkonaComponent {
   boja = input('#002019');
   velicina = input(24);
+  rotacija = input(0);
 }

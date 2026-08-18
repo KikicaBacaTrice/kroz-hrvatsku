@@ -42,7 +42,7 @@
 @supports (animation-timeline: scroll()) {
   // ako je navigacija sticky onda offsetaj sticky:top od kartice za veličinu navigacije
   .lokacija-sadrzaj__kartica-izazov {
-    --kraj-navigacije: 7rem;
+    --kraj-navigacije: 7.5rem;
   }
 }
 
