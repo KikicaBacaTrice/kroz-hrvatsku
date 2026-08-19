@@ -1,0 +1,32 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.karta-hrvatske {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+.karta-hrvatske__zupanija {
+  cursor: pointer;
+  transition:
+    fill 200ms ease,
+    filter 200ms ease,
+    transform 200ms ease;
+  transform-box: fill-box;
+  transform-origin: center;
+  outline: none;
+
+  &:hover,
+  &:focus-visible,
+  &--aktivna {
+    fill: var(--clr-sekundarna-400);
+    filter: drop-shadow(0 0.35rem 0.6rem rgb(0 0 0 / 20%));
+    outline: none;
+    transform: translateY(-2px);
+    z-index: 2;
+  }
+}

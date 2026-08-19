@@ -1,0 +1,145 @@
+@use "../../../../../stilovi/postavke" as postavke;
+@use "../../../../../stilovi/alati" as alati;
+
+.posjet-nagrade {
+  display: grid;
+  gap: 2rem;
+  margin-inline: 8rem;
+
+  &__sekcija {
+    min-height: 60svh;
+    position: relative;
+  }
+
+  &__sadrzaj {
+    --stog-gap: 0.5rem;
+    max-width: 40ch;
+
+    span {
+      margin-bottom: 0.5rem;
+      color: var(--clr-primarna-800);
+      position: relative;
+      &::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 2ch;
+        transform: translateY(-50%);
+        width: 25px;
+        height: 2px;
+        background: var(--clr-primarna-800);
+      }
+    }
+  }
+
+  &__slika-spremnik {
+    height: 60svh;
+    width: auto;
+
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: var(--radius-lg);
+    }
+  }
+
+  &__strelica-sljedeca-sekcija {
+    position: absolute;
+    height: 200px;
+    width: auto;
+    top: 90%;
+    left: 45%;
+    transform: translateY(-50%);
+
+    &--inverz {
+      right: 45%;
+      transform: scaleX(-1);
+    }
+  }
+}
+
+@include alati.ekranManjiOd(postavke.$breakpoint-xl) {
+  .posjet-nagrade {
+    margin-inline: 4rem;
+  }
+
+  .posjet-nagrade__strelica-sljedeca-sekcija {
+    height: 140px;
+  }
+}
+
+@include alati.ekranManjiOd(postavke.$breakpoint-lg) {
+  .posjet-nagrade {
+    margin-inline: 2rem;
+  }
+
+  .posjet-nagrade__sekcija {
+    min-height: auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding-block: 3rem;
+  }
+
+  .posjet-nagrade-sekcija__podijeli-iskustvo {
+    min-height: auto;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .posjet-nagrade__slika-spremnik {
+    height: auto;
+
+    img {
+      max-height: 18rem;
+      object-fit: cover;
+    }
+  }
+
+  .posjet-nagrade__strelica-sljedeca-sekcija {
+    display: none;
+  }
+
+  .posjet-nagrade__strelica-sljedeca-sekcija {
+    display: none;
+  }
+}
+
+@include alati.ekranManjiOd(postavke.$breakpoint-md) {
+  .posjet-nagrade {
+    margin-inline: 1rem;
+  }
+
+  .posjet-nagrade {
+    gap: 1rem;
+  }
+
+  .posjet-nagrade__sekcija {
+    padding-block: 2rem;
+  }
+
+  .posjet-nagrade__sadrzaj {
+    max-width: 100%;
+    text-align: center;
+    align-items: center;
+
+    span::after {
+      display: none;
+    }
+  }
+
+  .posjet-nagrade__slika-spremnik img {
+    max-height: 22rem;
+    object-fit: cover;
+  }
+}
+
+@include alati.ekranManjiOd(postavke.$breakpoint-sm) {
+  .posjet-nagrade {
+    margin-inline: 0.75rem;
+  }
+
+  .posjet-nagrade__slika-spremnik img {
+    max-height: 18rem;
+  }
+}

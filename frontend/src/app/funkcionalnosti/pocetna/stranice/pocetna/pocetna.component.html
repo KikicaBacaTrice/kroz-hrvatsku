@@ -1,3 +1,16 @@
-<p>pocetna works!</p>
+<div class="o-stog | pocetna-stranica-spremnik">
+  <app-hero-sekcija [jePrijavljen]="authStanje.prijavljen()" />
 
-<a routerLink="/lokacije/1">trakoscan </a>
+  <app-lokacije-sekcija
+    [odabranaZupanija]="odabranaZupanija()"
+    [lokacijeZupanije]="lokacijeZupanije()"
+    [ucitavanjeLokacija]="ucitavanjeLokacija()"
+    (zupanijaOdabrana)="odaberiZupaniju($event)"
+  />
+
+  <app-posjet-sekcija />
+
+  <app-tvoja-prica />
+
+  <app-zapocni-putovanje />
+</div>

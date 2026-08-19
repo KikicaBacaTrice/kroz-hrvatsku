@@ -1,0 +1,61 @@
+@use "../../../../../stilovi/postavke" as postavke;
+@use "../../../../../stilovi/alati" as alati;
+
+.tvoja-prica {
+  display: grid;
+  place-items: center;
+  width: 100%;
+
+  &__spremnik {
+    width: min(60rem, 100%);
+  }
+
+  &__sadrzaj {
+    display: grid;
+    gap: 0.75rem;
+    text-align: center;
+
+    h3 {
+      font-size: var(--fs-2xl);
+      line-height: 1.1;
+    }
+  }
+
+  &__slika-spremnik {
+    display: grid;
+    place-items: center;
+
+    img {
+      width: 60%;
+    }
+  }
+}
+
+@include alati.ekranManjiOd(postavke.$breakpoint-lg) {
+  .tvoja-prica__spremnik {
+    width: min(100%, 44rem);
+    padding-inline: 2rem;
+  }
+
+  .tvoja-prica__slika-spremnik img {
+    width: 85%;
+  }
+}
+
+@include alati.ekranManjiOd(postavke.$breakpoint-md) {
+  .tvoja-prica {
+    padding-block: 3rem;
+  }
+
+  .tvoja-prica__spremnik {
+    padding-inline: 1rem;
+  }
+
+  .tvoja-prica__sadrzaj h3 {
+    font-size: clamp(2rem, 10vw, var(--fs-2xl));
+  }
+
+  .tvoja-prica__slika-spremnik img {
+    width: 100%;
+  }
+}

@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { AutentikacijaComponent } from './stranice/autentikacija/autentikacija.component';
+import { gostGuard } from '../../jezgra/autentikacija/gost.guard';
 
 export const AUTENTIKACIJA_ROUTES: Routes = [
   {
@@ -13,6 +14,7 @@ export const AUTENTIKACIJA_ROUTES: Routes = [
       },
       {
         path: 'prijava',
+        canActivate: [gostGuard],
         loadComponent: () =>
           import('./stranice/prijava/prijava.component').then(
             (m) => m.PrijavaComponent,
@@ -20,6 +22,7 @@ export const AUTENTIKACIJA_ROUTES: Routes = [
       },
       {
         path: 'registracija',
+        canActivate: [gostGuard],
         loadComponent: () =>
           import('./stranice/registracija/registracija.component').then(
             (m) => m.RegistracijaComponent,

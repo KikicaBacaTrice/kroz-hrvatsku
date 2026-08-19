@@ -1,0 +1,39 @@
+<section class="sekcija-lokacije">
+  <div class="sekcija-lokacije__zaglavlje">
+    <div class="sekcija-lokacije__sadrzaj">
+      <h2>Otkrij najbolje lokacije u Hrvatskoj</h2>
+      @if (odabranaZupanija(); as zupanija) {
+        <div class="sekcija-lokacije__rezultati">
+          <h4 class="sekcija-lokacije__odabrana_zupanija">
+            Top lokacije u županiji: {{ zupanija }}
+          </h4>
+          @if (lokacijeZupanije().length === 0) {
+            <span class="sekcija-lokacije__nema-lokacija"
+              >Nažalost za ovu županiju nemam istaknutih lokacija</span
+            >
+          } @else {
+            @for (lokacija of lokacijeZupanije(); track lokacija.lokacijaId) {
+              <app-kartica-lokacije [lokacija]="lokacija" />
+
+              <a
+                [routerLink]="['/lokacije']"
+                [queryParams]="{ zupanija: lokacija.zupanija }"
+              >
+                <button class="c-button c-button--primarna o-klaster">
+                  Pogledaj sve lokacije
+                  <app-strelica-ikona boja="#fff" [rotacija]="180" />
+                </button>
+              </a>
+            }
+          }
+        </div>
+      } @else {
+        <span
+          >Kliknite na željenu županiju i vidite najpopularnije lokacije</span
+        >
+      }
+    </div>
+
+    <app-karta-hrvatske (zupanijaOdabrana)="zupanijaOdabrana.emit($event)" />
+  </div>
+</section>
