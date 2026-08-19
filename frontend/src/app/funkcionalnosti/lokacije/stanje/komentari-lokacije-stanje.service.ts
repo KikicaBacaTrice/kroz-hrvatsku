@@ -1,12 +1,12 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { LokacijeHttpService } from '../podaci/lokacije-http.service';
+import { LokacijeHttpService } from '../podaci/servisi/lokacije-http.service';
 import {
   AzurirajKomentarLokacijeZahtjev,
   DodajKomentarLokacijeZahtjev,
   KomentarLokacije,
 } from '../modeli/komentarLokacije.model';
 import { LokacijaStanjeService } from './lokacija-stanje.service';
-import { KomentariLokacijeHttpService } from '../podaci/komentari-lokacije-http.service';
+import { KomentariLokacijeHttpService } from '../podaci/servisi/komentari-lokacije-http.service';
 
 @Injectable({
   providedIn: 'root',

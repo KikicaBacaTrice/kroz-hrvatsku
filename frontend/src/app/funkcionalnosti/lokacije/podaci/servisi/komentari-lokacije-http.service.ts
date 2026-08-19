@@ -4,8 +4,8 @@ import {
   AzurirajKomentarLokacijeZahtjev,
   DodajKomentarLokacijeZahtjev,
   KomentarLokacije,
-} from '../modeli/komentarLokacije.model';
-import { API_URL } from '../../../jezgra/konfiguracija/api.config';
+} from '../../modeli/komentarLokacije.model';
+import { API_URL } from '../../../../jezgra/konfiguracija/api.config';
 
 @Injectable({
   providedIn: 'root',

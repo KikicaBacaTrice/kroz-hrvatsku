@@ -1,5 +1,5 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { KategorijeHttpService } from '../podaci/kategorije-http.service';
+import { KategorijeHttpService } from '../podaci/servisi/kategorije-http.service';
 import { KategorijaLokacije } from '../modeli/lokacija.model';
 
 @Injectable({

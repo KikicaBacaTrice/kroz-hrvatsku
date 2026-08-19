@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { KategorijaLokacije } from '../modeli/lokacija.model';
-import { API_URL } from '../../../jezgra/konfiguracija/api.config';
+import { KategorijaLokacije } from '../../modeli/lokacija.model';
+import { API_URL } from '../../../../jezgra/konfiguracija/api.config';
 
 @Injectable({
   providedIn: 'root',

@@ -1,8 +1,8 @@
 import { Component, EventEmitter, inject, input, Output } from '@angular/core';
 import { API_URL } from '../../../../jezgra/konfiguracija/api.config';
-import { LokacijeHttpService } from '../../../lokacije/podaci/lokacije-http.service';
 import { Lokacija } from '../../../lokacije/modeli/lokacija.model';
 import { FormsModule } from '@angular/forms';
+import { LokacijeIServis } from '../../../lokacije/podaci/lokacije-iservis';
 
 @Component({
   selector: 'app-uredi-slike-lokacije',
@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './uredi-slike-lokacije.component.scss',
 })
 export class UrediSlikeLokacijeComponent {
-  private readonly lokacijeHttp = inject(LokacijeHttpService);
+  private readonly lokacijeServis = inject(LokacijeIServis);
 
   lokacija = input.required<Lokacija>();
 
@@ -35,7 +35,7 @@ export class UrediSlikeLokacijeComponent {
       return;
     }
 
-    this.lokacijeHttp
+    this.lokacijeServis
       .dodajSlikuLokacije(
         this.lokacija().lokacijaId,
         this.odabranaSlika,
@@ -54,7 +54,7 @@ export class UrediSlikeLokacijeComponent {
   }
 
   postaviKaoGlavnu(slikaId: number): void {
-    this.lokacijeHttp
+    this.lokacijeServis
       .postaviGlavnuSliku(this.lokacija().lokacijaId, slikaId)
       .subscribe({
         next: () => {
@@ -70,7 +70,7 @@ export class UrediSlikeLokacijeComponent {
       return;
     }
 
-    this.lokacijeHttp
+    this.lokacijeServis
       .obrisiSlikuLokacije(this.lokacija().lokacijaId, slikaId)
       .subscribe({
         next: () => {

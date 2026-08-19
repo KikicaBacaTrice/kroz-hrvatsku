@@ -2,9 +2,9 @@
   <app-hero-sekcija [jePrijavljen]="authStanje.prijavljen()" />
 
   <app-lokacije-sekcija
-    [odabranaZupanija]="odabranaZupanija()"
-    [lokacijeZupanije]="lokacijeZupanije()"
-    [ucitavanjeLokacija]="ucitavanjeLokacija()"
+    [odabranaZupanija]="lokacijaStanje.odabranaZupanija()"
+    [lokacijeZupanije]="lokacijaStanje.topLokacijeZupanije()"
+    [ucitavanjeLokacija]="lokacijaStanje.ucitavanjeTopLokacijaZupanije()"
     (zupanijaOdabrana)="odaberiZupaniju($event)"
   />
 

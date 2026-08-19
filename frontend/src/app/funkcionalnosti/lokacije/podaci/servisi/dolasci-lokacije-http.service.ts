@@ -1,12 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { API_URL } from '../../../jezgra/konfiguracija/api.config';
-import { RijesenaLokacija } from '../modeli/posjet-lokacija.model';
+import { API_URL } from '../../../../jezgra/konfiguracija/api.config';
+import { RijesenaLokacija } from '../../modeli/posjet-lokacija.model';
+import { DolasciLokacijeIServis } from '../dolasci-lokacije-iservis';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class DolasciLokacijeHttpService {
+@Injectable()
+export class DolasciLokacijeHttpService implements DolasciLokacijeIServis {
   private readonly http = inject(HttpClient);
 
   zabiljeziDolazak(lokacijaId: number, biljeska: string, slike: File[]) {

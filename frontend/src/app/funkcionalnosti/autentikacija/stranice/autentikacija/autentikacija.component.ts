@@ -1,11 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet, Router, RouterLinkWithHref } from '@angular/router';
 import { AsyncPipe, Location } from '@angular/common';
-import { LokacijeHttpService } from '../../../lokacije/podaci/lokacije-http.service';
+
 import { API_URL } from '../../../../jezgra/konfiguracija/api.config';
 import { KrozHrvatskuLogoIkonaComponent } from '../../../../dijeljeno/ui/ikone/kroz-hrvatsku-logo-ikona/kroz-hrvatsku-logo-ikona.component';
 import { StrelicaIkonaComponent } from '../../../../dijeljeno/ui/ikone/strelica-ikona/strelica-ikona.component';
 import { AutentikacijaCarouselComponent } from '../../ui/autentikacija-carousel/autentikacija-carousel.component';
+import { LokacijeHttpService } from '../../../lokacije/podaci/servisi/lokacije-http.service';
 
 @Component({
   selector: 'app-autentikacija',
