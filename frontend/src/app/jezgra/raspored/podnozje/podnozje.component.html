@@ -1,0 +1,21 @@
+<footer class="podnozje">
+  <div class="podnozje__gornji-dio">
+    <a routerLink="/" class="podnozje__logo-link">
+      <app-kroz-hrvatsku-logo-ikona sirinaLogo="180" [jeInverz]="true" />
+    </a>
+
+    <nav class="podnozje__navigacija">
+      <a routerLink="/lokacije" class="podnozje__link">Lokacije</a>
+      @if (!authStanje.prijavljen()) {
+        <a routerLink="/autentikacija/prijava" class="podnozje__link"
+          >Prijavi se
+        </a>
+      } @else {
+        <a routerLink="/trgovina" class="podnozje__link">Trgovina</a>
+        <a routerLink="/profil" class="podnozje__link">Profil</a>
+      }
+    </nav>
+  </div>
+
+  <p class="podnozje__copyright">&#169; 2026 Nikola Kihas. Završni rad</p>
+</footer>
