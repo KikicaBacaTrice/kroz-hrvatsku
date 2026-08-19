@@ -1,16 +1,16 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { AuthHttpService } from '../podaci/auth-http.service';
 import { TokenSpremisteService } from '../../../jezgra/autentikacija/token-spremiste.service';
 import { Router } from '@angular/router';
 import { PrijavaZahtjev, RegistracijaZahtjev } from '../modeli/auth.model';
 import { tap } from 'rxjs';
 import { ProfilStanjeService } from '../../profil/stanje/profil-stanje.service';
+import { AuthIServis } from '../podaci/auth-iservis';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthStanjeService {
-  private readonly authHttp = inject(AuthHttpService);
+  private readonly authServis = inject(AuthIServis);
   private readonly tokenSpremiste = inject(TokenSpremisteService);
   private readonly router = inject(Router);
   private readonly profilStanje = inject(ProfilStanjeService);
@@ -18,7 +18,7 @@ export class AuthStanjeService {
   readonly prijavljen = signal(this.tokenSpremiste.jePrijavljen());
 
   prijava(zahtjev: PrijavaZahtjev) {
-    return this.authHttp.prijava(zahtjev).pipe(
+    return this.authServis.prijava(zahtjev).pipe(
       tap((odgovor) => {
         this.tokenSpremiste.spremiToken(odgovor.accessToken);
         this.prijavljen.set(true);
@@ -28,7 +28,7 @@ export class AuthStanjeService {
   }
 
   registracija(zahtjev: RegistracijaZahtjev) {
-    return this.authHttp.registracija(zahtjev).pipe(
+    return this.authServis.registracija(zahtjev).pipe(
       tap((odgovor) => {
         this.tokenSpremiste.spremiToken(odgovor.accessToken);
         this.prijavljen.set(true);

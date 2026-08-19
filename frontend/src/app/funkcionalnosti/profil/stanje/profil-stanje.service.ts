@@ -1,13 +1,12 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { ProfilHttpService } from '../podaci/profil-http.service';
 import {
   MojProfil,
   ProfilBedz,
   ProfilSlikaPosjeta,
   UrediProfilaZahtjev,
 } from '../modeli/profil.model';
-import { single } from 'rxjs';
 import { ProfilStatistika } from '../modeli/profil-statistika.model';
+import { ProfilIServis } from '../podaci/profil-iservis';
 
 const TIP_DEKORACIJE_AVATAR = 1;
 const TIP_DEKORACIJE_BEDZ = 2;
@@ -17,7 +16,7 @@ const TIP_DEKORACIJE_POZADINA = 3;
   providedIn: 'root',
 })
 export class ProfilStanjeService {
-  private readonly profilHttp = inject(ProfilHttpService);
+  private readonly profilServis = inject(ProfilIServis);
 
   readonly profil = signal<MojProfil | null>(null);
   readonly ucitavanje = signal(false);
@@ -43,7 +42,7 @@ export class ProfilStanjeService {
     this.ucitavanje.set(true);
     this.greska.set(null);
 
-    this.profilHttp.dohvatiMojProfil().subscribe({
+    this.profilServis.dohvatiMojProfil().subscribe({
       next: (profil) => {
         this.profil.set(profil);
         this.ucitavanje.set(false);
@@ -60,7 +59,7 @@ export class ProfilStanjeService {
     this.statistikaUcitavanje.set(true);
     this.statistikaGreska.set(null);
 
-    this.profilHttp.dohvatiMojuStatistiku().subscribe({
+    this.profilServis.dohvatiMojuStatistiku().subscribe({
       next: (profil) => {
         this.statistika.set(profil);
         this.statistikaUcitavanje.set(false);
@@ -77,7 +76,7 @@ export class ProfilStanjeService {
     this.ucitavanje.set(true);
     this.greska.set(null);
 
-    this.profilHttp.urediMojProfil(zahtjev).subscribe({
+    this.profilServis.urediMojProfil(zahtjev).subscribe({
       next: () => {
         this.ucitajMojProfil();
         this.ucitavanje.set(false);
@@ -91,7 +90,7 @@ export class ProfilStanjeService {
   }
 
   promijeniProfilnuSliku(slika: File): void {
-    this.profilHttp.promijeniProfilnuSliku(slika).subscribe({
+    this.profilServis.promijeniProfilnuSliku(slika).subscribe({
       next: (profil) => {
         this.profil.set(profil);
       },
@@ -102,7 +101,7 @@ export class ProfilStanjeService {
   }
 
   obrisiProfilnuSliku(): void {
-    this.profilHttp.obrisiProfilnuSliku().subscribe({
+    this.profilServis.obrisiProfilnuSliku().subscribe({
       next: (profil) => {
         this.profil.set(profil);
       },
@@ -116,7 +115,7 @@ export class ProfilStanjeService {
     this.slikePosjetaUcitavanje.set(true);
     this.slikePosjetaGreska.set(null);
 
-    this.profilHttp.dohvatiMojeSlikePosjeta().subscribe({
+    this.profilServis.dohvatiMojeSlikePosjeta().subscribe({
       next: (slike) => {
         this.slikePosjeta.set(slike);
         this.slikePosjetaUcitavanje.set(false);
@@ -132,7 +131,7 @@ export class ProfilStanjeService {
   }
 
   ucitajMojeDekoracijeProfila(): void {
-    this.profilHttp.dohvatiMojeBedzeve().subscribe({
+    this.profilServis.dohvatiMojeBedzeve().subscribe({
       next: (korisnikDekoracije) => {
         const mapiraj = (zapis: any) => ({
           bedzId: zapis.dekoracija.dekoracijaId,
@@ -172,7 +171,7 @@ export class ProfilStanjeService {
     this.spremanjeBedza.set(true);
     this.bedzeviGreska.set(null);
 
-    this.profilHttp.postaviBedzNaProfil(pozicijaBedz, bedzId).subscribe({
+    this.profilServis.postaviBedzNaProfil(pozicijaBedz, bedzId).subscribe({
       next: () => {
         this.ucitajMojProfil();
         this.ucitajMojeDekoracijeProfila();
@@ -186,7 +185,7 @@ export class ProfilStanjeService {
   }
 
   aktivirajDekoraciju(dekoracijaId: number, pozicijaPrikaza = 1): void {
-    this.profilHttp
+    this.profilServis
       .aktivirajDekoraciju(dekoracijaId, pozicijaPrikaza)
       .subscribe({
         next: () => {
@@ -208,7 +207,7 @@ export class ProfilStanjeService {
   }
 
   postaviDefaultDekoraciju(tipDekoracijeId: number): void {
-    this.profilHttp.deaktivirajTipDekoracije(tipDekoracijeId).subscribe({
+    this.profilServis.deaktivirajTipDekoracije(tipDekoracijeId).subscribe({
       next: () => {
         this.ucitajMojProfil();
         this.ucitajMojeDekoracijeProfila();

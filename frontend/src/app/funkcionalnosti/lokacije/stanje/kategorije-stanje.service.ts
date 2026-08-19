@@ -1,12 +1,12 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { KategorijeHttpService } from '../podaci/servisi/kategorije-http.service';
 import { KategorijaLokacije } from '../modeli/lokacija.model';
+import { KategorijeIServis } from '../podaci/kateogrije-iservis';
 
 @Injectable({
   providedIn: 'root',
 })
 export class KategorijeStanjeService {
-  private readonly kategorijeHttp = inject(KategorijeHttpService);
+  private readonly kategorijeServis = inject(KategorijeIServis);
 
   readonly kategorije = signal<KategorijaLokacije[]>([]);
   readonly ucitavanje = signal(false);
@@ -20,7 +20,7 @@ export class KategorijeStanjeService {
     this.ucitavanje.set(true);
     this.greska.set(null);
 
-    this.kategorijeHttp.dohvatiSveKategorije().subscribe({
+    this.kategorijeServis.dohvatiSveKategorije().subscribe({
       next: (kategorije) => {
         this.kategorije.set(kategorije);
         this.ucitavanje.set(false);

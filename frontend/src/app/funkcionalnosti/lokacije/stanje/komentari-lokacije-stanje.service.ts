@@ -1,18 +1,17 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { LokacijeHttpService } from '../podaci/servisi/lokacije-http.service';
 import {
   AzurirajKomentarLokacijeZahtjev,
   DodajKomentarLokacijeZahtjev,
   KomentarLokacije,
 } from '../modeli/komentarLokacije.model';
 import { LokacijaStanjeService } from './lokacija-stanje.service';
-import { KomentariLokacijeHttpService } from '../podaci/servisi/komentari-lokacije-http.service';
+import { KomentariLokacijeIServis } from '../podaci/komentari-lokacije-iservis';
 
 @Injectable({
   providedIn: 'root',
 })
 export class KomentariLokacijeStanjeService {
-  private readonly komentariHttp = inject(KomentariLokacijeHttpService);
+  private readonly komentariServis = inject(KomentariLokacijeIServis);
   private readonly lokacijaStanje = inject(LokacijaStanjeService);
 
   readonly komentari = signal<KomentarLokacije[]>([]);
@@ -24,7 +23,7 @@ export class KomentariLokacijeStanjeService {
     this.greska.set(null);
     this.komentari.set([]);
 
-    this.komentariHttp.dohvatiKomentareLokacije(lokacijaId).subscribe({
+    this.komentariServis.dohvatiKomentareLokacije(lokacijaId).subscribe({
       next: (komentari) => {
         this.komentari.set(komentari);
         this.ucitavanje.set(false);
@@ -44,7 +43,7 @@ export class KomentariLokacijeStanjeService {
     this.ucitavanje.set(true);
     this.greska.set(null);
 
-    this.komentariHttp.dodajKomentarLokacije(lokacijaId, zahtjev).subscribe({
+    this.komentariServis.dodajKomentarLokacije(lokacijaId, zahtjev).subscribe({
       next: () => {
         this.ucitavanje.set(false);
         this.ucitajKomentare(lokacijaId);
@@ -69,7 +68,7 @@ export class KomentariLokacijeStanjeService {
     this.ucitavanje.set(true);
     this.greska.set(null);
 
-    this.komentariHttp
+    this.komentariServis
       .obrisiKomentarLokacije(lokacijaId, povratnaInformacijaId)
       .subscribe({
         next: () => {
@@ -110,7 +109,7 @@ export class KomentariLokacijeStanjeService {
     this.ucitavanje.set(true);
     this.greska.set(null);
 
-    this.komentariHttp
+    this.komentariServis
       .urediKomentarLokacije(lokacijaId, povratnaInformacijaId, zahtjev)
       .subscribe({
         next: () => {

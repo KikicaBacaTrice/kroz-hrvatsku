@@ -6,7 +6,7 @@ import { API_URL } from '../../../../jezgra/konfiguracija/api.config';
 import { KrozHrvatskuLogoIkonaComponent } from '../../../../dijeljeno/ui/ikone/kroz-hrvatsku-logo-ikona/kroz-hrvatsku-logo-ikona.component';
 import { StrelicaIkonaComponent } from '../../../../dijeljeno/ui/ikone/strelica-ikona/strelica-ikona.component';
 import { AutentikacijaCarouselComponent } from '../../ui/autentikacija-carousel/autentikacija-carousel.component';
-import { LokacijeHttpService } from '../../../lokacije/podaci/servisi/lokacije-http.service';
+import { LokacijeIServis } from '../../../lokacije/podaci/lokacije-iservis';
 
 @Component({
   selector: 'app-autentikacija',
@@ -22,13 +22,13 @@ import { LokacijeHttpService } from '../../../lokacije/podaci/servisi/lokacije-h
   styleUrl: './autentikacija.component.scss',
 })
 export class AutentikacijaComponent {
-  private readonly lokacijeHttp = inject(LokacijeHttpService);
+  private readonly lokacijeServis = inject(LokacijeIServis);
   private readonly location = inject(Location);
   private readonly router = inject(Router);
 
   readonly apiUrl = API_URL;
 
-  lokacije$ = this.lokacijeHttp.dohvatiPrveTriLokacije();
+  lokacije$ = this.lokacijeServis.dohvatiPrveTriLokacije();
 
   aktivniIndex = 0;
   prethodniIndex: number | null = null;

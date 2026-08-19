@@ -4,14 +4,13 @@ import {
   MojProfil,
   ProfilSlikaPosjeta,
   UrediProfilaZahtjev,
-} from '../modeli/profil.model';
-import { API_URL } from '../../../jezgra/konfiguracija/api.config';
-import { ProfilStatistika } from '../modeli/profil-statistika.model';
+} from '../../modeli/profil.model';
+import { API_URL } from '../../../../jezgra/konfiguracija/api.config';
+import { ProfilStatistika } from '../../modeli/profil-statistika.model';
+import { ProfilIServis } from '../profil-iservis';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class ProfilHttpService {
+@Injectable()
+export class ProfilHttpService implements ProfilIServis {
   private readonly http = inject(HttpClient);
 
   dohvatiMojProfil() {
