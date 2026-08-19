@@ -1,0 +1,55 @@
+@use "../../../../../stilovi/postavke" as postavke;
+@use "../../../../../stilovi/alati" as alati;
+
+.zapocni-putovanje {
+  position: relative;
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+
+  &__slika {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: rgb(0 32 25 / 0.85);
+    z-index: -1;
+  }
+
+  &__sadrzaj {
+    display: grid;
+    place-items: center;
+    gap: 0.5rem;
+    padding-block: 10rem;
+
+    h3 {
+      color: var(--clr-primarna-200);
+      font-size: var(--fs-2xl);
+      text-align: center;
+    }
+  }
+
+  &__gumb {
+    background: transparent;
+    border-color: white;
+  }
+}
+
+@include alati.ekranManjiOd(postavke.$breakpoint-md) {
+  .zapocni-putovanje__sadrzaj {
+    padding: 6rem 1rem;
+
+    h3 {
+      font-size: var(--fs-xl);
+    }
+  }
+}

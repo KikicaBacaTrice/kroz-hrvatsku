@@ -1,0 +1,60 @@
+<section class="hero-sekcija">
+  <img
+    src="/slike/ostalo/pocetna-stranica/hero-slika.png"
+    alt="Hero slika"
+    class="hero-sekcija__slika"
+  />
+
+  <img
+    src="/slike/ostalo/pocetna-stranica/dekoracije/magla-lijevo.png"
+    alt="Slika magle"
+    class="hero-sekcija__magla hero-sekcija__magla--lijevo"
+  />
+
+  <img
+    src="/slike/ostalo/pocetna-stranica/dekoracije/magla-desno.png"
+    alt="Slika magle"
+    class="hero-sekcija__magla hero-sekcija__magla--desno"
+  />
+
+  <img
+    src="/slike/ostalo/pocetna-stranica/dekoracije/magla-dolje.png"
+    alt="Slika magle"
+    class="hero-sekcija__magla hero-sekcija__magla--dolje"
+  />
+
+  <div class="hero-sekcija__sadrzaj">
+    <h1>
+      Želiš upoznati Hrvatsku i podijeliti svoja iskustva? Ovo je prava
+      aplikacija za tebe.
+    </h1>
+    <span
+      >Otkrij skrivene dragulje, osvajaj nagrade i stvori nezaboravne
+      uspomene.</span
+    >
+
+    <div class="hero-sekcija__akcije">
+      <a routerLink="/lokacije">
+        <button class="c-button c-button--primarna">Istaži lokacije</button>
+      </a>
+
+      @if (jePrijavljen()) {
+        <a routerLink="/trgovina">
+          <button
+            class="c-button c-button--primarna-inverz | hero-sekcija__akcije-prijava-btn"
+          >
+            Trgovina
+          </button>
+        </a>
+      } @else {
+        <a routerLink="/autentikacija/prijava">
+          <button
+            class="c-button c-button--primarna-inverz | hero-sekcija__akcije-prijava-btn"
+          >
+            Prijavi se
+          </button>
+        </a>
+      }
+    </div>
+  </div>
+</section>

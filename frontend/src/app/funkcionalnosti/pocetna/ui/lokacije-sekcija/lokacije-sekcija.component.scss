@@ -1,0 +1,118 @@
+@use "../../../../../stilovi/postavke" as postavke;
+@use "../../../../../stilovi/alati" as alati;
+
+.sekcija-lokacije {
+  margin-inline: 8rem;
+
+  &__zaglavlje {
+    display: grid;
+    align-items: start;
+    grid-template-columns: auto 1fr;
+    gap: 4rem;
+    position: relative;
+  }
+
+  &__sadrzaj {
+    display: grid;
+    gap: 1rem;
+    max-width: 40ch;
+
+    h2 {
+      font-size: var(--fs-3xl);
+      line-height: 1.15;
+      color: var(--clr-primarna-400);
+    }
+
+    span {
+      font-size: var(--fs-rg);
+      color: var(--clr-text-prigusen);
+    }
+  }
+
+  &__rezultati {
+    margin-top: 1.5rem;
+    display: grid;
+    gap: 1rem;
+  }
+
+  &__odabrana_zupanija {
+    font-size: var(--fs-lg);
+  }
+}
+
+@include alati.ekranManjiOd(postavke.$breakpoint-xl) {
+  .sekcija-lokacije {
+    margin-inline: 4rem;
+  }
+
+  .sekcija-lokacije__zaglavlje {
+    grid-template-columns: minmax(18rem, 26rem) 1fr;
+    gap: 3rem;
+  }
+}
+
+@include alati.ekranManjiOd(postavke.$breakpoint-lg) {
+  .sekcija-lokacije {
+    margin-inline: 2rem;
+  }
+
+  .sekcija-lokacije__zaglavlje {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .sekcija-lokacije__sadrzaj {
+    max-width: 100%;
+
+    h2 {
+      font-size: var(--fs-2xl);
+    }
+  }
+
+  app-karta-hrvatske {
+    width: min(100%, 34rem);
+    justify-self: center;
+  }
+}
+
+@include alati.ekranManjiOd(postavke.$breakpoint-md) {
+  .sekcija-lokacije {
+    margin-inline: 1rem;
+  }
+
+  .sekcija-lokacije {
+    margin-top: 3rem;
+  }
+
+  .sekcija-lokacije__zaglavlje {
+    gap: 1.5rem;
+  }
+
+  .sekcija-lokacije__sadrzaj {
+    text-align: center;
+    justify-items: center;
+
+    h2 {
+      font-size: var(--fs-xl);
+    }
+  }
+
+  .sekcija-lokacije__rezultati {
+    width: 100%;
+    justify-items: stretch;
+  }
+
+  app-karta-hrvatske {
+    width: min(100%, 24rem);
+  }
+}
+
+@include alati.ekranManjiOd(postavke.$breakpoint-sm) {
+  .sekcija-lokacije {
+    margin-inline: 0.75rem;
+  }
+
+  app-karta-hrvatske {
+    width: 100%;
+  }
+}

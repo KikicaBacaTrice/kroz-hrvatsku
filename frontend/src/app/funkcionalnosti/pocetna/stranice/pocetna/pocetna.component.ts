@@ -1,26 +1,28 @@
 import { Component, inject, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { KartaHrvatskeComponent } from '../../ui/karta-hrvatske/karta-hrvatske.component';
+import { AuthStanjeService } from '../../../autentikacija/stanje/auth-stanje.service';
+import { HeroSekcijaComponent } from '../../ui/hero-sekcija/hero-sekcija.component';
+import { LokacijeSekcijaComponent } from '../../ui/lokacije-sekcija/lokacije-sekcija.component';
+import { PosjetSekcijaComponent } from '../../ui/posjet-sekcija/posjet-sekcija.component';
+import { TvojaPricaComponent } from '../../ui/tvoja-prica/tvoja-prica.component';
+import { ZapocniPutovanjeComponent } from '../../ui/zapocni-putovanje/zapocni-putovanje.component';
 import { LokacijeHttpService } from '../../../lokacije/podaci/lokacije-http.service';
 import { Lokacija } from '../../../lokacije/modeli/lokacija.model';
-import { KarticaLokacijeComponent } from '../../../lokacije/ui/kartice/kartica-lokacije/kartica-lokacije.component';
-import { StrelicaIkonaComponent } from '../../../../dijeljeno/ui/ikone/strelica-ikona/strelica-ikona.component';
-import { AuthStanjeService } from '../../../autentikacija/stanje/auth-stanje.service';
 
 @Component({
   selector: 'app-pocetna',
   imports: [
-    RouterLink,
-    KartaHrvatskeComponent,
-    KarticaLokacijeComponent,
-    StrelicaIkonaComponent,
+    HeroSekcijaComponent,
+    LokacijeSekcijaComponent,
+    PosjetSekcijaComponent,
+    TvojaPricaComponent,
+    ZapocniPutovanjeComponent,
   ],
   templateUrl: './pocetna.component.html',
   styleUrl: './pocetna.component.scss',
 })
 export class PocetnaComponent {
-  private readonly lokacijeHttp = inject(LokacijeHttpService);
   readonly authStanje = inject(AuthStanjeService);
+  private readonly lokacijeHttp = inject(LokacijeHttpService);
 
   odabranaZupanija = signal<string | null>(null);
   lokacijeZupanije = signal<Lokacija[]>([]);
