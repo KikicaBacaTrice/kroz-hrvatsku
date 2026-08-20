@@ -45,6 +45,7 @@
     align-items: center;
     gap: 2.5rem;
     color: white;
+    width: 100%;
   }
 
   &__slika-spremnik {
@@ -169,6 +170,7 @@
   &__tekst {
     flex: 1;
     min-width: 0;
+    width: 100%;
   }
 
   &__gornji-red {
