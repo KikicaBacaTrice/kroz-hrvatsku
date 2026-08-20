@@ -6,7 +6,7 @@ import { KategorijeIServis } from '../podaci/kateogrije-iservis';
   providedIn: 'root',
 })
 export class KategorijeStanjeService {
-  private readonly kategorijeServis = inject(KategorijeIServis);
+  private readonly kategorijeIServis = inject(KategorijeIServis);
 
   readonly kategorije = signal<KategorijaLokacije[]>([]);
   readonly ucitavanje = signal(false);
@@ -20,7 +20,7 @@ export class KategorijeStanjeService {
     this.ucitavanje.set(true);
     this.greska.set(null);
 
-    this.kategorijeServis.dohvatiSveKategorije().subscribe({
+    this.kategorijeIServis.dohvatiSveKategorije().subscribe({
       next: (kategorije) => {
         this.kategorije.set(kategorije);
         this.ucitavanje.set(false);

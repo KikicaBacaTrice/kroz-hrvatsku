@@ -11,7 +11,7 @@ import { LokacijeIServis } from '../../../lokacije/podaci/lokacije-iservis';
   styleUrl: './uredi-slike-lokacije.component.scss',
 })
 export class UrediSlikeLokacijeComponent {
-  private readonly lokacijeServis = inject(LokacijeIServis);
+  private readonly lokacijeIServis = inject(LokacijeIServis);
 
   lokacija = input.required<Lokacija>();
 
@@ -35,7 +35,7 @@ export class UrediSlikeLokacijeComponent {
       return;
     }
 
-    this.lokacijeServis
+    this.lokacijeIServis
       .dodajSlikuLokacije(
         this.lokacija().lokacijaId,
         this.odabranaSlika,
@@ -54,7 +54,7 @@ export class UrediSlikeLokacijeComponent {
   }
 
   postaviKaoGlavnu(slikaId: number): void {
-    this.lokacijeServis
+    this.lokacijeIServis
       .postaviGlavnuSliku(this.lokacija().lokacijaId, slikaId)
       .subscribe({
         next: () => {
@@ -70,7 +70,7 @@ export class UrediSlikeLokacijeComponent {
       return;
     }
 
-    this.lokacijeServis
+    this.lokacijeIServis
       .obrisiSlikuLokacije(this.lokacija().lokacijaId, slikaId)
       .subscribe({
         next: () => {

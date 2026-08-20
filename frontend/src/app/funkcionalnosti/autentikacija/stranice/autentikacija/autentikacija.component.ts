@@ -22,13 +22,13 @@ import { LokacijeIServis } from '../../../lokacije/podaci/lokacije-iservis';
   styleUrl: './autentikacija.component.scss',
 })
 export class AutentikacijaComponent {
-  private readonly lokacijeServis = inject(LokacijeIServis);
+  private readonly lokacijeIServis = inject(LokacijeIServis);
   private readonly location = inject(Location);
   private readonly router = inject(Router);
 
   readonly apiUrl = API_URL;
 
-  lokacije$ = this.lokacijeServis.dohvatiPrveTriLokacije();
+  lokacije$ = this.lokacijeIServis.dohvatiPrveTriLokacije();
 
   aktivniIndex = 0;
   prethodniIndex: number | null = null;

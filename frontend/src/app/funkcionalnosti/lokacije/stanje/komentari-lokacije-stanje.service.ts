@@ -11,7 +11,7 @@ import { KomentariLokacijeIServis } from '../podaci/komentari-lokacije-iservis';
   providedIn: 'root',
 })
 export class KomentariLokacijeStanjeService {
-  private readonly komentariServis = inject(KomentariLokacijeIServis);
+  private readonly komentariIServis = inject(KomentariLokacijeIServis);
   private readonly lokacijaStanje = inject(LokacijaStanjeService);
 
   readonly komentari = signal<KomentarLokacije[]>([]);
@@ -23,7 +23,7 @@ export class KomentariLokacijeStanjeService {
     this.greska.set(null);
     this.komentari.set([]);
 
-    this.komentariServis.dohvatiKomentareLokacije(lokacijaId).subscribe({
+    this.komentariIServis.dohvatiKomentareLokacije(lokacijaId).subscribe({
       next: (komentari) => {
         this.komentari.set(komentari);
         this.ucitavanje.set(false);
@@ -43,7 +43,7 @@ export class KomentariLokacijeStanjeService {
     this.ucitavanje.set(true);
     this.greska.set(null);
 
-    this.komentariServis.dodajKomentarLokacije(lokacijaId, zahtjev).subscribe({
+    this.komentariIServis.dodajKomentarLokacije(lokacijaId, zahtjev).subscribe({
       next: () => {
         this.ucitavanje.set(false);
         this.ucitajKomentare(lokacijaId);
@@ -68,7 +68,7 @@ export class KomentariLokacijeStanjeService {
     this.ucitavanje.set(true);
     this.greska.set(null);
 
-    this.komentariServis
+    this.komentariIServis
       .obrisiKomentarLokacije(lokacijaId, povratnaInformacijaId)
       .subscribe({
         next: () => {
@@ -109,7 +109,7 @@ export class KomentariLokacijeStanjeService {
     this.ucitavanje.set(true);
     this.greska.set(null);
 
-    this.komentariServis
+    this.komentariIServis
       .urediKomentarLokacije(lokacijaId, povratnaInformacijaId, zahtjev)
       .subscribe({
         next: () => {

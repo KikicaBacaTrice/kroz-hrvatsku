@@ -16,7 +16,7 @@ const TIP_DEKORACIJE_POZADINA = 3;
   providedIn: 'root',
 })
 export class ProfilStanjeService {
-  private readonly profilServis = inject(ProfilIServis);
+  private readonly profilIServis = inject(ProfilIServis);
 
   readonly profil = signal<MojProfil | null>(null);
   readonly ucitavanje = signal(false);
@@ -42,7 +42,7 @@ export class ProfilStanjeService {
     this.ucitavanje.set(true);
     this.greska.set(null);
 
-    this.profilServis.dohvatiMojProfil().subscribe({
+    this.profilIServis.dohvatiMojProfil().subscribe({
       next: (profil) => {
         this.profil.set(profil);
         this.ucitavanje.set(false);
@@ -59,7 +59,7 @@ export class ProfilStanjeService {
     this.statistikaUcitavanje.set(true);
     this.statistikaGreska.set(null);
 
-    this.profilServis.dohvatiMojuStatistiku().subscribe({
+    this.profilIServis.dohvatiMojuStatistiku().subscribe({
       next: (profil) => {
         this.statistika.set(profil);
         this.statistikaUcitavanje.set(false);
@@ -76,7 +76,7 @@ export class ProfilStanjeService {
     this.ucitavanje.set(true);
     this.greska.set(null);
 
-    this.profilServis.urediMojProfil(zahtjev).subscribe({
+    this.profilIServis.urediMojProfil(zahtjev).subscribe({
       next: () => {
         this.ucitajMojProfil();
         this.ucitavanje.set(false);
@@ -90,7 +90,7 @@ export class ProfilStanjeService {
   }
 
   promijeniProfilnuSliku(slika: File): void {
-    this.profilServis.promijeniProfilnuSliku(slika).subscribe({
+    this.profilIServis.promijeniProfilnuSliku(slika).subscribe({
       next: (profil) => {
         this.profil.set(profil);
       },
@@ -101,7 +101,7 @@ export class ProfilStanjeService {
   }
 
   obrisiProfilnuSliku(): void {
-    this.profilServis.obrisiProfilnuSliku().subscribe({
+    this.profilIServis.obrisiProfilnuSliku().subscribe({
       next: (profil) => {
         this.profil.set(profil);
       },
@@ -115,7 +115,7 @@ export class ProfilStanjeService {
     this.slikePosjetaUcitavanje.set(true);
     this.slikePosjetaGreska.set(null);
 
-    this.profilServis.dohvatiMojeSlikePosjeta().subscribe({
+    this.profilIServis.dohvatiMojeSlikePosjeta().subscribe({
       next: (slike) => {
         this.slikePosjeta.set(slike);
         this.slikePosjetaUcitavanje.set(false);
@@ -131,7 +131,7 @@ export class ProfilStanjeService {
   }
 
   ucitajMojeDekoracijeProfila(): void {
-    this.profilServis.dohvatiMojeBedzeve().subscribe({
+    this.profilIServis.dohvatiMojeBedzeve().subscribe({
       next: (korisnikDekoracije) => {
         const mapiraj = (zapis: any) => ({
           bedzId: zapis.dekoracija.dekoracijaId,
@@ -171,7 +171,7 @@ export class ProfilStanjeService {
     this.spremanjeBedza.set(true);
     this.bedzeviGreska.set(null);
 
-    this.profilServis.postaviBedzNaProfil(pozicijaBedz, bedzId).subscribe({
+    this.profilIServis.postaviBedzNaProfil(pozicijaBedz, bedzId).subscribe({
       next: () => {
         this.ucitajMojProfil();
         this.ucitajMojeDekoracijeProfila();
@@ -185,7 +185,7 @@ export class ProfilStanjeService {
   }
 
   aktivirajDekoraciju(dekoracijaId: number, pozicijaPrikaza = 1): void {
-    this.profilServis
+    this.profilIServis
       .aktivirajDekoraciju(dekoracijaId, pozicijaPrikaza)
       .subscribe({
         next: () => {
@@ -207,7 +207,7 @@ export class ProfilStanjeService {
   }
 
   postaviDefaultDekoraciju(tipDekoracijeId: number): void {
-    this.profilServis.deaktivirajTipDekoracije(tipDekoracijeId).subscribe({
+    this.profilIServis.deaktivirajTipDekoracije(tipDekoracijeId).subscribe({
       next: () => {
         this.ucitajMojProfil();
         this.ucitajMojeDekoracijeProfila();

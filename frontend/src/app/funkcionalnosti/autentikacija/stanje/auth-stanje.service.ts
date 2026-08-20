@@ -10,7 +10,7 @@ import { AuthIServis } from '../podaci/auth-iservis';
   providedIn: 'root',
 })
 export class AuthStanjeService {
-  private readonly authServis = inject(AuthIServis);
+  private readonly authIServis = inject(AuthIServis);
   private readonly tokenSpremiste = inject(TokenSpremisteService);
   private readonly router = inject(Router);
   private readonly profilStanje = inject(ProfilStanjeService);
@@ -18,7 +18,7 @@ export class AuthStanjeService {
   readonly prijavljen = signal(this.tokenSpremiste.jePrijavljen());
 
   prijava(zahtjev: PrijavaZahtjev) {
-    return this.authServis.prijava(zahtjev).pipe(
+    return this.authIServis.prijava(zahtjev).pipe(
       tap((odgovor) => {
         this.tokenSpremiste.spremiToken(odgovor.accessToken);
         this.prijavljen.set(true);
@@ -28,7 +28,7 @@ export class AuthStanjeService {
   }
 
   registracija(zahtjev: RegistracijaZahtjev) {
-    return this.authServis.registracija(zahtjev).pipe(
+    return this.authIServis.registracija(zahtjev).pipe(
       tap((odgovor) => {
         this.tokenSpremiste.spremiToken(odgovor.accessToken);
         this.prijavljen.set(true);
