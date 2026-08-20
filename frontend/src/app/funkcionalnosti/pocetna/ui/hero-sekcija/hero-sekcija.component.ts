@@ -1,8 +1,9 @@
 import { Component, input } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-hero-sekcija',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './hero-sekcija.component.html',
   styleUrl: './hero-sekcija.component.scss',
 })
