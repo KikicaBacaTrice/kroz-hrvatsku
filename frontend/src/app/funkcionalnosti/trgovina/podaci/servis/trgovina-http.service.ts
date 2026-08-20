@@ -4,13 +4,12 @@ import {
   Dekoracija,
   DekoracijaTrgovina,
   KorisnikDekoracija,
-} from '../modeli/dekoracija.model';
-import { API_URL } from '../../../jezgra/konfiguracija/api.config';
+} from '../../modeli/dekoracija.model';
+import { API_URL } from '../../../../jezgra/konfiguracija/api.config';
+import { TrgovinaIServis } from '../trgovina-iservis';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class TrgovinaHttpService {
+@Injectable()
+export class TrgovinaHttpService implements TrgovinaIServis {
   private readonly http = inject(HttpClient);
 
   dohvatiDekoracije() {

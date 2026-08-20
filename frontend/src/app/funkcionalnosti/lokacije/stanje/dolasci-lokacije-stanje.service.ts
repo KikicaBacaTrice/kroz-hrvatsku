@@ -1,14 +1,14 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { DolasciLokacijeHttpService } from '../podaci/dolasci-lokacije-http.service';
 import { ProfilStanjeService } from '../../profil/stanje/profil-stanje.service';
 import { RijesenaLokacija } from '../modeli/posjet-lokacija.model';
 import { LokacijaStanjeService } from './lokacija-stanje.service';
+import { DolasciLokacijeIServis } from '../podaci/dolasci-lokacije-iservis';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DolasciLokacijeStanjeService {
-  private readonly dolasciHttp = inject(DolasciLokacijeHttpService);
+  private readonly dolasciIServis = inject(DolasciLokacijeIServis);
   private readonly profilStanje = inject(ProfilStanjeService);
   private readonly lokacijaStanje = inject(LokacijaStanjeService);
 
@@ -21,14 +21,14 @@ export class DolasciLokacijeStanjeService {
   ucitajMojDolazak(lokacijaId: number): void {
     this.mojDolazak.set(null);
 
-    this.dolasciHttp.dohvatiMojDolazak(lokacijaId).subscribe({
+    this.dolasciIServis.dohvatiMojDolazak(lokacijaId).subscribe({
       next: (dolazak) => this.mojDolazak.set(dolazak),
       error: () => this.mojDolazak.set(null),
     });
   }
 
   ucitajRijeseneLokacije(): void {
-    this.dolasciHttp.dohvatiRijeseneLokacije().subscribe({
+    this.dolasciIServis.dohvatiRijeseneLokacije().subscribe({
       next: (rijeseneLokacije) => this.rijeseneLokacije.set(rijeseneLokacije),
       error: () => this.rijeseneLokacije.set([]),
     });
@@ -62,20 +62,22 @@ export class DolasciLokacijeStanjeService {
   zabiljeziDolazak(lokacijaId: number, biljeska: string, slike: File[]): void {
     this.spremanjeDolaska.set(true);
 
-    this.dolasciHttp.zabiljeziDolazak(lokacijaId, biljeska, slike).subscribe({
-      next: (dolazak) => {
-        this.mojDolazak.set(dolazak);
-        this.modalDolaskaOtvoren.set(false);
-        this.spremanjeDolaska.set(false);
+    this.dolasciIServis
+      .zabiljeziDolazak(lokacijaId, biljeska, slike)
+      .subscribe({
+        next: (dolazak) => {
+          this.mojDolazak.set(dolazak);
+          this.modalDolaskaOtvoren.set(false);
+          this.spremanjeDolaska.set(false);
 
-        this.lokacijaStanje.osvjeziLokaciju(lokacijaId);
-        this.profilStanje.ucitajMojProfil();
+          this.lokacijaStanje.osvjeziLokaciju(lokacijaId);
+          this.profilStanje.ucitajMojProfil();
 
-        document.body.classList.remove('body--bez-scrolla');
-      },
-      error: () => {
-        this.spremanjeDolaska.set(false);
-      },
-    });
+          document.body.classList.remove('body--bez-scrolla');
+        },
+        error: () => {
+          this.spremanjeDolaska.set(false);
+        },
+      });
   }
 }

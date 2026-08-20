@@ -1,16 +1,16 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { TrgovinaHttpService } from '../podaci/trgovina-http.service';
 import {
   DekoracijaTrgovina,
   KorisnikDekoracija,
 } from '../modeli/dekoracija.model';
 import { ProfilStanjeService } from '../../profil/stanje/profil-stanje.service';
+import { TrgovinaIServis } from '../podaci/trgovina-iservis';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TrgovinaStanjeService {
-  private readonly trgovinaHttp = inject(TrgovinaHttpService);
+  private readonly trgovinaIServis = inject(TrgovinaIServis);
   private readonly profilStanje = inject(ProfilStanjeService);
 
   readonly dekoracije = signal<DekoracijaTrgovina[]>([]);
@@ -44,7 +44,7 @@ export class TrgovinaStanjeService {
     this.ucitavanje.set(true);
     this.greska.set(null);
 
-    this.trgovinaHttp.dohvatiDekoracijeZaTrgovinu().subscribe({
+    this.trgovinaIServis.dohvatiDekoracijeZaTrgovinu().subscribe({
       next: (dekoracije) => {
         this.dekoracije.set(dekoracije);
         this.ucitavanje.set(false);
@@ -64,7 +64,7 @@ export class TrgovinaStanjeService {
   }
 
   ucitajMojeDekoracije(): void {
-    this.trgovinaHttp.dohvatiMojeDekoracije().subscribe({
+    this.trgovinaIServis.dohvatiMojeDekoracije().subscribe({
       next: (dekoracije) => {
         this.mojeDekoracije.set(dekoracije);
       },
@@ -78,12 +78,23 @@ export class TrgovinaStanjeService {
     this.kupnjaUcitavanje.set(dekoracijaId);
     this.kupnjaGreska.set(null);
 
-    this.trgovinaHttp.kupiDekoraciju(dekoracijaId).subscribe({
+    this.trgovinaIServis.kupiDekoraciju(dekoracijaId).subscribe({
       next: (kupljenaDekoracija) => {
         this.mojeDekoracije.update((trenutne) => [
           kupljenaDekoracija,
           ...trenutne,
         ]);
+
+        this.dekoracije.update((dekoracije) =>
+          dekoracije.map((dekoracija) =>
+            dekoracija.dekoracijaId === dekoracijaId
+              ? {
+                  ...dekoracija,
+                  posjeduje: true,
+                }
+              : dekoracija,
+          ),
+        );
 
         this.profilStanje.ucitajMojProfil();
         this.kupnjaUcitavanje.set(null);

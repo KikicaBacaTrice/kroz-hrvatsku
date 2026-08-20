@@ -11,10 +11,10 @@
     </div>
   </header>
 
-  @if (ucitavanje()) {
+  @if (lokacijaStanje.ucitavanje()) {
     <p>Učitavanje lokacija...</p>
-  } @else if (greska()) {
-    <p>{{ greska() }}</p>
+  } @else if (lokacijaStanje.greska()) {
+    <p>{{ lokacijaStanje.greska() }}</p>
   } @else {
     <div class="uredivanje-lokacija__tablica-spremnik">
       <table class="uredivanje-lokacija__tablica">
@@ -30,7 +30,10 @@
         </thead>
 
         <tbody>
-          @for (lokacija of lokacije(); track lokacija.lokacijaId) {
+          @for (
+            lokacija of lokacijaStanje.lokacije();
+            track lokacija.lokacijaId
+          ) {
             <tr>
               <td>
                 @if (glavnaSlika(lokacija); as slika) {
@@ -58,7 +61,7 @@
                   <button
                     type="button"
                     class="c-button c-button--primarna-inverz"
-                    (click)="obrisiLokaciju(lokacija)"
+                    (click)="lokacijaStanje.obrisiLokaciju(lokacija)"
                   >
                     Obriši
                   </button>

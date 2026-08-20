@@ -1,18 +1,26 @@
-@if (pocetnaVrijednostForme(); as pocetnaVrijednost) {
-  <app-lokacija-forma
-    nacin="uredivanje"
-    [pocetnaVrijednost]="pocetnaVrijednost"
-    [kategorije]="kategorije()"
-    (spremi)="azurirajLokaciju($event)"
-    (odustani)="odustani()"
-  />
+@if (lokacijaStanje.ucitavanje()) {
+  <p>Učitavanje lokacije...</p>
+} @else if (lokacijaStanje.greska()) {
+  <p>{{ lokacijaStanje.greska() }}</p>
+}
 
-  @if (lokacija(); as lokacija) {
-    <app-uredi-slike-lokacije
-      [lokacija]="lokacija"
-      (slikePromijenjene)="ucitajLokaciju()"
+@if (lokacijaStanje.lokacija(); as lokacija) {
+  @if (pocetnaVrijednostForme(); as pocetnaVrijednost) {
+    <app-lokacija-forma
+      nacin="uredivanje"
+      [pocetnaVrijednost]="pocetnaVrijednost"
+      [kategorije]="kategorije()"
+      (spremi)="azurirajLokaciju($event)"
+      (odustani)="odustani()"
     />
   }
+
+  <app-uredi-slike-lokacije
+    [lokacija]="lokacija"
+    (slikePromijenjene)="
+      lokacijaStanje.ucitajLokacijuZaUredivanje(lokacija.lokacijaId)
+    "
+  />
 } @else {
-  <p>Učitavanje lokacije</p>
+  <p>Lokacija nije pronađena.</p>
 }

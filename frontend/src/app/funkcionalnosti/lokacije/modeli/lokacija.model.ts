@@ -27,5 +27,6 @@ export type Lokacija = {
   geoDuzina: number;
   geoSirina: number;
   kategorija: KategorijaLokacije;
+  kateogrijaId: number;
   slikeLokacije: SlikaLokacije[];
 };

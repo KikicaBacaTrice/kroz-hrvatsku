@@ -4,13 +4,12 @@ import {
   AuthOdgovor,
   PrijavaZahtjev,
   RegistracijaZahtjev,
-} from '../modeli/auth.model';
-import { API_URL } from '../../../jezgra/konfiguracija/api.config';
+} from '../../modeli/auth.model';
+import { API_URL } from '../../../../jezgra/konfiguracija/api.config';
+import { AuthIServis } from '../auth-iservis';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class AuthHttpService {
+@Injectable()
+export class AuthHttpService implements AuthIServis {
   private readonly http = inject(HttpClient);
 
   prijava(zahtjev: PrijavaZahtjev) {

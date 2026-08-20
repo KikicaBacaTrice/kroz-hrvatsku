@@ -1,6 +1,5 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LokacijeHttpService } from '../../../lokacije/podaci/lokacije-http.service';
 import {
   KategorijaLokacije,
   Lokacija,
@@ -10,6 +9,8 @@ import { LokacijaFormaComponent } from '../../ui/lokacija-forma/lokacija-forma.c
 import { FormsModule } from '@angular/forms';
 import { UrediSlikeLokacijeComponent } from '../../ui/uredi-slike-lokacije/uredi-slike-lokacije.component';
 import { KategorijeStanjeService } from '../../../lokacije/stanje/kategorije-stanje.service';
+import { LokacijeHttpService } from '../../../lokacije/podaci/servisi/lokacije-http.service';
+import { LokacijaStanjeService } from '../../../lokacije/stanje/lokacija-stanje.service';
 
 @Component({
   selector: 'app-uredi-lokaciju',
@@ -20,25 +21,31 @@ import { KategorijeStanjeService } from '../../../lokacije/stanje/kategorije-sta
 export class UrediLokacijuComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
-  private readonly lokacijeHttp = inject(LokacijeHttpService);
-  private readonly kateogrijeStanje = inject(KategorijeStanjeService);
+  private readonly kategorijeStanje = inject(KategorijeStanjeService);
+  readonly lokacijaStanje = inject(LokacijaStanjeService);
 
-  readonly lokacija = signal<Lokacija | null>(null);
-  readonly kategorije = this.kateogrijeStanje.kategorije;
-  readonly pocetnaVrijednostForme = signal<Partial<LokacijaFormaModel> | null>(
-    null,
-  );
+  readonly kategorije = this.kategorijeStanje.kategorije;
   private lokacijaId = 0;
 
   ngOnInit(): void {
     this.lokacijaId = Number(this.route.snapshot.paramMap.get('id'));
 
     if (!Number.isNaN(this.lokacijaId)) {
-      this.ucitajLokaciju();
+      this.lokacijaStanje.ucitajLokacijuZaUredivanje(this.lokacijaId);
     }
 
-    this.kateogrijeStanje.ucitajKategorije();
+    this.kategorijeStanje.ucitajKategorije();
   }
+
+  readonly pocetnaVrijednostForme = computed(() => {
+    const lokacija = this.lokacijaStanje.lokacija();
+
+    if (!lokacija) {
+      return null;
+    }
+
+    return this.mapirajLokacijuUFormu(lokacija);
+  });
 
   mapirajLokacijuUFormu(lokacija: Lokacija): Partial<LokacijaFormaModel> {
     return {
@@ -52,34 +59,17 @@ export class UrediLokacijuComponent implements OnInit {
       geoDuzina: lokacija.geoDuzina,
       nagradaXp: lokacija.nagradaXp,
       nagradaValuta: lokacija.nagradaValuta,
-      kategorijaId: lokacija.kategorija.kategorijaId,
+      kategorijaId: lokacija.kategorija?.kategorijaId ?? lokacija.kateogrijaId,
     };
   }
 
   azurirajLokaciju(zahtjev: LokacijaFormaModel): void {
-    console.log('PATCH lokacijaId:', this.lokacijaId);
-    console.log('PATCH zahtjev:', zahtjev);
-    this.lokacijeHttp.azurirajLokaciju(this.lokacijaId, zahtjev).subscribe({
-      next: () => {
-        console.log('azurirana lokacija', this.lokacija);
-        this.router.navigate(['/uredivanje/lokacije']);
-      },
-      error: (greska) => {
-        console.log('Greska: ', greska);
-      },
-    });
+    this.lokacijaStanje.azurirajLokaciju(this.lokacijaId, zahtjev, () =>
+      this.router.navigate(['/uredivanje/lokacije']),
+    );
   }
 
   odustani(): void {
     this.router.navigate(['/uredivanje/lokacije']);
-  }
-
-  ucitajLokaciju(): void {
-    this.lokacijeHttp.dohvatiTrazenuLokaciju(this.lokacijaId).subscribe({
-      next: (lokacija) => {
-        this.lokacija.set(lokacija);
-        this.pocetnaVrijednostForme.set(this.mapirajLokacijuUFormu(lokacija));
-      },
-    });
   }
 }

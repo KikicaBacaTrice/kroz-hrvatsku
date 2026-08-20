@@ -218,6 +218,10 @@ export class LokacijeService {
     return this.prisma.lokacija.update({
       where: { lokacijaId: id },
       data: dto,
+      include: {
+        kategorija: true,
+        slikeLokacije: true,
+      },
     });
   }
 

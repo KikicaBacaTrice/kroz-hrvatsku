@@ -1,15 +1,14 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Lokacija, SlikaLokacije } from '../modeli/lokacija.model';
-import { API_URL } from '../../../jezgra/konfiguracija/api.config';
+import { Lokacija, SlikaLokacije } from '../../modeli/lokacija.model';
+import { API_URL } from '../../../../jezgra/konfiguracija/api.config';
 import { map } from 'rxjs';
-import { LokacijaFormaModel } from '../../uredivanje/modeli/lokacija-forma.mode';
-import { FilterLokacija } from '../modeli/filter-lokacija.model';
+import { LokacijaFormaModel } from '../../../uredivanje/modeli/lokacija-forma.mode';
+import { FilterLokacija } from '../../modeli/filter-lokacija.model';
+import { LokacijeIServis } from '../lokacije-iservis';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class LokacijeHttpService {
+@Injectable()
+export class LokacijeHttpService implements LokacijeIServis {
   private readonly http = inject(HttpClient);
 
   /* Lokacije */
