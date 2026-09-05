@@ -1,0 +1,78 @@
+<section class="o-stog | uredivanje-korisnika">
+  <h1>Uređivanje korisnika</h1>
+
+  @if (korisniciStanje.ucitavanje()) {
+    <p>Učitavanje korisnika</p>
+  }
+  @if (korisniciStanje.greska()) {
+    <p>{{ korisniciStanje.greska() }}</p>
+  }
+
+  <table class="uredivanje-korisnika__tablica">
+    <thead>
+      <tr>
+        <th>Uloga</th>
+        <th>Ime</th>
+        <th>Prezime</th>
+        <th>Korisničko ime</th>
+        <th>Virtualni novac</th>
+        <th>Akcije</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      @for (
+        korisnik of korisniciStanje.korisnici();
+        track korisnik.korisnikId
+      ) {
+        <tr>
+          <td>
+            @if (korisnik.ulogaId === 2) {
+              <span
+                class="uredivanje-korisnika__uloga uredivanje-korisnika__uloga--admin"
+              >
+                Admin
+              </span>
+            } @else {
+              <span class="uredivanje-korisnika__uloga"> Korisnik </span>
+            }
+          </td>
+          <td>{{ korisnik.ime || "-" }}</td>
+          <td>{{ korisnik.prezime || "-" }}</td>
+          <td>{{ korisnik.korisnickoIme }}</td>
+          <td>
+            <div class="uredivanje-korisnika__novac">
+              <input
+                class="uredivanje-korisnika__input"
+                type="number"
+                min="0"
+                [ngModel]="korisnik.profil?.virtualniNovac ?? 0"
+                #novac
+              />
+
+              <button
+                type="button"
+                class="c-button c-button--primarna"
+                (click)="azurirajNovac(korisnik.korisnikId, novac.value)"
+              >
+                Spremi
+              </button>
+            </div>
+          </td>
+          <td>
+            <div class="uredivanje-korisnika__akcije">
+              <button
+                type="button"
+                class="c-button c-button--primarna-inverz"
+                [disabled]="korisnik.ulogaId === 2"
+                (click)="obrisiKorisnika(korisnik)"
+              >
+                Obriši
+              </button>
+            </div>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</section>

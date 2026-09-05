@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { AzurirajKorisnikaDto } from './dto/azuriraj-korisnika.dto';
 
@@ -13,8 +17,20 @@ export class KorisniciService {
         ime: true,
         prezime: true,
         korisnickoIme: true,
-        email: true,
         ulogaId: true,
+        uloga: {
+          select: {
+            naziv: true,
+          },
+        },
+        profil: {
+          select: {
+            virtualniNovac: true,
+          },
+        },
+      },
+      orderBy: {
+        korisnikId: 'asc',
       },
     });
   }
@@ -48,8 +64,33 @@ export class KorisniciService {
     });
   }
 
+  async azurirajNovacKorisnika(korisnikId: number, virtualniNovac: number) {
+    return this.prisma.profil.update({
+      where: {
+        korisnikId,
+      },
+      data: {
+        virtualniNovac,
+      },
+    });
+  }
+
   async obrisi(id: number) {
-    await this.provjeriPostojiLiKorisnik(id);
+    const korisnik = await this.prisma.korisnik.findUnique({
+      where: { korisnikId: id },
+      select: {
+        korisnikId: true,
+        ulogaId: true,
+      },
+    });
+
+    if (!korisnik) {
+      throw new NotFoundException('Korisnik nije pronađen');
+    }
+
+    if (korisnik.ulogaId === 2) {
+      throw new ForbiddenException('Admin korisnik se ne može obrisati');
+    }
 
     return this.prisma.korisnik.delete({
       where: { korisnikId: id },
