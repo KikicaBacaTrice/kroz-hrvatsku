@@ -19,6 +19,8 @@ import { ProfilIServis } from './funkcionalnosti/profil/podaci/profil-iservis';
 import { ProfilHttpService } from './funkcionalnosti/profil/podaci/servis/profil-http.service';
 import { TrgovinaIServis } from './funkcionalnosti/trgovina/podaci/trgovina-iservis';
 import { TrgovinaHttpService } from './funkcionalnosti/trgovina/podaci/servis/trgovina-http.service';
+import { KorisniciAdminIServis } from './funkcionalnosti/uredivanje/podaci/korisnici-admin-iservis';
+import { KorisniciAdminHttpService } from './funkcionalnosti/uredivanje/podaci/servisi/korisnici-admin-http.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -57,6 +59,10 @@ export const appConfig: ApplicationConfig = {
     {
       provide: TrgovinaIServis,
       useClass: TrgovinaHttpService,
+    },
+    {
+      provide: KorisniciAdminIServis,
+      useClass: KorisniciAdminHttpService,
     },
   ],
 };

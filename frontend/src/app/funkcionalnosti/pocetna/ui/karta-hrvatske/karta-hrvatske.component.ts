@@ -1,4 +1,4 @@
-import { Component, output } from '@angular/core';
+import { Component, EventEmitter, Output, output } from '@angular/core';
 
 @Component({
   selector: 'app-karta-hrvatske',
@@ -7,7 +7,7 @@ import { Component, output } from '@angular/core';
   styleUrl: './karta-hrvatske.component.scss',
 })
 export class KartaHrvatskeComponent {
-  zupanijaOdabrana = output<string>();
+  @Output() zupanijaOdabrana = new EventEmitter<string>();
 
   private aktivnaZupanijaElement: Element | null = null;
 

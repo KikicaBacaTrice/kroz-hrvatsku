@@ -13,9 +13,10 @@ import { KorisniciService } from './korisnici.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { UlogeGuard } from 'src/auth/uloge.guard';
 import { Uloge } from 'src/auth/uloge.decorator';
+import { AzurirajNovacDto } from './dto/azuriraj-novac.dto';
 
 @UseGuards(JwtAuthGuard, UlogeGuard)
-@Uloge(1)
+@Uloge(2)
 @Controller('korisnici')
 export class KorisniciController {
   constructor(private readonly korisniciService: KorisniciService) {}
@@ -36,6 +37,17 @@ export class KorisniciController {
     @Body() dto: AzurirajKorisnikaDto,
   ) {
     return this.korisniciService.azuriraj(id, dto);
+  }
+
+  @Patch(':korisnikId/novac')
+  azurirajNovac(
+    @Param('korisnikId', ParseIntPipe) korisnikId: number,
+    @Body() dto: AzurirajNovacDto,
+  ) {
+    return this.korisniciService.azurirajNovacKorisnika(
+      korisnikId,
+      dto.virtualniNovac,
+    );
   }
 
   @Delete(':id')

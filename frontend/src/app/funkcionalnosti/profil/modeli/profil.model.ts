@@ -53,3 +53,21 @@ export type ProfilSlikaPosjeta = {
     };
   };
 };
+
+export type AdminKorisnik = {
+  korisnikId: number;
+  ime: string | null;
+  prezime: string | null;
+  korisnickoIme: string;
+  ulogaId: number;
+  uloga?: {
+    naziv: string;
+  };
+  profil: {
+    virtualniNovac: number;
+  } | null;
+};
+
+export type azurirajNovacKorisnikaZahjtev = {
+  virtualniNovac: number;
+};

@@ -34,4 +34,12 @@ export const UREDIVANJE_ROUTES: Routes = [
         (m) => m.UrediLokacijuComponent,
       ),
   },
+  {
+    path: 'korisnici',
+    canActivate: [adminGuard],
+    loadComponent: () =>
+      import('./stranice/uredivanje-korisnika/uredivanje-korisnika.component').then(
+        (m) => m.UredivanjeKorisnikaComponent,
+      ),
+  },
 ];
