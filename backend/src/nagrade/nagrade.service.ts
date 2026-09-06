@@ -131,11 +131,6 @@ export class NagradeService {
       postignuce.nagradaXp,
       postignuce.nagradaValuta,
     );
-
-    await this.dodijeliDostignuceZaPostignuce(
-      korisnikId,
-      postignuce.dekoracijaId,
-    );
   }
 
   async prebrojuRijeseneLokacijeZaKategoriju(
@@ -200,18 +195,5 @@ export class NagradeService {
       return;
     }
     await this.dodijeliNagradu(korisnikId, nagradaXp, nagradaValuta);
-  }
-
-  async dodijeliDostignuceZaPostignuce(
-    korisnikId: number,
-    dekoracijaId: number | null,
-  ) {
-    if (!dekoracijaId) {
-      return;
-    }
-    await this.dekoracijeServis.dodijeliDekoracijuKorisniku(
-      korisnikId,
-      dekoracijaId,
-    );
   }
 }

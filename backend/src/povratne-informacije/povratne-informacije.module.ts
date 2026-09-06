@@ -8,5 +8,6 @@ import { NagradeModule } from 'src/nagrade/nagrade.module';
   imports: [PrismaModule, NagradeModule],
   providers: [PovratneInformacijeService],
   controllers: [PovratneInformacijeController],
+  exports: [PovratneInformacijeService],
 })
 export class PovratneInformacijeModule {}
