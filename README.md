@@ -16,6 +16,38 @@ Aplikacija povezuje pregled turističkih lokacija s elementima igrifikacije. Kor
 
 Naglasak završnog rada je na organizaciji koda koja olakšava razumijevanje, održavanje i proširivanje aplikacije. Projekt primjenjuje modularnu strukturu, razdvajanje odgovornosti, ponovnu uporabu komponenti i responzivno oblikovanje sučelja.
 
+## Prikaz aplikacije
+
+### Početna stranica i popis lokacija
+
+Pregled početne stranice, odabir županije na interaktivnoj karti i istraživanje popisa lokacija.
+
+![Početna stranica, odabir županije i popis lokacija](dokumentacija/gifovi/pocetna-lista_lokacija.gif)
+
+### Detalji lokacije
+
+Pregled detalja lokacije, osnovnih informacija i galerije fotografija.
+
+![Pregled detalja lokacije](dokumentacija/gifovi/detalji-lokacije.gif)
+
+### Registracija i prijava
+
+Pristup korisničkom računu putem sučelja za registraciju i prijavu.
+
+![Registracija i prijava korisnika](dokumentacija/gifovi/Autentifikacija.gif)
+
+### Povratne informacije
+
+Komentari i ocjene kojima korisnici dijele svoja iskustva o lokacijama.
+
+![Komentiranje i ocjenjivanje lokacija](dokumentacija/gifovi/povratne-informacije.gif)
+
+### Profil i dekoracije
+
+Pregled korisničkog profila i personalizacija pomoću dekoracija.
+
+![Korisnički profil i dekoracije](dokumentacija/gifovi/profil-dekoracije.gif)
+
 ## Funkcionalnosti
 
 - Pregled lokacija i filtriranje prema kriterijima, uključujući kategoriju i županiju.
